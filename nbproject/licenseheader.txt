@@ -1,0 +1,7 @@
+<#if licenseFirst??>
+${licenseFirst}
+</#if>
+${licensePrefix}Jerry Kim (18015036), 2019
+<#if licenseLast??>
+${licenseLast}
+</#if>
