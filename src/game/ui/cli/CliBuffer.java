@@ -19,6 +19,11 @@ public class CliBuffer {
     private static final int TopPadding = 8;
     
     /**
+     * Buffer value used for padding.
+     */
+    public final char[] PaddingBuffer;
+    
+    /**
      * Internal buffer array.
      */
     private char[] buffer;
@@ -48,18 +53,21 @@ public class CliBuffer {
     {
         this.width = width;
         this.height = height;
-        buffer = new char[TopPadding + width * height + height - 1];
+        
+        PaddingBuffer = new char[TopPadding];
+        for(int i=0; i<PaddingBuffer.length; i++)
+            PaddingBuffer[i] = '\n';
+        
+        buffer = new char[(width + 1) * height];
         
         // Setup clear buffer
         clearBuffer = new char[buffer.length];
-        for(int i=0; i<TopPadding-1; i++)
-            clearBuffer[i] = '\n';
         for(int r=0; r<height; r++)
         {
-            int rInx = TopPadding-1 + r * (width+1);
-            clearBuffer[rInx] = '\n';
-            for(int c=1; c<width+1; c++)
+            int rInx = r * (width+1);
+            for(int c=0; c<width; c++)
                 clearBuffer[rInx+c] = ' ';
+            clearBuffer[rInx + width] = '\n';
         }
         
         // Set initial buffer data
@@ -94,15 +102,15 @@ public class CliBuffer {
      * Sets the character at specified location.
      * Attempt to set the character out of bounds will be ignored.
      * @param ch
-     * @param x Between 1 and width
-     * @param y Between 1 and height
+     * @param x Between 0 and width-1
+     * @param y Between 0 and height-1
      */
     public void SetBuffer(char ch, int x, int y)
     {
-        if(x < 1 || x > width || y < 1 || y > height)
+        if(x < 0 || x >= width || y < 0 || y >= height)
             return;
         // Convert simulated x y position to one dimensional position.
-        int inx = TopPadding - 1 + x + (y-1) * (width+1);
+        int inx = x + y * (width+1);
         // If buffer to be set is a different value, we should update.
         if(buffer[inx] != ch)
         {
@@ -138,6 +146,8 @@ public class CliBuffer {
      */
     public void SetBuffer(String str, int x, int y, Pivot pivot)
     {
+        if(str == null)
+            return;
         int strLen = str.length();
         switch(pivot)
         {

@@ -3,7 +3,10 @@
  */
 package game;
 
+import game.allocation.DependencyContainer;
 import game.allocation.IDependencyContainer;
+import game.debug.ConsoleLogger;
+import game.debug.Debug;
 import game.debug.ILogger;
 import java.util.Scanner;
 
@@ -22,6 +25,7 @@ public class BaseGame {
     protected BaseGame(ILogger logger)
     {
         this.logger = logger;
+        dependencies = new DependencyContainer(logger);
     }
     
     /**
@@ -31,6 +35,7 @@ public class BaseGame {
     {
         Initialize();
         PostInitialize();
+        OnStart();
     }
     
     /**
@@ -38,6 +43,8 @@ public class BaseGame {
      */
     protected void Initialize()
     {
+        Debug.Initialize(logger);
+        
         dependencies.CacheAs(ILogger.class, logger);
         dependencies.CacheAs(IDependencyContainer.class, dependencies);
     }
@@ -46,6 +53,13 @@ public class BaseGame {
      * Performs any processes after initialization process.
      */
     protected void PostInitialize()
+    {
+    }
+    
+    /**
+     * Performs any initial process to start the actual game.
+     */
+    protected void OnStart()
     {
     }
 }

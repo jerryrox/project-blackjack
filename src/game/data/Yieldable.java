@@ -63,11 +63,16 @@ public class Yieldable<T> implements Iterable<T> {
                 catch(InterruptedException e)
                 {
                     // TODO: Do something
-                    boolLock.set(false);
                 }
                 catch(Exception e)
                 {
                     // TODO: Do something
+                }
+                
+                synchronized(yieldProcessor)
+                {
+                    yieldProcessor = null;
+                    current = null;
                     boolLock.set(false);
                 }
             });

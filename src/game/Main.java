@@ -5,6 +5,7 @@ package game;
 
 import game.debug.ConsoleLogger;
 import game.debug.ILogger;
+import game.tests.TestConsoleGame;
 
 /**
  * The entry point of the application.
@@ -15,7 +16,11 @@ public class Main {
     public static void main(String[] args)
     {
         ILogger logger = new ConsoleLogger();
-        ConsoleGame game = new ConsoleGame(logger);
         
+//        ConsoleGame game = new ConsoleGame(logger);
+        TestConsoleGame game = new TestConsoleGame(logger);
+        
+        // Start game.
+        game.Start();
     }
 }

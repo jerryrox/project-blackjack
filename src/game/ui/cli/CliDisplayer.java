@@ -4,36 +4,65 @@
 package game.ui.cli;
 
 import game.allocation.IDependencyContainer;
+import game.allocation.ReceivesDependency;
 import game.ui.IDisplayer;
+import game.ui.cli.commands.CommandContext;
 import java.util.TreeSet;
 
 /**
  * Displayer implementation for CLI UI engine.
  * @author jerrykim
  */
-public class CliDisplayer implements IDisplayer<CliDisplayer> {
+public class CliDisplayer<T extends CliDisplayer> implements IDisplayer<T>, Comparable<CliDisplayer> {
     
     /**
      * List of children nested under this displayer, sorted by their depth values.
      */
-    protected TreeSet<CliDisplayer> children = new TreeSet<CliDisplayer>();
+    protected TreeSet<T> children = new TreeSet<T>();
+    
+    /**
+     * Whether the displayer is currently active.
+     */
+    protected boolean isActive = true;
+    
+    /**
+     * Command holder for this displayer.
+     */
+    protected CommandContext commands = new CommandContext();
     
     /**
      * Dependency container instance for automated injection of dependencies on all child displayers.
      */
+    @ReceivesDependency
     private IDependencyContainer dependencyContainer;
     
     
     public @Override int GetDepth() { return 0; }
     
-    public @Override void AddChild(CliDisplayer child)
+    public @Override void SetActive(boolean isActive)
+    {
+        this.isActive = isActive;
+        if(isActive)
+            OnEnable();
+        else
+            OnDisable();
+    }
+    
+    public @Override boolean IsActive() { return isActive; }
+    
+    public @Override void OnEnable() {}
+    
+    public @Override void OnDisable() {}
+    
+    public @Override <TDisplayer extends T> TDisplayer AddChild(TDisplayer child)
     {
         if(dependencyContainer != null)
             dependencyContainer.Inject(child);
         children.add(child);
+        return child;
     }
     
-    public @Override void AddChildren(CliDisplayer... children)
+    public @Override void AddChildren(T... children)
     {
         for(int i=0; i<children.length; i++)
         {
@@ -43,12 +72,17 @@ public class CliDisplayer implements IDisplayer<CliDisplayer> {
         }
     }
     
-    public @Override void RemoveChild(CliDisplayer child)
+    public @Override void RemoveChild(T child)
     {
         children.remove(child);
     }
     
-    public @Override void SetDependencyContainer(IDependencyContainer container) { dependencyContainer = container; }
+    public @Override Iterable<T> GetChildren(boolean reverse)
+    {
+        if(!reverse)
+            return children;
+        return children.descendingSet();
+    }
     
     public @Override int compareTo(CliDisplayer displayer)
     {
@@ -65,6 +99,14 @@ public class CliDisplayer implements IDisplayer<CliDisplayer> {
     public void Render(CliBuffer buffer)
     {
         for(CliDisplayer displayer : children)
-            displayer.Render(buffer);
+        {
+            if(displayer.IsActive())
+                displayer.Render(buffer);
+        }
     }
+    
+    /**
+     * Returns the command context being managed by this displayer.
+     */
+    public CommandContext GetCommands() { return commands; }
 }

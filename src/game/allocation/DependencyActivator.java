@@ -103,7 +103,7 @@ public class DependencyActivator {
      */
     private IInjectionHandler CreateHandlerForMethod(Class type)
     {
-        Method[] methods = type.getMethods();
+        Method[] methods = type.getDeclaredMethods();
         for(int i=0; i<methods.length; i++)
         {
             Method method = methods[i];
@@ -150,7 +150,7 @@ public class DependencyActivator {
     private IInjectionHandler CreateHandlerForFields(Class type)
     {
         ArrayList<IInjectionHandler> handlers = new ArrayList<IInjectionHandler>();
-        Field[] fields = type.getFields();
+        Field[] fields = type.getDeclaredFields();
         for(int i=0; i<fields.length; i++)
         {
             Field field = fields[i];
