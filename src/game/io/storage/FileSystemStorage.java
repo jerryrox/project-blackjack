@@ -1,23 +1,25 @@
 /*
  * Jerry Kim (18015036), 2019
  */
-package game.io.store;
+package game.io.storage;
 
+import game.entities.IEntity;
 import game.io.IKeyValueSerializable;
 import game.utils.PathUtils;
 import java.io.File;
 import java.util.HashMap;
-import game.io.IStore;
 import game.io.serializers.KeyValueSerializer;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
+import game.io.IStorage;
+import java.util.UUID;
 
 /**
- *
+ * Data provider using the file system.
  * @author jerrykim
  */
-public class FileSystemStore<T extends IKeyValueSerializable> implements IStore<T> {
+public class FileSystemStorage<T extends IEntity & IKeyValueSerializable> implements IStorage<T> {
     
     /**
      * A reserved key to be mapped to KeyValueSerializer upon setting T value to this store.
@@ -41,7 +43,7 @@ public class FileSystemStore<T extends IKeyValueSerializable> implements IStore<
     private ICreateHandler<T> createHandler;
     
     
-    public FileSystemStore(String fileName, ICreateHandler<T> createHandler)
+    public FileSystemStorage(String fileName, ICreateHandler<T> createHandler)
     {
         this.createHandler = createHandler;
         file = new File(PathUtils.GetDataPath() + fileName);
@@ -76,8 +78,8 @@ public class FileSystemStore<T extends IKeyValueSerializable> implements IStore<
                 serializer.FromString(line);
                 
                 // Make sure the key exists.
-                String name = serializer.Get(NameKey);
-                if(name != null && name.length() > 0)
+                String id = serializer.Get(NameKey);
+                if(id != null && id.length() > 0)
                 {
                     // Create the container object.
                     T obj = createHandler.Invoke();
@@ -85,8 +87,9 @@ public class FileSystemStore<T extends IKeyValueSerializable> implements IStore<
                     {
                         // Parse data from serializer.
                         obj.Deserialize(serializer);
+                        obj.SetId(id);
                         // Store it in the cache.
-                        Set(name, obj);
+                        Set(id, obj);
                     }
                 }
             }
@@ -128,34 +131,38 @@ public class FileSystemStore<T extends IKeyValueSerializable> implements IStore<
         }
     }
 
-    public @Override void Set(String name, T value)
+    public @Override void Add(T value)
     {
-        if(name == null || name.length() == 0)
+        if(value == null)
+            return;
+        String existingId = value.GetId();
+        if(existingId == null || existingId.length() == 0)
+            value.SetId(existingId = UUID.randomUUID().toString());
+        
+        Set(existingId, value);
+    }
+
+    public @Override void Set(String id, T value)
+    {
+        if(id == null || id.length() == 0)
             return;
         if(value == null)
-            Remove(name);
+            Remove(id);
         else
-            cached.put(name, value);
+            cached.put(id, value);
     }
     
-    public @Override void Remove(String name)
-    {
-        cached.remove(name);
-    }
+    public @Override void Remove(String id) { cached.remove(id); }
 
     public @Override void Clear() { cached.clear(); }
     
-    public @Override T Get(String name)
-    {
-        return cached.get(name);
-    }
+    public @Override T Get(String id) { return cached.get(id); }
 
-    public @Override Iterable<String> GetAllNames()
-    {
-        return cached.keySet();
-    }
+    public @Override Iterable<String> GetAllId() { return cached.keySet(); }
     
-    public @Override boolean ContainsName(String name) { return cached.containsKey(name); }
+    public @Override Iterable<T> GetAll() { return cached.values(); }
+    
+    public @Override boolean ContainsId(String id) { return cached.containsKey(id); }
     
     
     /**

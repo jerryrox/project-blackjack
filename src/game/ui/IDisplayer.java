@@ -9,7 +9,7 @@ import game.allocation.IDependencyContainer;
  * Provides a general signature for any displayable ui element.
  * @author jerrykim
  */
-public interface IDisplayer<T> {
+public interface IDisplayer<T> extends IHasPosition {
     
     /**
      * Returns the depth of the display.

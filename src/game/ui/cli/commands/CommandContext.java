@@ -16,12 +16,12 @@ public class CommandContext {
      * Whether the inputted command should further propagate when none of the registered
      * command has been selected.
      */
-    private boolean isPropagate = false;
+    private boolean isPropagate = true;
     
     /**
      * Whether the context is enabled for receiving commands.
      */
-    private boolean isEnabled = false;
+    private boolean isEnabled = true;
     
     /**
      * List of command infos this context provides.
@@ -57,6 +57,16 @@ public class CommandContext {
      * @param command 
      */
     public void AddCommand(CommandInfo command) { commands.put(command.GetName(), command); }
+    
+    /**
+     * Clears all commands in the table.
+     */
+    public void ClearCommands() { commands.clear(); }
+    
+    /**
+     * Returns the number of commands in the context.
+     */
+    public int GetCount() { return commands.size(); }
     
     /**
      * Returns the command information that matches the specified name.

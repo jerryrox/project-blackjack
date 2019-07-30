@@ -9,8 +9,13 @@ import game.ui.IView;
  * An abstract IView implementation for specialized View subclasses.
  * @author jerrykim
  */
-public abstract class CliView extends CliDisplayer<CliView> implements IView<CliView> {
+public abstract class CliView<T extends CliView> extends CliDisplayer<T> implements IView<T> {
 
+    protected CliView()
+    {
+        isActive = false;
+    }
+    
     public @Override void ShowView()
     {
         if(isActive)

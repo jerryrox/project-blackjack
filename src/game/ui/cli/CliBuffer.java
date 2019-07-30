@@ -43,11 +43,6 @@ public class CliBuffer {
      */
     private int height;
     
-    /**
-     * Whether the buffer is dirty and needs redraw.
-     */
-    private boolean isDirty = false;
-    
     
     public CliBuffer(int width, int height)
     {
@@ -88,17 +83,6 @@ public class CliBuffer {
     public char[] GetRawBuffers() { return buffer; }
     
     /**
-     * Sets dirty flag on the buffer to indicate whether buffers should be redrawn.
-     * @param isDirty 
-     */
-    public void SetDirty(boolean isDirty) { this.isDirty = isDirty; }
-    
-    /**
-     * Returns whether the buffer is dirty.
-     */
-    public boolean IsDirty() { return isDirty; }
-    
-    /**
      * Sets the character at specified location.
      * Attempt to set the character out of bounds will be ignored.
      * @param ch
@@ -111,16 +95,8 @@ public class CliBuffer {
             return;
         // Convert simulated x y position to one dimensional position.
         int inx = x + y * (width+1);
-        // If buffer to be set is a different value, we should update.
-        if(buffer[inx] != ch)
-        {
-            if(!isDirty)
-            {
-                isDirty = true;
-                Clear();
-            }
-            buffer[inx] = ch;
-        }
+        // Set buffer.
+        buffer[inx] = ch;
     }
     
     /**
@@ -154,7 +130,7 @@ public class CliBuffer {
         case Top:
         case Center:
         case Bottom:
-            x -= strLen / 2;
+            x -= (strLen - 1) / 2;
             break;
         case TopRight:
         case Right:
@@ -176,6 +152,16 @@ public class CliBuffer {
      * Returns the height of the console canvas.
      */
     public int GetHeight() { return height; }
+    
+    /**
+     * Returns the last x position.
+     */
+    public int GetLastX() { return width - 1; }
+    
+    /**
+     * Returns the last y position.
+     */
+    public int GetLastY() { return height - 1; }
     
     /**
      * Returns the half width of the console canvas.

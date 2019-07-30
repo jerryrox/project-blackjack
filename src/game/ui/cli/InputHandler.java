@@ -173,10 +173,9 @@ public class InputHandler {
      */
     private boolean IterateCommands(CliDisplayer displayer, CommandHandler handler)
     {
-        if(displayer == null)
-        {
+        // If displayer is somehow null or is inactive, commands shouldn't be processed.
+        if(displayer == null || !displayer.IsActive())
             return true;
-        }
         
         // Propagate through children first.
         for(Object child : displayer.GetChildren(true))

@@ -70,6 +70,21 @@ public class CommandInfo {
     public String GetDescription() { return description; }
     
     /**
+     * Sets callback handler of this command.
+     * @param callback
+     */
+    public CommandInfo SetCallback(CallbackHandler callback)
+    {
+        this.callback = callback;
+        return this;
+    }
+    
+    /**
+     * Returns the callback handler on this command.
+     */
+    public CallbackHandler GetCallback() { return callback; }
+    
+    /**
      * Sets an argument to indicate that this command takes certain arguments.
      */
     public CommandInfo SetArgument(String name, ArgumentTypes type)
@@ -93,7 +108,8 @@ public class CommandInfo {
      */
     public void Evaluate(KeyValueSerializer arguments)
     {
-        callback.Invoke(arguments);
+        if(callback != null)
+            callback.Invoke(arguments);
     }
     
     /**

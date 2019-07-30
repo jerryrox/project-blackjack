@@ -14,13 +14,18 @@ import game.ui.cli.commands.CommandInfo;
 public class CliRoot extends CliDisplayer {
     
     
+    public CliRoot()
+    {
+        SetActive(true);
+    }
+    
     @InitWithDependency
     public void Init(ICliEngine engine)
     {
-        commands.AddCommand(new CommandInfo("quit", (args) -> {
-            engine.StopUpdate();
-        }));
-        
-        commands.SetEnable(true);
+//        commands.AddCommand(new CommandInfo("quit", (args) -> {
+//            engine.StopUpdate();
+//        }));
+//        
+//        commands.SetEnable(true);
     }
 }

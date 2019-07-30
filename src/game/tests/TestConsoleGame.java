@@ -15,9 +15,6 @@ import game.debug.ILogger;
 import game.ui.Pivot;
 import game.ui.cli.CliBuffer;
 import game.ui.cli.CliDisplayer;
-import game.ui.cli.CliEngine;
-import game.ui.cli.CliRoot;
-import game.ui.cli.ICliEngine;
 import game.ui.cli.commands.ArgumentTypes;
 import game.ui.cli.commands.CommandInfo;
 
@@ -44,6 +41,7 @@ public class TestConsoleGame extends ConsoleGame {
     {   
         cliEngine.StartUpdate();
     }
+    
     
     private class DummyDisplayer extends CliDisplayer {
         

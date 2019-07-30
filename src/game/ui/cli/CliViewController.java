@@ -5,13 +5,13 @@ package game.ui.cli;
 
 import game.allocation.IDependencyContainer;
 import game.data.Yieldable;
-import game.ui.IDisplayer;
-import game.ui.IView;
+import game.debug.Debug;
 import game.ui.IViewController;
 import java.util.HashMap;
 
 /**
  * Provides a base implementation for a the controller subclasses.
+ * In CLI mode, views (screens and overlays) are fundamentally treated the same type.
  * @author jerrykim
  */
 public abstract class CliViewController<T extends CliView> implements IViewController<T> {
@@ -42,55 +42,69 @@ public abstract class CliViewController<T extends CliView> implements IViewContr
     {
         return new Yieldable<T>(yield -> {
             for(T view : views.values())
-                yield.Return(view);
+            {
+                if(view.IsActive())
+                    yield.Return(view);
+            }
         });
     }
     
     public @Override <TView extends T> TView ShowView(Class<TView> type)
     {
-        return null;
-    }
-    
-    /*
-    public T ShowView<T> () where T : TView, new()
-    {
-        var view = FindOrCreateView<T>();
-        view.ShowView();
-        OnPostShow(view);
+        TView view = FindView(type, true);
+        if(view != null)
+        {
+            view.ShowView();
+            OnPostShow(view);
+        }
         return view;
     }
-
-    public T GetView<T>() where T : TView, new() { return FindOrCreateView<T>(false); }
-
-    public bool IsActive<T> () where T : TView, new() { return ActiveViews.OfType<T>().FirstOrDefault() != null; }
-
-    public void HideView<T> () where T : TView, new()
-    {
-            if(!ViewExists<T>())
-                    return;
-
-            var view = FindOrCreateView<T>();
-            view.HideView();
-            OnPostHide(view);
-    }
-
-    public void HideView(TView view)
-    {
-            view.HideView();
-            OnPostHide(view);
-    }
-
-    /// <summary>
-    /// Handles additional processes after showing the specified view.
-    /// </summary>
-    protected virtual void OnPostShow(TView view) {}
-
-    /// <summary>
-    /// Handles additional processes after hiding the specified view.
-    /// </summary>
-    protected virtual void OnPostHide(TView view) {}
-    */
     
+    public @Override <TView extends T> TView GetView(Class<TView> type)
+    {
+        return FindView(type, false);
+    }
+    
+    public @Override <TView extends T> boolean IsActive(Class<TView> type)
+    {
+        for(T view : views.values())
+        {
+            if(view.getClass() == type)
+                return view.IsActive();
+        }
+        return false;
+    }
+    
+    public @Override <TView extends T> void HideView(Class<TView> type)
+    {
+        TView view = FindView(type, false);
+        if(view != null)
+        {
+            view.HideView();
+            OnPostHide(view);
+        }
+    }
+    
+    public @Override void HideView(T view)
+    {
+        if(view != null)
+        {
+            view.HideView();
+            OnPostHide(view);
+        }
+    }
+    
+    /**
+     * Event called from showing the specified view.
+     * @param view 
+     */
+    protected abstract void OnPostShow(T view);
+    
+    /**
+     * Event called from hiding the specified view.
+     * @param view 
+     */
+    protected abstract void OnPostHide(T view);
     
     /**
      * Finds and returns the view instance for specified type.

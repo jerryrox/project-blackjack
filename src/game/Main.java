@@ -17,8 +17,8 @@ public class Main {
     {
         ILogger logger = new ConsoleLogger();
         
-//        ConsoleGame game = new ConsoleGame(logger);
-        TestConsoleGame game = new TestConsoleGame(logger);
+        ConsoleGame game = new ConsoleGame(logger);
+//        TestConsoleGame game = new TestConsoleGame(logger);
         
         // Start game.
         game.Start();

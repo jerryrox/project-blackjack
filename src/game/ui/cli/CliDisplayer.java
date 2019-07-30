@@ -5,6 +5,7 @@ package game.ui.cli;
 
 import game.allocation.IDependencyContainer;
 import game.allocation.ReceivesDependency;
+import game.data.Vector2;
 import game.ui.IDisplayer;
 import game.ui.cli.commands.CommandContext;
 import java.util.TreeSet;
@@ -31,6 +32,11 @@ public class CliDisplayer<T extends CliDisplayer> implements IDisplayer<T>, Comp
     protected CommandContext commands = new CommandContext();
     
     /**
+     * Position of the displayer.
+     */
+    protected Vector2 position = new Vector2();
+    
+    /**
      * Dependency container instance for automated injection of dependencies on all child displayers.
      */
     @ReceivesDependency
@@ -48,11 +54,19 @@ public class CliDisplayer<T extends CliDisplayer> implements IDisplayer<T>, Comp
             OnDisable();
     }
     
-    public @Override boolean IsActive() { return isActive; }
-    
     public @Override void OnEnable() {}
     
     public @Override void OnDisable() {}
+    
+    public @Override boolean IsActive() { return isActive; }
+    
+    public @Override void SetPosition(int x, int y) { position.X = x; position.Y = y; }
+    
+    public @Override void SetPositionX(int x) { position.X = x; }
+    
+    public @Override void SetPositionY(int y) { position.Y = y; }
+    
+    public @Override Vector2 GetPosition() { return position.Clone(); }
     
     public @Override <TDisplayer extends T> TDisplayer AddChild(TDisplayer child)
     {

@@ -132,11 +132,15 @@ public class DependencyActivator {
             return (Object obj, IDependencyContainer container) -> {
                 try
                 {
-                    method.invoke(obj, paramGetters.stream().map(d -> d.Invoke(container)).toArray());
+                    Object[] params = paramGetters.stream().map(d -> d.Invoke(container)).toArray();
+                    method.invoke(obj, params);
                 }
                 catch(Exception e)
                 {
                     Logger.LogErrorFormat("An exception was thrown while invoking the method (%s) of type (%s) with dependencies.", method.getName(), type.getName());
+                    Logger.LogError("Error: " + e.toString());
+                    for(StackTraceElement trace : e.getStackTrace())
+                        Logger.LogError(trace.toString());
                 }
             };
         }

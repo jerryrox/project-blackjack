@@ -48,5 +48,5 @@ public interface IViewController<T> {
      * @param <TView>
      * @param view 
      */
-    <TView extends T> void HideView(TView view);
+    void HideView(T view);
 }

@@ -5,10 +5,11 @@ package game;
 
 import game.allocation.DependencyContainer;
 import game.allocation.IDependencyContainer;
-import game.debug.ConsoleLogger;
 import game.debug.Debug;
 import game.debug.ILogger;
-import java.util.Scanner;
+import game.io.storage.UserFileStorage;
+import game.io.store.UserStore;
+import game.rulesets.ItemDefinitions;
 
 /**
  * Manages the shared modules that can be used between any implementation of game,
@@ -20,6 +21,10 @@ public class BaseGame {
     protected ILogger logger;
     
     protected IDependencyContainer dependencies;
+    
+    protected UserStore userStore;
+    
+    protected ItemDefinitions itemDefinitions;
     
     
     protected BaseGame(ILogger logger)
@@ -45,8 +50,15 @@ public class BaseGame {
     {
         Debug.Initialize(logger);
         
+        // Core
         dependencies.CacheAs(ILogger.class, logger);
         dependencies.CacheAs(IDependencyContainer.class, dependencies);
+        
+        // Cache user store and user instance
+        dependencies.Cache(userStore = new UserStore(new UserFileStorage()));
+        dependencies.Cache(userStore.Load());
+        
+        dependencies.Cache(itemDefinitions = new ItemDefinitions());
     }
     
     /**

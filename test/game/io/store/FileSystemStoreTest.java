@@ -3,6 +3,8 @@
  */
 package game.io.store;
 
+import game.entities.IEntity;
+import game.io.storage.FileSystemStorage;
 import game.io.IKeyValueSerializable;
 import game.io.serializers.KeyValueSerializer;
 import org.junit.Test;
@@ -25,7 +27,7 @@ public class FileSystemStoreTest {
      */
     @Test
     public void testInitialize() {
-        FileSystemStore instance = new FileSystemStore(TestFileName, () -> new TestData());
+        FileSystemStorage instance = new FileSystemStorage(TestFileName, () -> new TestData());
         instance.Initialize();
     }
 
@@ -34,7 +36,7 @@ public class FileSystemStoreTest {
      */
     @Test
     public void testSave_Load() {
-        FileSystemStore<TestData> instance = new FileSystemStore<TestData>(TestFileName, () -> new TestData());
+        FileSystemStorage<TestData> instance = new FileSystemStorage<TestData>(TestFileName, () -> new TestData());
         instance.Initialize();
         TestData testData = new TestData(1, true, "Test");
         instance.Set("Data0", testData);
@@ -43,7 +45,7 @@ public class FileSystemStoreTest {
         
         // Reinitialize to reload data
         instance.Initialize();
-        assertEquals(instance.ContainsName("Data0"), true);
+        assertEquals(instance.ContainsId("Data0"), true);
         TestData loadedData = instance.Get("Data0");
         assertNotNull(loadedData);
         assertEquals(loadedData.A, testData.A);
@@ -56,7 +58,7 @@ public class FileSystemStoreTest {
      */
     @Test
     public void testSet() {
-        FileSystemStore<TestData> instance = new FileSystemStore<TestData>(TestFileName, () -> new TestData());
+        FileSystemStorage<TestData> instance = new FileSystemStorage<TestData>(TestFileName, () -> new TestData());
         instance.Initialize();
         
         TestData testData = new TestData(1, true, "Test");
@@ -69,13 +71,13 @@ public class FileSystemStoreTest {
      */
     @Test
     public void testRemove() {
-        FileSystemStore<TestData> instance = new FileSystemStore<TestData>(TestFileName, () -> new TestData());
+        FileSystemStorage<TestData> instance = new FileSystemStorage<TestData>(TestFileName, () -> new TestData());
         instance.Initialize();
         
         TestData testData = new TestData(1, true, "Test");
         instance.Set("Data0", testData);
         instance.Remove("Data0");
-        assertEquals(instance.ContainsName("Data0"), false);
+        assertEquals(instance.ContainsId("Data0"), false);
         assertEquals(instance.Get("Data0"), null);
     }
 
@@ -84,7 +86,7 @@ public class FileSystemStoreTest {
      */
     @Test
     public void testGetAllNames() {
-        FileSystemStore<TestData> instance = new FileSystemStore<TestData>(TestFileName, () -> new TestData());
+        FileSystemStorage<TestData> instance = new FileSystemStorage<TestData>(TestFileName, () -> new TestData());
         instance.Initialize();
         instance.Clear();
         instance.Set("Data0", new TestData(10, true, "A"));
@@ -95,16 +97,31 @@ public class FileSystemStoreTest {
         instance.Set("Data0", null);
         instance.Remove("Data3");
         
-        for(String name : instance.GetAllNames())
+        for(String name : instance.GetAllId())
         {
             System.out.println("Name: " + name);
             assertTrue(name.equals("Data1") || name.equals("Data2") || name.equals("Data4"));
         }
     }
     
-    
-    private class TestData implements IKeyValueSerializable {
+    @Test
+    public void TestAdd()
+    {
+        FileSystemStorage<TestData> instance = new FileSystemStorage<TestData>(TestFileName, () -> new TestData());
+        instance.Initialize();
         
+        TestData data = new TestData(20, true, "bbb");
+        instance.Add(data);
+        
+        System.out.println("Added with id: " + data.GetId());
+        
+        assertTrue(instance.ContainsId(data.GetId()));
+    }
+    
+    
+    private class TestData implements IKeyValueSerializable, IEntity {
+        
+        public String id;
         public int A;
         public boolean B;
         public String C;
@@ -122,6 +139,10 @@ public class FileSystemStoreTest {
             B = b;
             C = c;
         }
+        
+        public @Override void SetId(String id) { this.id = id; }
+
+        public @Override String GetId() { return id; }
 
         public @Override void Serialize(KeyValueSerializer serializer)
         {

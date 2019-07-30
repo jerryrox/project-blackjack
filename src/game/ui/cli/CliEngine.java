@@ -59,20 +59,16 @@ public class CliEngine implements ICliEngine {
         isRunning = true;
         while(isRunning)
         {
-            // Try rendering the screen
+            // Clear the buffer.
+            buffer.Clear();
+            
+            // Start rendering the displayers
             root.Render(buffer);
-
-            // If the screen has not changed, return.
-            if(!buffer.IsDirty())
-                return;
-
-            // Set buffer to clean state
-            buffer.SetDirty(false);
-
-            // Render padding
+            
+            // Output padding
             System.out.print(buffer.PaddingBuffer);
 
-            // Render commands
+            // Output commands
             inputHandler.PromptCommands();
 
             // Output the buffer to console.
