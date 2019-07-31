@@ -30,6 +30,7 @@ public class ItemStore {
     {
         this.definitions = definitions;
         this.storage = storage;
+        storage.Initialize();
     }
     
     /**
@@ -45,7 +46,54 @@ public class ItemStore {
     public void RemoveItem(OwnedItem item) { storage.Remove(item.GetId()); }
     
     /**
+     * Removes an arbitrary owned item instance that refers to specified item info.
+     * @param item 
+     */
+    public void RemoveItem(ItemInfo item)
+    {
+        for(OwnedItem i : storage.GetAll())
+        {
+            if(i.GetInfo() == item)
+            {
+                storage.Remove(i.GetId());
+                return;
+            }
+        }
+    }
+    
+    /**
      * Returns all items the user currently owns.
      */
     public Iterable<OwnedItem> GetItems() { return storage.GetAll(); }
+    
+    public Iterable<OwnedItem> GetItems(ItemInfo item)
+    {
+        return new Yieldable<OwnedItem>(yield -> {
+            for(OwnedItem i : storage.GetAll())
+            {
+                if(i.GetInfo() == item)
+                    yield.Return(i);
+            }
+        });
+    }
+    
+    /**
+     * Returns the number of items referencing the specified item info.
+     * @param item
+     */
+    public int GetItemCount(ItemInfo item)
+    {
+        int count = 0;
+        for(OwnedItem i : storage.GetAll())
+        {
+            if(i.GetInfo() == item)
+                count ++;
+        }
+        return count;
+    }
+    
+    /**
+     * Saves all entries to storage.
+     */
+    public void Save() { storage.Save(); }
 }

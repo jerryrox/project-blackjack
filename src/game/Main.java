@@ -17,7 +17,15 @@ public class Main {
     {
         ILogger logger = new ConsoleLogger();
         
-        ConsoleGame game = new ConsoleGame(logger);
+        BaseGame game = null;
+        switch(Application.Runtime)
+        {
+        case Console: game = new ConsoleGame(logger); break;
+        case Gui: break;
+        default:
+            logger.LogWarning("Unknown application runtime! Check Application class to see if it's setup correctly!");
+            return;
+        }
 //        TestConsoleGame game = new TestConsoleGame(logger);
         
         // Start game.

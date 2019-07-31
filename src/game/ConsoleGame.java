@@ -11,6 +11,7 @@ import game.ui.cli.CliRoot;
 import game.ui.cli.CliScreenController;
 import game.ui.cli.ICliEngine;
 import game.ui.cli.overlays.CliFrameOverlay;
+import game.ui.cli.overlays.CliTestCommandOverlay;
 import game.ui.cli.screens.CliHomeScreen;
 
 /**
@@ -18,6 +19,8 @@ import game.ui.cli.screens.CliHomeScreen;
  * @author jerrykim
  */
 public class ConsoleGame extends BaseGame {
+    
+    private final boolean EnableTestCommands = true;
     
     protected CliRoot rootDisplayer;
     
@@ -59,6 +62,10 @@ public class ConsoleGame extends BaseGame {
         screenController.ShowView(CliHomeScreen.class);
         // Show frame overlay.
         overlayController.ShowView(CliFrameOverlay.class);
+        
+        // Test commands.
+        if(EnableTestCommands)
+            overlayController.ShowView(CliTestCommandOverlay.class);
         
         // Start the engine.
         cliEngine.StartUpdate();

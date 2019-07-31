@@ -13,6 +13,7 @@ import game.ui.cli.CliView;
 import game.ui.cli.ICliEngine;
 import game.ui.cli.commands.CommandInfo;
 import game.ui.cli.overlays.CliDialogOverlay;
+import game.ui.cli.overlays.CliDialogPresets;
 
 /**
  * Home screen.
@@ -34,12 +35,10 @@ public class CliHomeScreen extends CliView {
         
         CommandInfo quit = new CommandInfo("quit", (args) -> {
             CliDialogOverlay overlay = overlays.ShowView(CliDialogOverlay.class);
-            overlay.SetDialog(
-                "Are you sure you want to quit?",
-                new CommandInfo("yes", (arguments) -> {
-                    engine.StopUpdate();
-                }),
-                new CommandInfo("no", null)
+            CliDialogPresets.SetQuit(
+                overlay,
+                (a) -> engine.StopUpdate(),
+                (a2) -> {}
             );
         });
         

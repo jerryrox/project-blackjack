@@ -7,7 +7,9 @@ import game.allocation.DependencyContainer;
 import game.allocation.IDependencyContainer;
 import game.debug.Debug;
 import game.debug.ILogger;
+import game.io.storage.ItemFileStorage;
 import game.io.storage.UserFileStorage;
+import game.io.store.ItemStore;
 import game.io.store.UserStore;
 import game.rulesets.ItemDefinitions;
 
@@ -22,9 +24,10 @@ public class BaseGame {
     
     protected IDependencyContainer dependencies;
     
-    protected UserStore userStore;
-    
     protected ItemDefinitions itemDefinitions;
+    
+    protected UserStore userStore;
+    protected ItemStore itemStore;
     
     
     protected BaseGame(ILogger logger)
@@ -54,11 +57,12 @@ public class BaseGame {
         dependencies.CacheAs(ILogger.class, logger);
         dependencies.CacheAs(IDependencyContainer.class, dependencies);
         
-        // Cache user store and user instance
+        dependencies.Cache(itemDefinitions = new ItemDefinitions());
+        
         dependencies.Cache(userStore = new UserStore(new UserFileStorage()));
         dependencies.Cache(userStore.Load());
         
-        dependencies.Cache(itemDefinitions = new ItemDefinitions());
+        dependencies.Cache(itemStore = new ItemStore(itemDefinitions, new ItemFileStorage(itemDefinitions)));
     }
     
     /**

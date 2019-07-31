@@ -75,7 +75,7 @@ public class InputHandler {
                 return true;
 
             // We should print this command
-            sb.append(name);
+            sb.append('"').append(name).append('"');
             if(description != null)
                 sb.append(" - ").append(description);
             sb.append('\n');

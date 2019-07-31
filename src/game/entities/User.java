@@ -15,6 +15,7 @@ public class User implements IKeyValueSerializable, IEntity {
     private String id;
     private String username;
     private int gold;
+    private int survivalRound = 0;
     
     private UserStats stats = new UserStats();
     
@@ -29,6 +30,9 @@ public class User implements IKeyValueSerializable, IEntity {
     public int GetGold() { return gold; }
     public void SetGold(int gold) { this.gold = gold; }
     
+    public int GetSurvivalRound() { return survivalRound; }
+    public void SetSurvivalRound(int round) { survivalRound = round; }
+    
     public UserStats GetStats() { return stats; }
     
     /**
@@ -41,6 +45,7 @@ public class User implements IKeyValueSerializable, IEntity {
     {
         serializer.Set("username", username);
         serializer.Set("gold", gold);
+        serializer.Set("survivalRound", survivalRound);
         
         stats.Serialize(serializer);
     }
@@ -49,6 +54,7 @@ public class User implements IKeyValueSerializable, IEntity {
     {
         username = serializer.Get("username");
         gold = serializer.GetInt("gold");
+        survivalRound = serializer.GetInt("survivalRound");
         
         stats.Deserialize(serializer);
     }
@@ -56,10 +62,11 @@ public class User implements IKeyValueSerializable, IEntity {
     public @Override String toString()
     {
         return String.format(
-            "User - id: %d, username: %s, gold: %d",
+            "User - id: %d, username: %s, gold: %d, survivalRound: %d",
             id,
             username,
-            gold
+            gold,
+            survivalRound
         );
     }
 }
