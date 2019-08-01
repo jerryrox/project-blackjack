@@ -10,6 +10,7 @@ import game.entities.User;
 import game.io.store.UserStore;
 import game.rulesets.GameModes;
 import game.rulesets.GameResult;
+import game.rulesets.GameResultTypes;
 import game.ui.Pivot;
 import game.ui.cli.CliBuffer;
 import game.ui.cli.CliScreenController;
@@ -70,10 +71,8 @@ public class CliResultScreen extends CliView {
         
         // Refresh user status.
         user.SetGold(user.GetGold() + GetFinalRewards());
-        if(result.Mode == GameModes.Survival)
-        {
+        if(result.Mode == GameModes.Survival && result.ResultType == GameResultTypes.Win)
             user.SetSurvivalRound(Math.max(result.Difficulty, user.GetSurvivalRound()));
-        }
         
         // Save user data.
         userStore.Save();
