@@ -47,7 +47,7 @@ public abstract class BaseRuleset implements IGameSession {
     
     public @Override void OnStopSession()
     {
-        gameProcessor.OnStartSession();
+        gameProcessor.OnStopSession();
         drawableRuleset.OnStopSession();
         
         // Remove game processor dependency.
