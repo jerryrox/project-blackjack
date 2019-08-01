@@ -15,4 +15,9 @@ public class GuiGame extends BaseGame {
     {
         super(logger);
     }
+
+    protected @Override void OnStart()
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

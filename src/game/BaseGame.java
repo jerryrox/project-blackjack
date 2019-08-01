@@ -18,7 +18,7 @@ import game.rulesets.items.ItemDefinitions;
  * such as console or GUI, etc.
  * @author jerrykim
  */
-public class BaseGame {
+public abstract class BaseGame {
     
     protected ILogger logger;
     
@@ -57,25 +57,22 @@ public class BaseGame {
         dependencies.CacheAs(ILogger.class, logger);
         dependencies.CacheAs(IDependencyContainer.class, dependencies);
         
+        // Items
         dependencies.Cache(itemDefinitions = new ItemDefinitions());
         
+        // Stores
         dependencies.Cache(userStore = new UserStore(new UserFileStorage()));
         dependencies.Cache(userStore.Load());
-        
         dependencies.Cache(itemStore = new ItemStore(itemDefinitions, new ItemFileStorage(itemDefinitions)));
     }
     
     /**
      * Performs any processes after initialization process.
      */
-    protected void PostInitialize()
-    {
-    }
+    protected void PostInitialize() {}
     
     /**
      * Performs any initial process to start the actual game.
      */
-    protected void OnStart()
-    {
-    }
+    protected abstract void OnStart();
 }

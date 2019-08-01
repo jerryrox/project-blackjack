@@ -26,7 +26,6 @@ public class Main {
             logger.LogWarning("Unknown application runtime! Check Application class to see if it's setup correctly!");
             return;
         }
-//        TestConsoleGame game = new TestConsoleGame(logger);
         
         // Start game.
         game.Start();
