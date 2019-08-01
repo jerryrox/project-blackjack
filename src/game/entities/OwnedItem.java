@@ -5,8 +5,8 @@ package game.entities;
 
 import game.io.IKeyValueSerializable;
 import game.io.serializers.KeyValueSerializer;
-import game.rulesets.ItemDefinitions;
-import game.rulesets.ItemInfo;
+import game.rulesets.items.ItemDefinitions;
+import game.rulesets.items.ItemInfo;
 
 /**
  * Item instance owned by the user.

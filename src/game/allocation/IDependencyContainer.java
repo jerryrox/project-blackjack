@@ -22,6 +22,12 @@ public interface IDependencyContainer {
     void CacheAs(Class type, Object obj);
     
     /**
+     * Removes the dependency instance of specified type.
+     * @param type 
+     */
+    void Remove(Class type);
+    
+    /**
      * Returns a dependency instance of specified type T.
      * @param <T>
      */

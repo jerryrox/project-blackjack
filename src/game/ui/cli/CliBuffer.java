@@ -16,7 +16,7 @@ public class CliBuffer {
     /**
      * Number of new lines to be inserted in the beginning before actually displaying the content.
      */
-    private static final int TopPadding = 8;
+    private static final int TopPadding = 24;
     
     /**
      * Buffer value used for padding.

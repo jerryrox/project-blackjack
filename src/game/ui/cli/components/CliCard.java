@@ -18,14 +18,22 @@ public class CliCard extends CliDisplayer {
      */
     private int value;
     
+    /**
+     * Whether the card value should be hidden.
+     */
+    private boolean isHidden;
+    
     
     /**
      * Sets the value to be displayed.
      */
-    public void SetValue(int value)
-    {
-        this.value = value;
-    }
+    public void SetValue(int value) { this.value = value; }
+    
+    /**
+     * Sets the card's visibility state.
+     * @param isHidden 
+     */
+    public void SetHidden(boolean isHidden) { this.isHidden = isHidden; }
     
     public @Override void Render(CliBuffer buffer)
     {
@@ -43,7 +51,9 @@ public class CliCard extends CliDisplayer {
        buffer.SetBuffer('│', startX, startY+1);
        buffer.SetBuffer('│', endX, startY+1);
        
-       if(value < 10)
+       if(isHidden)
+           buffer.SetBuffer("??", startX+1, startY+1);
+       else if(value < 10)
            buffer.SetBuffer("0"+value, startX+1, startY+1);
        else
            buffer.SetBuffer(String.valueOf(value), startX+1, startY+1);

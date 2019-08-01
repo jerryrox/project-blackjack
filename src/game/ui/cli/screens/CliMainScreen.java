@@ -30,6 +30,7 @@ public class CliMainScreen extends CliView {
     private CliButton shopButton;
     private CliButton inventoryButton;
     private CliButton statButton;
+    private CliButton helpButton;
     private CliButton quitButton;
     
     private CliPlayerPortrait portrait;
@@ -45,40 +46,55 @@ public class CliMainScreen extends CliView {
     private void Init(ICliEngine engine, CliScreenController screens,
             CliOverlayController overlays)
     {
+        int buttonWidth = 15;
+        int buttonX = 3;
         int buttonY = 16;
-        playButton = (CliButton)AddChild(new CliButton(16, 3, "Play"));
+        playButton = (CliButton)AddChild(new CliButton(buttonWidth, 3, "Play"));
         {
             CommandInfo play = new CommandInfo("play", (args) -> {
                 screens.ShowView(CliModeScreen.class);
             });
+            play.SetDescription("Navigates to play mode selection screen.");
             playButton.BindCommand(play);
-            playButton.SetPosition(3, buttonY);
+            playButton.SetPosition(buttonX, buttonY);
         }
-        shopButton = (CliButton)AddChild(new CliButton(16, 3, "Shop"));
+        shopButton = (CliButton)AddChild(new CliButton(buttonWidth, 3, "Shop"));
         {
             CommandInfo shop = new CommandInfo("shop", (args) -> {
                 screens.ShowView(CliShopScreen.class);
             });
+            shop.SetDescription("Navigates to shop screen.");
             shopButton.BindCommand(shop);
-            shopButton.SetPosition(20, buttonY);
+            shopButton.SetPosition(buttonX += buttonWidth + 1, buttonY);
         }
-        inventoryButton = (CliButton)AddChild(new CliButton(16, 3, "Inventory"));
+        inventoryButton = (CliButton)AddChild(new CliButton(buttonWidth, 3, "Inventory"));
         {
             CommandInfo inventory = new CommandInfo("inventory", (args) -> {
                 screens.ShowView(CliInventoryScreen.class);
             });
+            inventory.SetDescription("Navigates to inventory screen.");
             inventoryButton.BindCommand(inventory);
-            inventoryButton.SetPosition(37, buttonY);
+            inventoryButton.SetPosition(buttonX += buttonWidth + 1, buttonY);
         }
-        statButton = (CliButton)AddChild(new CliButton(16, 3, "Stat"));
+        statButton = (CliButton)AddChild(new CliButton(buttonWidth, 3, "Stat"));
         {
             CommandInfo stat = new CommandInfo("stat", (args) -> {
                 screens.ShowView(CliStatScreen.class);
             });
+            stat.SetDescription("Navigates to stat screen.");
             statButton.BindCommand(stat);
-            statButton.SetPosition(54, buttonY);
+            statButton.SetPosition(buttonX += buttonWidth + 1, buttonY);
         }
-        quitButton = (CliButton)AddChild(new CliButton(16, 3, "Quit"));
+        helpButton = (CliButton)AddChild(new CliButton(buttonWidth, 3, "Help"));
+        {
+            CommandInfo stat = new CommandInfo("help", (args) -> {
+                screens.ShowView(CliHelpScreen.class);
+            });
+            stat.SetDescription("Navigates to help screen.");
+            helpButton.BindCommand(stat);
+            helpButton.SetPosition(buttonX += buttonWidth + 1, buttonY);
+        }
+        quitButton = (CliButton)AddChild(new CliButton(buttonWidth, 3, "Quit"));
         {
             CommandInfo quit = new CommandInfo("quit", (args) -> {
                 CliDialogOverlay overlay = overlays.ShowView(CliDialogOverlay.class);
@@ -88,8 +104,9 @@ public class CliMainScreen extends CliView {
                     null
                 );
             });
+            quit.SetDescription("Quits the game.");
             quitButton.BindCommand(quit);
-            quitButton.SetPosition(71, buttonY);
+            quitButton.SetPosition(buttonX += buttonWidth + 1, buttonY);
         }
         
         portrait = (CliPlayerPortrait)AddChild(new CliPlayerPortrait(10, 4));

@@ -4,7 +4,9 @@
 package game.rulesets.casual;
 
 import game.Application;
+import game.allocation.ReceivesDependency;
 import game.debug.Debug;
+import game.entities.User;
 import game.entities.UserStats;
 import game.rulesets.BaseRuleset;
 import game.rulesets.GameAIPlayer;
@@ -19,15 +21,19 @@ import game.utils.Random;
  */
 public class CasualRuleset extends BaseRuleset {
     
+    @ReceivesDependency
+    private User user;
+    
+    
     public @Override void OnStartSession()
     {
         // In casual ruleset, the enemy ai's difficulty should be adjusted
         // somewhere near player's level.
-        UserStats stats = players[0].GetUser().GetStats();
-        int difficulty = (stats.Power.GetLevel() + stats.Armor.GetLevel() + stats.Endurance.GetLevel() + stats.Luck.GetLevel()) / 8;
+        UserStats stats = user.GetStats();
+        int difficulty = (stats.Power.GetLevel() + stats.Armor.GetLevel() + stats.Endurance.GetLevel() + stats.Luck.GetLevel()) / 2;
         
-        GameAIPlayer ai = (GameAIPlayer)players[1];
-        ai.SetDifficulty(Random.Range(difficulty-2, difficulty+2));
+        GameAIPlayer ai = gameProcessor.GetAIPlayer();
+        ai.SetDifficulty(Math.max(Random.Range(difficulty-2, difficulty+5), 0));
         
         super.OnStartSession();
     }

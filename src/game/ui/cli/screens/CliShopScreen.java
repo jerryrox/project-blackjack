@@ -9,8 +9,8 @@ import game.data.Action;
 import game.entities.User;
 import game.io.store.ItemStore;
 import game.io.store.UserStore;
-import game.rulesets.ItemDefinitions;
-import game.rulesets.ItemInfo;
+import game.rulesets.items.ItemDefinitions;
+import game.rulesets.items.ItemInfo;
 import game.ui.Pivot;
 import game.ui.cli.CliBuffer;
 import game.ui.cli.CliOverlayController;
@@ -213,7 +213,8 @@ public class CliShopScreen extends CliView {
         
         // Define shared purchase action for case with confirmation and another without confirmation.
         Action purchase = () -> {
-            itemStore.AddItem(item);
+            for(int i=0; i<count; i++)
+                itemStore.AddItem(item);
             user.SetGold(user.GetGold() - cost);
             SetStatus("Purchased " + count + " " + item.Name + " successfully.");
             

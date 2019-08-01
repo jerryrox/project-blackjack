@@ -38,6 +38,11 @@ public class DependencyContainer implements IDependencyContainer {
         }
         dependencies.put(type, obj);
     }
+    
+    public @Override void Remove(Class type)
+    {
+        dependencies.remove(type);
+    }
 
     public @Override <T> T Get(Class<T> type)
     {

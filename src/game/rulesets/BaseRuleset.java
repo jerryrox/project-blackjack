@@ -22,104 +22,42 @@ public abstract class BaseRuleset implements IGameSession {
     protected IDrawableRuleset drawableRuleset;
     
     /**
-     * Current phase number during this battle (session).
+     * Game process manager instance.
      */
-    protected int curPhase;
+    protected GameProcessor gameProcessor;
     
-    /**
-     * Players participating in the game.
-     * Should only be two players anyway.
-     */
-    protected GamePlayer[] players;
-    
-    /**
-     * Current player on turn.
-     */
-    protected GamePlayer playerOnTurn;
-    
-    /**
-     * Current deck instance in use.
-     */
-    protected Deck deck;
-    
-    /**
-     * Human user instance.
-     */
-    protected User user;
+    @ReceivesDependency
+    private IDependencyContainer dependencies;
     
     
     @InitWithDependency
     private void Init(User user)
     {
-        this.user = user;
-        
-        players = new GamePlayer[] {
-            new GamePlayer(user),
-            new GameAIPlayer()
-        };
+        gameProcessor = new GameProcessor(user);
     }
     
     public @Override void OnStartSession()
     {
-        deck = new Deck(1);
-        deck.Shuffle();
+        // Temporarily include the game processor as dependency within this session.
+        dependencies.Cache(gameProcessor);
         
-        curPhase = 1;
-        for(int i=0; i<players.length; i++)
-            players[i].ResetState();
-        playerOnTurn = players[0];
-        
+        gameProcessor.OnStartSession();
         drawableRuleset.OnStartSession();
     }
     
     public @Override void OnStopSession()
     {
+        gameProcessor.OnStartSession();
         drawableRuleset.OnStopSession();
+        
+        // Remove game processor dependency.
+        dependencies.Remove(GameProcessor.class);
     }
     
     /**
-     * Returns the deck in use.
+     * Returns the current game processor instance.
      */
-    public Deck GetDeck() { return deck; }
-    
-    /**
-     * Returns the player on turn.
-     */
-    public GamePlayer GetPlayerOnTurn() { return playerOnTurn; }
-    
-    /**
-     * Returns the player not on turn.
-     */
-    public GamePlayer GetPlayerNotOnTurn() { return IsHumanPlayerTurn() ? players[1] : players[0]; }
-    
-    /**
-     * Returns the players array.
-     */
-    public GamePlayer[] GetPlayers() { return players; }
-    
-    /**
-     * Changes turn to other player.
-     */
-    public void SwitchTurn()
-    {
-        if(IsHumanPlayerTurn())
-            playerOnTurn = players[1];
-        else
-        {
-            playerOnTurn = players[0];
-            curPhase ++;
-        }
-    }
-    
-    /**
-     * Returns whether it's currently the human player's turn.
-     */
-    public boolean IsHumanPlayerTurn() { return playerOnTurn == players[0]; }
-    
-    /**
-     * Returns current phase number.
-     */
-    public int GetPhase() { return curPhase; }
+    public GameProcessor GetGameProcessor() { return gameProcessor; }
     
     /**
      * Returns the visual representation of this ruleset.
@@ -135,6 +73,29 @@ public abstract class BaseRuleset implements IGameSession {
                 drawableRuleset.SetRuleset(this);
         }
         return drawableRuleset;
+    }
+    
+    /**
+     * Returns the game result object.
+     */
+    public GameResult GetResult()
+    {
+        GamePlayer humanPlayer = gameProcessor.GetHumanPlayer();
+        GameAIPlayer aiPlayer = gameProcessor.GetAIPlayer();
+        
+        int rewards = aiPlayer.GetUser().GetGold();
+        GameResultTypes resultType = GameResultTypes.Draw;
+        
+        if(!humanPlayer.IsDead())
+            resultType = GameResultTypes.Win;
+        else if(!aiPlayer.IsDead())
+        {
+            resultType = GameResultTypes.Lose;
+            rewards = (int)(rewards * 0.25);
+        }
+        
+        
+        return new GameResult(GetGameMode(), resultType, rewards, aiPlayer.GetDifficulty());
     }
     
     /**

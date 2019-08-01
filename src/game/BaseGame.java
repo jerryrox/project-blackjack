@@ -11,7 +11,7 @@ import game.io.storage.ItemFileStorage;
 import game.io.storage.UserFileStorage;
 import game.io.store.ItemStore;
 import game.io.store.UserStore;
-import game.rulesets.ItemDefinitions;
+import game.rulesets.items.ItemDefinitions;
 
 /**
  * Manages the shared modules that can be used between any implementation of game,

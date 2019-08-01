@@ -4,7 +4,9 @@
 package game.rulesets.survival;
 
 import game.Application;
+import game.allocation.ReceivesDependency;
 import game.debug.Debug;
+import game.entities.User;
 import game.rulesets.BaseRuleset;
 import game.rulesets.GameAIPlayer;
 import game.rulesets.GameModes;
@@ -18,10 +20,14 @@ import game.ui.IDisplayer;
  */
 public class SurvivalRuleset extends BaseRuleset {
     
+    @ReceivesDependency
+    private User user;
+    
+    
     public @Override void OnStartSession()
     {
         // In survival ruleset, the AI's difficulty depends on user's best survival level value.
-        GameAIPlayer ai = (GameAIPlayer) players[1];
+        GameAIPlayer ai = gameProcessor.GetAIPlayer();
         ai.SetDifficulty(user.GetSurvivalRound() + 1);
         
         super.OnStartSession();

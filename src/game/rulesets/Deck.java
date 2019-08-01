@@ -68,8 +68,7 @@ public class Deck implements IDeck<Card> {
         return cards.get(cards.size()-1);
     }
     
-    public @Override boolean HasCard()
-    {
-        return cards.size() > 0;
-    }
+    public @Override boolean HasCard() { return cards.size() > 0; }
+    
+    public @Override Iterable<Card> GetAllCards() { return cards; }
 }

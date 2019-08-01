@@ -100,15 +100,12 @@ public class InputHandler {
             System.out.println("Enter command.");
             // Receive command and check if the definition exists.
             lastInput = GetInputString();
-            if(lastInput == null)
-                continue;
-            lastInput = lastInput.trim();
-            if(lastInput.length() == 0)
+            if(lastInput == null || lastInput.length() == 0)
                 continue;
             
             // Find command info with given input.
             IterateCommands(inputRoot, command -> {
-                if(command.GetName().equals(lastInput))
+                if(command.GetName().equalsIgnoreCase(lastInput))
                 {
                     curCommand = command;
                     return false;
@@ -141,10 +138,7 @@ public class InputHandler {
                     
                     // Receive argument string
                     String input = GetInputString();
-                    if(input == null)
-                        continue;
-                    input = input.trim();
-                    if(input.length() == 0)
+                    if(input == null || input.length() == 0)
                         continue;
                     
                     // Try parsing the input as argument value.
@@ -197,10 +191,10 @@ public class InputHandler {
         // Invoke handler.
         for(CommandInfo command : commands.GetCommands())
         {
+            if(!command.IsAvailable())
+                continue;
             if(!handler.Invoke(command))
-            {
                 return false;
-            }
         }
         // Return whether propagation should continue
         return commands.IsPropagate();
@@ -211,17 +205,10 @@ public class InputHandler {
      */
     private String GetInputString()
     {
-        return scanner.nextLine();
-//        while(scanner.hasNextLine())
-//            scanner.nextLine();
-        
-//        if(scanner.hasNext())
-//            return scanner.nextLine();
-//        return "";
-        
-//        String val = scanner.next();
-//        scanner.nextLine();
-//        return val;
+        String val = scanner.nextLine();
+        if(val != null)
+            val = val.trim();
+        return val;
     }
     
     /**

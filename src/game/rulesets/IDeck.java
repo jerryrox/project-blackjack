@@ -44,4 +44,9 @@ public interface IDeck<T extends ICard> {
      * Returns whether there is a card in the pile.
      */
     boolean HasCard();
+    
+    /**
+     * Returns all cards in the deck, without popping.
+     */
+    Iterable<T> GetAllCards();
 }

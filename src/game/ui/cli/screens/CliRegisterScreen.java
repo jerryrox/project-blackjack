@@ -26,12 +26,14 @@ public class CliRegisterScreen extends CliView {
             String username = args.Get("username");
             if(username != null && !username.isEmpty())
             {
+                if(username.length() > 16)
+                    username = username.substring(0, 16);
                 user.SetUsername(username);
                 userStore.Save();
                 screens.ShowView(CliMainScreen.class);
             }
         });
-        create.SetDescription("Creates a new user profile")
+        create.SetDescription("Creates a new user profile. (* Max 16 characters *)")
                 .SetArgument("username", ArgumentTypes.String);
         
         CommandInfo cancel = new CommandInfo("cancel", (args) -> {

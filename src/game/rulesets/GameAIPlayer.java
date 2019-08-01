@@ -13,10 +13,21 @@ import game.utils.Random;
  */
 public class GameAIPlayer extends GamePlayer {
     
+    /**
+     * Current difficulty set on the ai.
+     */
+    private int difficulty;
+    
+    
     public GameAIPlayer()
     {
         super(new User());
     }
+    
+    /**
+     * Returns the current difficulty value of this ai.
+     */
+    public int GetDifficulty() { return difficulty; }
     
     /**
      * Sets the difficulty value on the ai.
@@ -24,6 +35,8 @@ public class GameAIPlayer extends GamePlayer {
      */
     public void SetDifficulty(int difficulty)
     {
+        this.difficulty = difficulty;
+        
         // Set reward for this ai.
         user.SetGold(GetReward(difficulty));
         

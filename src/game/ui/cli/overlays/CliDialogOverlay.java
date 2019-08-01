@@ -3,12 +3,14 @@
  */
 package game.ui.cli.overlays;
 
+import game.allocation.InitWithDependency;
 import game.allocation.ReceivesDependency;
 import game.ui.Pivot;
 import game.ui.cli.CliBuffer;
 import game.ui.cli.CliOverlayController;
 import game.ui.cli.CliView;
 import game.ui.cli.commands.CommandInfo;
+import game.ui.cli.components.CliFrame;
 
 /**
  * Overlay for displaying dialogs.
@@ -18,6 +20,8 @@ public class CliDialogOverlay extends CliView {
     
     private String message;
     
+    private CliFrame frame;
+    
     @ReceivesDependency
     private CliOverlayController overlays;
     
@@ -26,6 +30,12 @@ public class CliDialogOverlay extends CliView {
     {
         commands.SetEnable(true);
         commands.SetPropagate(false);
+    }
+    
+    @InitWithDependency
+    private void Init()
+    {
+        AddChild(frame = new CliFrame());
     }
     
     public void SetDialog(String message, CommandInfo... commands)
@@ -69,18 +79,7 @@ public class CliDialogOverlay extends CliView {
                 buffer.SetBuffer(' ', c, r);
         }
         // Draw frames
-        for(int i=1; i<lastX; i++) buffer.SetBuffer('▓', i, 1);
-        for(int i=2; i<lastX-1; i++) buffer.SetBuffer('▒', i, 2);
-        for(int i=3; i<lastX-2; i++) buffer.SetBuffer('░', i, 3);
-        for(int i=1; i<lastX; i++) buffer.SetBuffer('▓', i, lastY-1);
-        for(int i=2; i<lastX-1; i++) buffer.SetBuffer('▒', i, lastY-2);
-        for(int i=3; i<lastX-2; i++) buffer.SetBuffer('░', i, lastY-3);
-        for(int i=1; i<lastY; i++) buffer.SetBuffer('▓', 1, i);
-        for(int i=2; i<lastY-1; i++) buffer.SetBuffer('▒', 2, i);
-        for(int i=3; i<lastY-2; i++) buffer.SetBuffer('░', 3, i);
-        for(int i=1; i<lastY; i++) buffer.SetBuffer('▓', lastX-1, i);
-        for(int i=2; i<lastY-1; i++) buffer.SetBuffer('▒', lastX-2, i);
-        for(int i=3; i<lastY-2; i++) buffer.SetBuffer('░', lastX-3, i);
+        frame.SetRect(1, 1, lastX-1, lastY-1);
         
         // Calculate the Y position where the message and commands will be listed from.
         int y = halfHeight - lines/2;
@@ -94,5 +93,7 @@ public class CliDialogOverlay extends CliView {
             buffer.SetBuffer(String.format("[ %s ]", cmd.GetName()), halfWidth, y, Pivot.Center);
             y ++;
         }
+        
+        super.Render(buffer);
     }
 }

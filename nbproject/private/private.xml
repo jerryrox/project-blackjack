@@ -3,11 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/jerrykim/Desktop/School/_Assignments/Programming%203/project-blackjack/src/game/rulesets/ui/cli/CliRuleset.java</file>
-            <file>file:/Users/jerrykim/Desktop/School/_Assignments/Programming%203/project-blackjack/src/game/rulesets/ui/cli/CliCasualRuleset.java</file>
+            <file>file:/Users/jerrykim/Desktop/School/_Assignments/Programming%203/project-blackjack/src/game/rulesets/GameProcessor.java</file>
             <file>file:/Users/jerrykim/Desktop/School/_Assignments/Programming%203/project-blackjack/src/game/rulesets/BaseRuleset.java</file>
-            <file>file:/Users/jerrykim/Desktop/School/_Assignments/Programming%203/project-blackjack/src/game/ui/cli/components/CliGameInfoPanel.java</file>
-            <file>file:/Users/jerrykim/Desktop/School/_Assignments/Programming%203/project-blackjack/src/game/rulesets/IDeck.java</file>
+            <file>file:/Users/jerrykim/Desktop/School/_Assignments/Programming%203/project-blackjack/src/game/ui/cli/screens/CliResultScreen.java</file>
+            <file>file:/Users/jerrykim/Desktop/School/_Assignments/Programming%203/project-blackjack/src/game/rulesets/GameResult.java</file>
+            <file>file:/Users/jerrykim/Desktop/School/_Assignments/Programming%203/project-blackjack/src/game/rulesets/PlayerHand.java</file>
         </group>
     </open-files>
 </project-private>

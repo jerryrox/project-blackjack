@@ -6,8 +6,8 @@ package game.io.store;
 import game.data.Yieldable;
 import game.entities.OwnedItem;
 import game.io.IStorage;
-import game.rulesets.ItemDefinitions;
-import game.rulesets.ItemInfo;
+import game.rulesets.items.ItemDefinitions;
+import game.rulesets.items.ItemInfo;
 
 /**
  * Store which manages the user's owned items.

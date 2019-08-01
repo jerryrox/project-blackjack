@@ -9,6 +9,7 @@ import game.allocation.ReceivesDependency;
 import game.debug.Debug;
 import game.rulesets.BaseRuleset;
 import game.rulesets.GameModes;
+import game.rulesets.GameResult;
 import game.rulesets.Rulesets;
 import game.ui.cli.CliBuffer;
 import game.ui.cli.CliDisplayer;
@@ -50,13 +51,6 @@ public class CliGameScreen extends CliView {
     @InitWithDependency
     private void Init()
     {
-        CommandInfo exit = new CommandInfo("exit", (args) -> {
-            CliDialogOverlay overlay = overlays.ShowView(CliDialogOverlay.class);
-            CliDialogPresets.SetExitGame(overlay, (a) -> ExitGame(CliMainScreen.class), null);
-        });
-        exit.SetDescription("Exits to home screen. Progress will be lost!");
-        
-        commands.AddCommand(exit);
         commands.SetPropagate(false);
     }
     
@@ -96,8 +90,17 @@ public class CliGameScreen extends CliView {
      */
     public <T extends CliView> void ExitGame(Class<T> screen)
     {
+        GameResult result = currentRuleset.GetResult();
+        
         StopGame();
-        screens.ShowView(screen);
+        T view = screens.ShowView(screen);
+        // If showing result
+        if(screen == CliResultScreen.class)
+        {
+            CliResultScreen resultScreen = (CliResultScreen)view;
+            if(resultScreen != null)
+                resultScreen.SetResult(result);
+        }
     }
     
     public @Override void Render(CliBuffer buffer)

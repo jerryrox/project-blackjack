@@ -4,7 +4,7 @@
 package game.io.storage;
 
 import game.entities.OwnedItem;
-import game.rulesets.ItemDefinitions;
+import game.rulesets.items.ItemDefinitions;
 
 /**
  * FileSystemStorage extension for owned item data.
