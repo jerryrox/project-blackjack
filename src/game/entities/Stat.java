@@ -40,7 +40,7 @@ public abstract class Stat implements IKeyValueSerializable {
     /**
      * Returns the cost to upgrading this stat at current level.
      */
-    public int GetCost() { return 100 + level * 50; }
+    public int GetCost() { return 50 + level * 40; }
     
     /**
      * Returns the evaluated value derived from stat level.
