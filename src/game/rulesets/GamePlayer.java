@@ -154,6 +154,10 @@ public class GamePlayer {
         double armor = user.GetStats().Armor.GetValue() * GetArmorMultiplier();
         damage -= armor;
         
+        // Ensure minimum damage applies.
+        if(damage < 1)
+            damage = 1;
+        
         // Decrease health
         SetCurHealth(curHealth - (int)damage);
         
