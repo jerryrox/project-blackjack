@@ -43,6 +43,6 @@ public class CliHelpScreen extends CliView {
         buffer.SetBuffer("", halfWidth, 14, Pivot.Center);
         buffer.SetBuffer("* Damaging when the card total is 21 has 200% critical chance. *", halfWidth, 15, Pivot.Center);
         buffer.SetBuffer("* Critical strike inflicts 150% damage. *", halfWidth, 16, Pivot.Center);
-        buffer.SetBuffer("", halfWidth, 17, Pivot.Center);
+        buffer.SetBuffer("* AI has not been rigged in any way. Check source code (game.rulesets.AiBehavior) for proof. *", halfWidth, 17, Pivot.Center);
     }
 }

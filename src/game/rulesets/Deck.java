@@ -22,11 +22,8 @@ public class Deck implements IDeck<Card> {
         this.setCount = setCount;
         
         // Create sets of cards.
-        for(int s=0; s<setCount; s++)
-        {
-            for(int i=0; i<11; i++)
-                cards.add(new Card(i+1));
-        }
+        for(int i=0; i<setCount; i++)
+            AddSetTo(cards);
     }
     
     public @Override void Shuffle()
@@ -52,6 +49,12 @@ public class Deck implements IDeck<Card> {
             return false;
         cards.add(card);
         return true;
+    }
+    
+    public @Override void AddSetTo(ArrayList<Card> list)
+    {
+        for(int i=1; i<12; i++)
+            list.add(new Card(i));
     }
     
     public @Override Card PopCard()

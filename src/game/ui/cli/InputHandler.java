@@ -131,15 +131,22 @@ public class InputHandler {
                 while(true)
                 {
                     System.out.println(String.format(
-                        "Enter value for argument (%s) of type (%s)",
+                        "Enter value for argument (%s) of type (%s)%s",
                         arg.GetName(),
-                        arg.GetType().toString()
+                        arg.GetType().toString(),
+                        arg.GetRegexDescription() != null ? String.format("\n*%s*", arg.GetRegexDescription()) : ""
                     ));
                     
                     // Receive argument string
                     String input = GetInputString();
                     if(input == null || input.length() == 0)
                         continue;
+                    // Check mattern matching
+                    if(!arg.MatchesPattern(input))
+                    {
+                        System.out.println("Your input does not match the required pattern!");
+                        continue;
+                    }
                     
                     // Try parsing the input as argument value.
                     String error = arg.TryParse(input);

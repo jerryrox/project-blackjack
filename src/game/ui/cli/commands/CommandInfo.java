@@ -94,6 +94,15 @@ public class CommandInfo {
     }
     
     /**
+     * Sets an argument to indicate that this command takes certain arguments restricted by regex pattern.
+     */
+    public CommandInfo SetArgument(String name, ArgumentTypes type, String regex, String regexDescription)
+    {
+        arguments.put(name, new ArgumentInfo(name, type, regex, regexDescription));
+        return this;
+    }
+    
+    /**
      * Returns the name of the command.
      */
     public String GetName() { return name; }

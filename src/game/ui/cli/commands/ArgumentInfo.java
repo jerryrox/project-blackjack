@@ -20,6 +20,16 @@ public class ArgumentInfo {
     private ArgumentTypes type;
     
     /**
+     * A regular expression pattern which restricts user input.
+     */
+    private String regex;
+    
+    /**
+     * Description which the user can understand regarding the imposed regex pattern.
+     */
+    private String regexDescription;
+    
+    /**
      * The value which has been validated to desired argument type and stored.
      * Just a temporary variable since Java doesn't support ref or out keyword like C# does.
      */
@@ -28,8 +38,15 @@ public class ArgumentInfo {
     
     public ArgumentInfo(String name, ArgumentTypes type)
     {
+        this(name, type, null, null);
+    }
+    
+    public ArgumentInfo(String name, ArgumentTypes type, String regex, String regexDescription)
+    {
         this.name = name;
         this.type = type;
+        this.regex = regex;
+        this.regexDescription = regexDescription;
     }
     
     /**
@@ -41,6 +58,17 @@ public class ArgumentInfo {
      * Returns the expected type of the argument.
      */
     public ArgumentTypes GetType() { return type; }
+    
+    /**
+     * Whether specified value matches the input restriction pattern.
+     * @param value
+     */
+    public boolean MatchesPattern(String value) { return regex == null ? true : value.matches(regex); }
+    
+    /**
+     * Returns the description of the regex pattern in user-friendly way.
+     */
+    public String GetRegexDescription() { return regexDescription; }
     
     /**
      * Returns the parsed value from evaluating TryParse.

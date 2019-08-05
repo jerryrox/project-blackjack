@@ -37,7 +37,7 @@ public class AiBehavior {
         PlayerHand humanHand = player.GetHand();
         
         // If player's visible hands have already exceeded 21, just skip.
-        if(humanHand.GetTotalVisibleValue() > 21)
+        if(humanHand.GetTotalVisibleValue() >= 21)
             return false;
         // Get my total
         int total = hand.GetTotalCardValue();
@@ -54,10 +54,8 @@ public class AiBehavior {
         // Determine all potentially available cards.
         availableCards.clear();
         for(int d=0; d<deck.GetSetCount(); d++)
-        {
-            for(int i=1; i<12; i++)
-                availableCards.add(new Card(i));
-        }
+            deck.AddSetTo(availableCards);
+        
         // Caculate probability of drawing a right card.
         int cardsWithinRange = 0;
         for(int i=availableCards.size()-1; i>=0; i--)
