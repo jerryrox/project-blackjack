@@ -5,7 +5,6 @@ package game;
 
 import game.debug.ConsoleLogger;
 import game.debug.ILogger;
-import game.tests.TestConsoleGame;
 
 /**
  * The entry point of the application.

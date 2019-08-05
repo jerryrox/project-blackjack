@@ -53,10 +53,12 @@ public class Yieldable<T> implements Iterable<T> {
                 {
                     // Processor should be paused on beginning.
                     // Calling hasNext should trigger invocation of the actual action.
-                    synchronized(yieldProcessor)
+                    while(!boolLock.get())
                     {
-                        while(!boolLock.get())
-                            this.wait();
+                        synchronized(yieldProcessor)
+                        {
+                            wait();
+                        }
                     }
                     action.Invoke(YieldIterator.this);
                 }
@@ -89,10 +91,8 @@ public class Yieldable<T> implements Iterable<T> {
             {
                 yieldProcessor.notify();
             }
-            while(boolLock.get());
-            if(yieldProcessor == null)
-                return false;
-            return true;
+            while(boolLock.get()) {}
+            return yieldProcessor != null;
         }
 
         public @Override T next()

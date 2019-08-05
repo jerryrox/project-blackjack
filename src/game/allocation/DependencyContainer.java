@@ -8,6 +8,8 @@ import java.util.HashMap;
 
 /**
  * Holds cached dependencies in order to be used for dependency injection.
+ * Java port from my existing C# code and osu Framework
+ * https://github.com/ppy/osu-framework/tree/master/osu.Framework/Allocation
  * @author jerrykim
  */
 public class DependencyContainer implements IDependencyContainer {
