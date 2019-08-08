@@ -6,7 +6,7 @@ package game.rulesets.survival;
 import game.Application;
 import game.allocation.ReceivesDependency;
 import game.debug.Debug;
-import game.entities.User;
+import game.entities.UserModel;
 import game.rulesets.BaseRuleset;
 import game.rulesets.GameAIPlayer;
 import game.rulesets.GameModes;
@@ -21,7 +21,7 @@ import game.ui.IDisplayer;
 public class SurvivalRuleset extends BaseRuleset {
     
     @ReceivesDependency
-    private User user;
+    private UserModel user;
     
     
     public @Override void OnStartSession()

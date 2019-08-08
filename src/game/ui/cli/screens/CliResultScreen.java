@@ -6,7 +6,7 @@ package game.ui.cli.screens;
 import game.allocation.InitWithDependency;
 import game.allocation.ReceivesDependency;
 import game.debug.Debug;
-import game.entities.User;
+import game.entities.UserModel;
 import game.io.store.UserStore;
 import game.rulesets.GameModes;
 import game.rulesets.GameResult;
@@ -30,7 +30,7 @@ public class CliResultScreen extends CliView {
     private GameResult result;
     
     @ReceivesDependency
-    private User user;
+    private UserModel user;
     
     @ReceivesDependency
     private UserStore userStore;

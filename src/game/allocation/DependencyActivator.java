@@ -171,7 +171,7 @@ public class DependencyActivator {
                 try { field.setAccessible(true); }
                 catch(SecurityException e)
                 {
-                    Logger.LogErrorFormat("Method (%s) is not accessible!", field.getName());
+                    Logger.LogErrorFormat("Field (%s) is not accessible!", field.getName());
                     continue;
                 }
             }

@@ -4,7 +4,7 @@
 package game.ui.cli.overlays;
 
 import game.allocation.ReceivesDependency;
-import game.entities.User;
+import game.entities.UserModel;
 import game.ui.Pivot;
 import game.ui.cli.CliBuffer;
 import game.ui.cli.CliView;
@@ -16,7 +16,7 @@ import game.ui.cli.CliView;
 public class CliTopMenuOverlay extends CliView {
     
     @ReceivesDependency
-    private User user;
+    private UserModel user;
     
     public @Override void Render(CliBuffer buffer)
     {

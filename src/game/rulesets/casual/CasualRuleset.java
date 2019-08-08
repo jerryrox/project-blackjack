@@ -6,7 +6,7 @@ package game.rulesets.casual;
 import game.Application;
 import game.allocation.ReceivesDependency;
 import game.debug.Debug;
-import game.entities.User;
+import game.entities.UserModel;
 import game.entities.UserStats;
 import game.rulesets.BaseRuleset;
 import game.rulesets.GameAIPlayer;
@@ -22,7 +22,7 @@ import game.utils.Random;
 public class CasualRuleset extends BaseRuleset {
     
     @ReceivesDependency
-    private User user;
+    private UserModel user;
     
     
     public @Override void OnStartSession()

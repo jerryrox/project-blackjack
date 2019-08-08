@@ -3,7 +3,7 @@
  */
 package game.rulesets;
 
-import game.entities.User;
+import game.entities.UserModel;
 
 /**
  * Game process management object.
@@ -24,7 +24,7 @@ public class GameProcessor implements IGameSession {
     /**
      * Human user instance.
      */
-    private User user;
+    private UserModel user;
     
     /**
      * Representation of human player as game player.
@@ -47,7 +47,7 @@ public class GameProcessor implements IGameSession {
     private boolean isFinished;
     
     
-    public GameProcessor(User user)
+    public GameProcessor(UserModel user)
     {
         this.user = user;
         

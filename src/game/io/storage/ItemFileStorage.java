@@ -3,18 +3,18 @@
  */
 package game.io.storage;
 
-import game.entities.OwnedItem;
+import game.entities.OwnedItemModel;
 import game.rulesets.items.ItemDefinitions;
 
 /**
  * FileSystemStorage extension for owned item data.
  * @author jerrykim
  */
-public class ItemFileStorage extends FileSystemStorage<OwnedItem> {
+public class ItemFileStorage extends FileSystemStorage<OwnedItemModel> {
     
     public ItemFileStorage(ItemDefinitions definitions)
     {
-        super("items.data", () -> new OwnedItem(definitions));
+        super("items.data", () -> new OwnedItemModel(definitions));
     }
     
 }

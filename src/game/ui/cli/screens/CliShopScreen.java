@@ -6,7 +6,7 @@ package game.ui.cli.screens;
 import game.allocation.InitWithDependency;
 import game.allocation.ReceivesDependency;
 import game.data.Action;
-import game.entities.User;
+import game.entities.UserModel;
 import game.io.store.ItemStore;
 import game.io.store.UserStore;
 import game.rulesets.items.ItemDefinitions;
@@ -53,7 +53,7 @@ public class CliShopScreen extends CliView {
     private UserStore userStore;
     
     @ReceivesDependency
-    private User user;
+    private UserModel user;
     
     
     @InitWithDependency

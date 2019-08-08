@@ -4,7 +4,7 @@
 package game.ui.cli.screens;
 
 import game.allocation.InitWithDependency;
-import game.entities.User;
+import game.entities.UserModel;
 import game.ui.Pivot;
 import game.ui.cli.CliBuffer;
 import game.ui.cli.CliOverlayController;
@@ -23,7 +23,7 @@ public class CliHomeScreen extends CliView {
     
     
     @InitWithDependency
-    private void Init(CliScreenController screens, CliOverlayController overlays, User user, ICliEngine engine)
+    private void Init(CliScreenController screens, CliOverlayController overlays, UserModel user, ICliEngine engine)
     {
         CommandInfo start = new CommandInfo("start", (args) -> {
             if(user.IsEmptyData())
