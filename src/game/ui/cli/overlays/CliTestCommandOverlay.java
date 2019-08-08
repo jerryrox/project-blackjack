@@ -4,7 +4,7 @@
 package game.ui.cli.overlays;
 
 import game.allocation.InitWithDependency;
-import game.entities.UserModel;
+import game.entities.UserEntity;
 import game.io.store.UserStore;
 import game.ui.cli.CliView;
 import game.ui.cli.commands.ArgumentTypes;
@@ -17,7 +17,7 @@ import game.ui.cli.commands.CommandInfo;
 public class CliTestCommandOverlay extends CliView {
     
     @InitWithDependency
-    private void Init(UserStore userStore, UserModel user)
+    private void Init(UserStore userStore, UserEntity user)
     {
         CommandInfo setGold = new CommandInfo("setGold", (args) -> {
             int gold = args.GetInt("amount");

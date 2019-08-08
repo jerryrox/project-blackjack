@@ -5,7 +5,7 @@ package game.ui.cli.screens;
 
 import game.allocation.InitWithDependency;
 import game.allocation.ReceivesDependency;
-import game.entities.UserModel;
+import game.entities.UserEntity;
 import game.rulesets.GameModes;
 import game.ui.Pivot;
 import game.ui.cli.CliBuffer;
@@ -27,7 +27,7 @@ public class CliModeScreen extends CliView {
     private CliScreenController screens;
     
     @ReceivesDependency
-    private UserModel user;
+    private UserEntity user;
     
     
     @InitWithDependency

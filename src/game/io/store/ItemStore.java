@@ -4,7 +4,7 @@
 package game.io.store;
 
 import game.data.Yieldable;
-import game.entities.OwnedItemModel;
+import game.entities.OwnedItemEntity;
 import game.io.IStorage;
 import game.rulesets.items.ItemDefinitions;
 import game.rulesets.items.ItemInfo;
@@ -18,7 +18,7 @@ public class ItemStore {
     /**
      * Storage from which the items are saved/loaded.
      */
-    private IStorage<OwnedItemModel> storage;
+    private IStorage<OwnedItemEntity> storage;
     
     /**
      * Definitions of items for static item information.
@@ -26,7 +26,7 @@ public class ItemStore {
     private ItemDefinitions definitions;
     
     
-    public ItemStore(ItemDefinitions definitions, IStorage<OwnedItemModel> storage)
+    public ItemStore(ItemDefinitions definitions, IStorage<OwnedItemEntity> storage)
     {
         this.definitions = definitions;
         this.storage = storage;
@@ -37,13 +37,13 @@ public class ItemStore {
      * Adds a new owned item instance for specified info.
      * @param item 
      */
-    public void AddItem(ItemInfo item) { storage.Add(new OwnedItemModel(definitions, item)); }
+    public void AddItem(ItemInfo item) { storage.Add(new OwnedItemEntity(definitions, item)); }
     
     /**
      * Removes the specified item from storage.
      * @param item 
      */
-    public void RemoveItem(OwnedItemModel item) { storage.Remove(item.GetId()); }
+    public void RemoveItem(OwnedItemEntity item) { storage.Remove(item.GetId()); }
     
     /**
      * Removes an arbitrary owned item instance that refers to specified item info.
@@ -51,7 +51,7 @@ public class ItemStore {
      */
     public void RemoveItem(ItemInfo item)
     {
-        for(OwnedItemModel i : storage.GetAll())
+        for(OwnedItemEntity i : storage.GetAll())
         {
             if(i.GetInfo() == item)
             {
@@ -64,12 +64,12 @@ public class ItemStore {
     /**
      * Returns all items the user currently owns.
      */
-    public Iterable<OwnedItemModel> GetItems() { return storage.GetAll(); }
+    public Iterable<OwnedItemEntity> GetItems() { return storage.GetAll(); }
     
-    public Iterable<OwnedItemModel> GetItems(ItemInfo item)
+    public Iterable<OwnedItemEntity> GetItems(ItemInfo item)
     {
-        return new Yieldable<OwnedItemModel>(yield -> {
-            for(OwnedItemModel i : storage.GetAll())
+        return new Yieldable<OwnedItemEntity>(yield -> {
+            for(OwnedItemEntity i : storage.GetAll())
             {
                 if(i.GetInfo() == item)
                     yield.Return(i);
@@ -84,7 +84,7 @@ public class ItemStore {
     public int GetItemCount(ItemInfo item)
     {
         int count = 0;
-        for(OwnedItemModel i : storage.GetAll())
+        for(OwnedItemEntity i : storage.GetAll())
         {
             if(i.GetInfo() == item)
                 count ++;

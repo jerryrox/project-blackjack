@@ -10,7 +10,7 @@ import game.io.serializers.KeyValueSerializer;
  * Representation of a user in the game space.
  * @author jerrykim
  */
-public class UserModel implements IKeyValueSerializable, IEntity {
+public class UserEntity implements IKeyValueSerializable, IEntity {
     
     private String id;
     private String username;

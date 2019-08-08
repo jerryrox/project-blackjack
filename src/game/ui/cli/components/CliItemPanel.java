@@ -5,7 +5,7 @@ package game.ui.cli.components;
 
 import game.allocation.InitWithDependency;
 import game.allocation.ReceivesDependency;
-import game.entities.OwnedItemModel;
+import game.entities.OwnedItemEntity;
 import game.io.store.ItemStore;
 import game.rulesets.BaseRuleset;
 import game.rulesets.Deck;
@@ -83,7 +83,7 @@ public class CliItemPanel extends CliDisplayer {
     public @Override void OnEnable()
     {
         entries.clear();
-        for(OwnedItemModel item : itemStore.GetItems())
+        for(OwnedItemEntity item : itemStore.GetItems())
         {
             ItemEntry entry = FindEntry(item.GetInfo());
             if(entry == null)

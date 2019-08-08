@@ -4,7 +4,7 @@
 package game.ui.cli.screens;
 
 import game.allocation.InitWithDependency;
-import game.entities.UserModel;
+import game.entities.UserEntity;
 import game.io.store.UserStore;
 import game.ui.Pivot;
 import game.ui.cli.CliBuffer;
@@ -20,7 +20,7 @@ import game.ui.cli.commands.CommandInfo;
 public class CliRegisterScreen extends CliView {
     
     @InitWithDependency
-    void Init(CliScreenController screens, UserStore userStore, UserModel user)
+    void Init(CliScreenController screens, UserStore userStore, UserEntity user)
     {
         CommandInfo create = new CommandInfo("create", (args) -> {
             String username = args.Get("username");

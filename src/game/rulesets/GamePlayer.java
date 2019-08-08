@@ -5,7 +5,7 @@ package game.rulesets;
 
 import game.data.Yieldable;
 import game.debug.Debug;
-import game.entities.UserModel;
+import game.entities.UserEntity;
 import game.rulesets.items.ItemInfo;
 import game.utils.Random;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class GamePlayer {
     /**
      * The user instance being wrapped over.
      */
-    protected UserModel user;
+    protected UserEntity user;
     
     /**
      * This player's hand of cards.
@@ -53,7 +53,7 @@ public class GamePlayer {
     
     
     
-    public GamePlayer(UserModel user)
+    public GamePlayer(UserEntity user)
     {
         this.user = user;
         this.hand = new PlayerHand(this);
@@ -63,7 +63,7 @@ public class GamePlayer {
     /**
      * Returns the user instance used to represent this player.
      */
-    public UserModel GetUser() { return user; }
+    public UserEntity GetUser() { return user; }
     
     /**
      * Returns this player's hand info.

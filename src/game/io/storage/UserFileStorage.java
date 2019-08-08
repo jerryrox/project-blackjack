@@ -3,16 +3,16 @@
  */
 package game.io.storage;
 
-import game.entities.UserModel;
+import game.entities.UserEntity;
 
 /**
  * FileSystemStorage extension for user data.
  * @author jerrykim
  */
-public class UserFileStorage extends FileSystemStorage<UserModel> {
+public class UserFileStorage extends FileSystemStorage<UserEntity> {
     
     public UserFileStorage()
     {
-        super("user.data", () -> new UserModel());
+        super("user.data", () -> new UserEntity());
     }
 }

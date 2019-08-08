@@ -6,7 +6,7 @@ package game.ui.cli.screens;
 import game.allocation.InitWithDependency;
 import game.allocation.ReceivesDependency;
 import game.debug.Debug;
-import game.entities.UserModel;
+import game.entities.UserEntity;
 import game.entities.UserStats;
 import game.ui.cli.CliBuffer;
 import game.ui.cli.CliOverlayController;
@@ -39,7 +39,7 @@ public class CliMainScreen extends CliView {
     private CliOverlayController overlays;
     
     @ReceivesDependency
-    private UserModel user;
+    private UserEntity user;
     
     
     @InitWithDependency

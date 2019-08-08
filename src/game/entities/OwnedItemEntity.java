@@ -12,7 +12,7 @@ import game.rulesets.items.ItemInfo;
  * Item instance owned by the user.
  * @author jerrykim
  */
-public class OwnedItemModel implements IKeyValueSerializable, IEntity {
+public class OwnedItemEntity implements IKeyValueSerializable, IEntity {
     
     /**
      * Identifier of the item.
@@ -30,12 +30,12 @@ public class OwnedItemModel implements IKeyValueSerializable, IEntity {
     private ItemDefinitions definitions;
 
     
-    public OwnedItemModel(ItemDefinitions definitions)
+    public OwnedItemEntity(ItemDefinitions definitions)
     {
         this.definitions = definitions;
     }
     
-    public OwnedItemModel(ItemDefinitions definitions, ItemInfo info)
+    public OwnedItemEntity(ItemDefinitions definitions, ItemInfo info)
     {
         this.definitions = definitions;
         this.itemInfo = info;

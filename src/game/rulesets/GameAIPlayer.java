@@ -3,7 +3,7 @@
  */
 package game.rulesets;
 
-import game.entities.UserModel;
+import game.entities.UserEntity;
 import game.entities.UserStats;
 import game.utils.Random;
 
@@ -21,7 +21,7 @@ public class GameAIPlayer extends GamePlayer {
     
     public GameAIPlayer()
     {
-        super(new UserModel());
+        super(new UserEntity());
     }
     
     /**

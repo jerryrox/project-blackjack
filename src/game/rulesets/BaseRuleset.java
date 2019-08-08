@@ -7,7 +7,7 @@ import game.allocation.IDependencyContainer;
 import game.allocation.InitWithDependency;
 import game.allocation.ReceivesDependency;
 import game.debug.Debug;
-import game.entities.UserModel;
+import game.entities.UserEntity;
 import game.rulesets.ui.IDrawableRuleset;
 
 /**
@@ -31,7 +31,7 @@ public abstract class BaseRuleset implements IGameSession {
     
     
     @InitWithDependency
-    private void Init(UserModel user)
+    private void Init(UserEntity user)
     {
         gameProcessor = new GameProcessor(user);
     }

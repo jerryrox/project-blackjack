@@ -4,7 +4,7 @@
 package game.io.store;
 
 import game.debug.Debug;
-import game.entities.UserModel;
+import game.entities.UserEntity;
 import game.io.IStorage;
 
 /**
@@ -16,15 +16,15 @@ public class UserStore {
     /**
      * Source from which the user data is loaded.
      */
-    private IStorage<UserModel> storage;
+    private IStorage<UserEntity> storage;
     
     /**
      * Current user loaded and cached from storage.
      */
-    private UserModel curUser;
+    private UserEntity curUser;
     
     
-    public UserStore(IStorage<UserModel> storage)
+    public UserStore(IStorage<UserEntity> storage)
     {
         this.storage = storage;
         storage.Initialize();
@@ -33,17 +33,17 @@ public class UserStore {
     /**
      * Returns the cached user instance loaded from storage.
      */
-    public UserModel GetUser() { return curUser; }
+    public UserEntity GetUser() { return curUser; }
     
     /**
      * Loads the user data from storage.
      * A new user instance is returned if doesn't exist.
      */
-    public UserModel Load()
+    public UserEntity Load()
     {
         curUser = storage.Get("user");
         if(curUser == null)
-            curUser = new UserModel();
+            curUser = new UserEntity();
         return curUser;
     }
     

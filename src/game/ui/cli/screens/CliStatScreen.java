@@ -7,7 +7,7 @@ import game.allocation.InitWithDependency;
 import game.allocation.ReceivesDependency;
 import game.data.Action;
 import game.entities.Stat;
-import game.entities.UserModel;
+import game.entities.UserEntity;
 import game.entities.UserStats;
 import game.io.store.UserStore;
 import game.ui.Pivot;
@@ -29,7 +29,7 @@ public class CliStatScreen extends CliView {
     private String statusMessage;
     
     @ReceivesDependency
-    private UserModel user;
+    private UserEntity user;
     
     @ReceivesDependency
     private UserStore userStore;
