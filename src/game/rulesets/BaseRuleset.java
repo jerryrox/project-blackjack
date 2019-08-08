@@ -68,10 +68,12 @@ public abstract class BaseRuleset implements IGameSession {
         {
             drawableRuleset = CreateDrawableRuleset();
             if(drawableRuleset == null)
+            {
                 Debug.LogError("Could not create drawable ruleset!");
-            else
-                drawableRuleset.SetRuleset(this);
+                return null;
+            }
         }
+        drawableRuleset.SetRuleset(this);
         return drawableRuleset;
     }
     

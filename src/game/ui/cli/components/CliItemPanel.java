@@ -207,7 +207,7 @@ public class CliItemPanel extends CliDisplayer {
                     deck.Shuffle();
                 }
                 else if(itemClass == CloneItemInfo.class)
-                    humanPlayer.GetHand().ClearCards();
+                    humanPlayer.GetHand().CloneLastCard();
                 else
                     humanPlayer.ApplyItem(entry.Item);
                 

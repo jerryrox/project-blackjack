@@ -31,6 +31,6 @@ public class HealItemInfo extends ItemInfo {
     
     public @Override void ApplyToGame(GamePlayer player, GameItem item)
     {
-        player.SetCurHealth((int)(player.GetMaxHealth() * effect / 100));
+        player.SetCurHealth((int)(player.GetMaxHealth() * effect / 100) + player.GetCurHealth());
     }
 }

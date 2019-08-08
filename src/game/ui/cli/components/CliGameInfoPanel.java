@@ -5,6 +5,7 @@ package game.ui.cli.components;
 
 import game.allocation.InitWithDependency;
 import game.allocation.ReceivesDependency;
+import game.debug.Debug;
 import game.rulesets.BaseRuleset;
 import game.rulesets.Deck;
 import game.rulesets.GameAIPlayer;

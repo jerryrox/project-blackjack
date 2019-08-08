@@ -51,6 +51,8 @@ public class CliRuleset<T extends BaseRuleset> extends CliDisplayer implements I
     
     private String statusMessage;
     
+    private boolean isInitialized;
+    
     @ReceivesDependency
     private CliScreenController screens;
     
@@ -61,6 +63,10 @@ public class CliRuleset<T extends BaseRuleset> extends CliDisplayer implements I
     @InitWithDependency
     private void Init()
     {
+        if(isInitialized)
+            return;
+        isInitialized = true;
+        
         AddChild(infoPanel = new CliGameInfoPanel(ruleset));
         AddChild(humanStatusBar = new CliStatusBar());
         AddChild(aiStatusBar = new CliStatusBar());
@@ -115,6 +121,8 @@ public class CliRuleset<T extends BaseRuleset> extends CliDisplayer implements I
     
     public @Override void OnStartSession()
     {
+        SetActive(true);
+        
         // Initialize AI behavior handler
         aiBehavior = new AiBehavior(
             gameProcessor.GetAIPlayer(),
@@ -134,6 +142,7 @@ public class CliRuleset<T extends BaseRuleset> extends CliDisplayer implements I
 
     public @Override void OnStopSession()
     {
+        SetActive(false);
     }
     
     public @Override void SetRuleset(T ruleset)
