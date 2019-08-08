@@ -27,6 +27,7 @@ public class Main {
         }
         
         // Start game.
-        game.Start();
+        if(game != null)
+            game.Start();
     }
 }
