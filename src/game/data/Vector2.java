@@ -21,6 +21,21 @@ public class Vector2 implements IStruct<Vector2> {
         Y = y;
     }
     
+    public Vector2(Vector2 vec)
+    {
+        X = vec.X;
+        Y = vec.Y;
+    }
+    
+    /**
+     * Copies values from specified vector.
+     */
+    public void CopyFrom(Vector2 vec)
+    {
+        X = vec.X;
+        Y = vec.Y;
+    }
+    
     /**
      * Clones this instance's values to a new Vector2 object.
      */

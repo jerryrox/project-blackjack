@@ -51,6 +51,7 @@ public abstract class BaseGame {
      */
     protected void Initialize()
     {
+        // Setup a global debugger instance.
         Debug.Initialize(logger);
         
         // Core

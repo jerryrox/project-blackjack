@@ -44,8 +44,8 @@ public class DependencyActivator {
     
     private DependencyActivator(Class type)
     {
-        injectionHandlers.add(CreateHandlerForMethod(type));
         injectionHandlers.add(CreateHandlerForFields(type));
+        injectionHandlers.add(CreateHandlerForMethod(type));
         
         Class superType = type.getSuperclass();
         if(superType != null && superType != Object.class)
@@ -134,8 +134,15 @@ public class DependencyActivator {
             return (Object obj, IDependencyContainer container) -> {
                 try
                 {
-                    Object[] params = paramGetters.stream().map(d -> d.Invoke(container)).toArray();
-                    method.invoke(obj, params);
+                    if(!paramGetters.isEmpty())
+                    {
+                        Object[] params = paramGetters.stream().map(d -> d.Invoke(container)).toArray();                        
+                        method.invoke(obj, params);
+                    }
+                    else
+                    {
+                        method.invoke(obj);
+                    }
                 }
                 catch(Exception e)
                 {

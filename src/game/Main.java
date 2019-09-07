@@ -20,7 +20,7 @@ public class Main {
         switch(Application.Runtime)
         {
         case Console: game = new ConsoleGame(logger); break;
-        case Gui: break;
+        case Gui: game = new GuiGame(logger); break;
         default:
             logger.LogWarning("Unknown application runtime! Check Application class to see if it's setup correctly!");
             return;

@@ -13,5 +13,5 @@ public final class Application {
      * Current runtime mode the game is running on.
      * Change this value to modify runtime mode.
      */
-    public static final RuntimeModes Runtime = RuntimeModes.Console;
+    public static final RuntimeModes Runtime = RuntimeModes.Gui;
 }
