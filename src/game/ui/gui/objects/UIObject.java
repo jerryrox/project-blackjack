@@ -9,9 +9,9 @@ import game.allocation.ReceivesDependency;
 import game.data.Yieldable;
 import game.debug.Debug;
 import game.debug.ILogger;
-import game.ui.gui.graphics.IGuiBuffer;
 import game.ui.gui.objects.components.UIComponent;
 import game.ui.gui.objects.components.UITransform;
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 /**
@@ -94,6 +94,22 @@ public class UIObject extends UIBehavior {
      * Returns the parent object instance of this object.
      */
     public UIObject GetParent() { return parent; }
+    
+    /**
+     * Sets the depth value of this object.
+     */
+    public void SetDepth(int depth)
+    {
+        this.depth = depth;
+        // Make parent rebuild its children list.
+        if(parent != null)
+            parent.isChildrenDirty = true;
+    }
+    
+    /**
+     * Returns the depth of this object.
+     */
+    public int GetDepth() { return depth; }
     
     /**
      * Sets the active state of the object.
@@ -313,7 +329,7 @@ public class UIObject extends UIBehavior {
      * Propagates render signal to children objects and components.
      * This method should never be called manually!
      */
-    public void PropagateRender(IGuiBuffer buffer)
+    public void PropagateRender(Graphics buffer)
     {
         // If this object is inactive, return.
         if(!isActive)

@@ -34,6 +34,8 @@ public class UIFrame extends JFrame {
         // Create root panel and add to frame
         rootPanel = new UIRootPanel();
         getContentPane().add(rootPanel);
+        // Add the root panel as dependency since certain drawable elements may need them.
+        dependencies.Cache(rootPanel);
         
         // Resize frame.
         pack();

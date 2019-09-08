@@ -3,11 +3,13 @@
  */
 package game.ui.gui.objects.components.ui;
 
+import game.allocation.ReceivesDependency;
 import game.data.Vector2;
 import game.ui.Pivot;
-import game.ui.gui.graphics.IGuiBuffer;
+import game.ui.gui.UIRootPanel;
 import game.ui.gui.objects.components.UITransform;
 import java.awt.Color;
+import java.awt.Graphics;
 
 /**
  * Basis for specific drawable elements such as labels, sprites, textures, etc.
@@ -35,6 +37,9 @@ public abstract class UIWidget extends UIDisplayer {
      */
     private Color color = new Color(1f, 1f, 1f);
     
+    @ReceivesDependency
+    protected UIRootPanel rootPanel;
+    
     
     protected UIWidget()
     {
@@ -54,7 +59,17 @@ public abstract class UIWidget extends UIDisplayer {
     /**
      * Sets the draw width & height.
      */
+    public void SetSize(int width, int height) { SetWidth(width); SetHeight(height); }
+    
+    /**
+     * Sets the draw width & height.
+     */
     public void SetSize(Vector2 size) { SetWidth((int)size.X); SetHeight((int)size.Y); }
+    
+    /**
+     * Resets the size to its natural value.
+     */
+    public abstract void ResetSize();
     
     /**
      * Returns the draw width.
@@ -91,7 +106,7 @@ public abstract class UIWidget extends UIDisplayer {
      */
     public Color GetColor() { return color; }
     
-    public @Override void Render(IGuiBuffer buffer)
+    public @Override void Render(Graphics buffer)
     {
         super.Render(buffer);
         
@@ -140,5 +155,5 @@ public abstract class UIWidget extends UIDisplayer {
     /**
      * Performs drawing of whatever element it's specialized in drawing.
      */
-    protected abstract void Draw(IGuiBuffer buffer, Vector2 drawPos, Vector2 scale, Vector2 actualSize);
+    protected abstract void Draw(Graphics buffer, Vector2 drawPos, Vector2 scale, Vector2 actualSize);
 }

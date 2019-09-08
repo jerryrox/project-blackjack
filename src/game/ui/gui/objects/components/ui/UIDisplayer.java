@@ -48,7 +48,7 @@ public abstract class UIDisplayer extends UIComponent {
     /**
      * Sets the local alpha value of the displayer.
      */
-    public void SetLocalAlpha(float alpha) { this.alpha = alpha; }
+    public void SetAlpha(float alpha) { this.alpha = alpha; }
     
     /**
      * Returns the local alpha value of the displayer.

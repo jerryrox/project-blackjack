@@ -3,7 +3,6 @@
  */
 package game.ui.gui;
 
-import game.ui.gui.graphics.GuiBuffer;
 import game.ui.gui.objects.UIScene;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -36,11 +35,6 @@ public class UIRootPanel extends JPanel {
     private UIScene scene;
     
     /**
-     * Buffer which enables rendering of ui elements on panel.
-     */
-    private GuiBuffer buffer;
-    
-    /**
      * Timer instance which enabled game loop logics.
      */
     private Timer gameLooper;
@@ -58,7 +52,6 @@ public class UIRootPanel extends JPanel {
         setPreferredSize(new Dimension(Width, Height));
         
         scene = new UIScene();
-        buffer = new GuiBuffer(this);
     }
     
     /**
@@ -86,6 +79,8 @@ public class UIRootPanel extends JPanel {
         gameLooper.start();
     }
     
+    
+    
     public UIScene GetScene() { return scene; }
     
     public @Override void paintComponent(Graphics g)
@@ -96,10 +91,7 @@ public class UIRootPanel extends JPanel {
         g.setColor(Color.black);
         g.fillRect(0, 0, Width, Height);
         
-        // Set buffer graphics instance.
-        buffer.SetGraphics(g);
-        
         // Start rendering.
-        scene.PropagateRender(buffer);
+        scene.PropagateRender(g);
     }
 }

@@ -7,9 +7,7 @@ import game.allocation.InitWithDependency;
 import game.allocation.ReceivesDependency;
 import game.data.Vector2;
 import game.debug.Debug;
-import game.ui.gui.UIRootPanel;
 import game.ui.gui.graphics.GuiFontProvider;
-import game.ui.gui.graphics.IGuiBuffer;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -98,9 +96,11 @@ public class UILabel extends UIWidget {
             super.SetHeight(height);
     }
     
-    public @Override void SetLocalAlpha(float alpha)
+    public @Override void ResetSize() { SetSize(image.getWidth(), image.getHeight()); }
+    
+    public @Override void SetAlpha(float alpha)
     {
-        super.SetLocalAlpha(alpha);
+        super.SetAlpha(alpha);
         isDirty = true;
     }
     
@@ -110,21 +110,21 @@ public class UILabel extends UIWidget {
         isDirty = true;
     }
     
-    public @Override void Render(IGuiBuffer buffer)
+    public @Override void Render(Graphics buffer)
     {
         // Rebuild text image.
         if(isDirty)
         {
             isDirty = false;
-            RebuildTextImage(buffer.GetFontMetrics(font));
+            RebuildTextImage(buffer.getFontMetrics(font));
         }
         
         super.Render(buffer);
     }
     
-    protected @Override void Draw(IGuiBuffer buffer, Vector2 drawPos, Vector2 scale, Vector2 actualSize)
+    protected @Override void Draw(Graphics buffer, Vector2 drawPos, Vector2 scale, Vector2 actualSize)
     {
-        buffer.RenderText(image, drawPos, actualSize);
+        buffer.drawImage(image, (int)drawPos.X, (int)drawPos.Y, (int)actualSize.X, (int)actualSize.Y, rootPanel);
     }
     
     /**

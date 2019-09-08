@@ -3,9 +3,9 @@
  */
 package game.ui.gui.objects.components;
 
-import game.ui.gui.graphics.IGuiBuffer;
 import game.ui.gui.objects.UIBehavior;
 import game.ui.gui.objects.UIObject;
+import java.awt.Graphics;
 
 /**
  * Represents an abstract component to be attached to gameobjects.
@@ -47,7 +47,7 @@ public abstract class UIComponent extends UIBehavior {
      * Handles rendering routine of the component.
      * Does nothing by default.
      */
-    public void Render(IGuiBuffer buffer) {}
+    public void Render(Graphics buffer) {}
 
     public @Override void Update(float deltaTime) {}
     
