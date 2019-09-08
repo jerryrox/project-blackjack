@@ -1,7 +1,7 @@
 /*
  * Jerry Kim (18015036), 2019
  */
-package game.ui.gui.objects.components;
+package game.ui.gui.components;
 
 import game.allocation.ReceivesDependency;
 import game.animations.Anime;

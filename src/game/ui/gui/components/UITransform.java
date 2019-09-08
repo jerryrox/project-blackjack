@@ -1,7 +1,7 @@
 /*
  * Jerry Kim (18015036), 2019
  */
-package game.ui.gui.objects.components;
+package game.ui.gui.components;
 
 import game.data.Vector2;
 import game.ui.gui.objects.UIObject;

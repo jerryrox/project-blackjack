@@ -1,13 +1,13 @@
 /*
  * Jerry Kim (18015036), 2019
  */
-package game.ui.gui.objects.components.ui;
+package game.ui.gui.components.ui;
 
 import game.allocation.ReceivesDependency;
 import game.data.Vector2;
 import game.ui.Pivot;
 import game.ui.gui.UIRootPanel;
-import game.ui.gui.objects.components.UITransform;
+import game.ui.gui.components.UITransform;
 import java.awt.Color;
 import java.awt.Graphics;
 

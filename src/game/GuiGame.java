@@ -7,8 +7,11 @@ import game.data.Rect;
 import game.debug.ILogger;
 import game.ui.gui.GuiEngine;
 import game.ui.gui.IGuiEngine;
+import game.ui.gui.UIOverlayController;
+import game.ui.gui.UIScreenController;
 import game.ui.gui.graphics.GuiFontProvider;
 import game.ui.gui.graphics.UIAtlas;
+import game.ui.gui.objects.UIScene;
 
 /**
  * Game implementation for Gui application build.
@@ -19,6 +22,9 @@ public class GuiGame extends BaseGame {
     private GuiEngine guiEngine;
     private GuiFontProvider fontProvider;
     private UIAtlas atlas;
+    
+    private UIScreenController screenController;
+    private UIOverlayController overlayController;
     
     
     public GuiGame(ILogger logger)
@@ -31,10 +37,12 @@ public class GuiGame extends BaseGame {
         super.Initialize();
         
         dependencies.CacheAs(IGuiEngine.class, guiEngine = new GuiEngine(dependencies));
-        
         dependencies.Cache(fontProvider = new GuiFontProvider());
-        
         dependencies.Cache(atlas = new UIAtlas());
+        
+        UIScene scene = guiEngine.GetFrame().GetRootPanel().GetScene();
+        dependencies.Cache(screenController = new UIScreenController(scene));
+        dependencies.Cache(overlayController = new UIOverlayController(scene));
     }
     
     protected @Override void PostInitialize()
@@ -55,6 +63,7 @@ public class GuiGame extends BaseGame {
         atlas.AddSprite("icon-power");
         atlas.AddSprite("icon-retry");
         atlas.AddSprite("loading");
+        atlas.AddSprite("logo-aut");
         atlas.AddSprite("null");
         atlas.AddSprite("round-box", new Rect(8, 8, 10, 10));
     }

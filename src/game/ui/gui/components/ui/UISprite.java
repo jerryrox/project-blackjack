@@ -1,11 +1,12 @@
 /*
  * Jerry Kim (18015036), 2019
  */
-package game.ui.gui.objects.components.ui;
+package game.ui.gui.components.ui;
 
 import game.allocation.ReceivesDependency;
 import game.data.Rect;
 import game.data.Vector2;
+import game.debug.Debug;
 import game.debug.ILogger;
 import game.ui.gui.graphics.UIAtlas;
 import game.ui.gui.graphics.UISpriteInfo;
@@ -15,6 +16,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
+import java.awt.image.ColorModel;
+import java.awt.image.WritableRaster;
 import javax.swing.ImageIcon;
 
 /**
@@ -54,11 +57,6 @@ public class UISprite extends UIWidget {
     private WrapModes wrapMode = WrapModes.Simple;
     
     /**
-     * Whether the sprite is dirty from changes and needs resolution.
-     */
-    private boolean isDirty = true;
-    
-    /**
      * Whether the image itself has changed when isDirty became true.
      * This would indicate reinstantiation of BufferedImage to switch the sprite.
      */
@@ -77,6 +75,11 @@ public class UISprite extends UIWidget {
     private Vector2[] srcDrawSizes = new Vector2[] {
         new Vector2(), new Vector2(), new Vector2()
     };
+    
+    /**
+     * Holds array of previous color values for performance issues.
+     */
+    private float[] prevColor = new float[] { -1, -1, -1, -1 };
     
     @ReceivesDependency
     private UIAtlas atlas;
@@ -114,7 +117,6 @@ public class UISprite extends UIWidget {
         imageSize.X = curIcon.getIconWidth();
         imageSize.Y = curIcon.getIconHeight();
         
-        isDirty = true;
         isImageDirty = true;
     }
     
@@ -133,18 +135,6 @@ public class UISprite extends UIWidget {
      */
     public WrapModes GetWrapMode() { return wrapMode; }
     
-    public @Override void SetColor(Color color)
-    {
-        super.SetColor(color);
-        isDirty = true;
-    }
-    
-    public @Override void SetAlpha(float alpha)
-    {
-        super.SetAlpha(alpha);
-        isDirty = true;
-    }
-    
     public @Override void ResetSize() { SetSize(imageSize); }
     
     protected @Override void Draw(Graphics buffer, Vector2 drawPos, Vector2 scale, Vector2 actualSize)
@@ -152,12 +142,8 @@ public class UISprite extends UIWidget {
         if(curIcon == null)
             return;
         
-        // Resolve dirtiness.
-        if(isDirty)
-        {
-            isDirty = false;
-            RebuildSprite();
-        }
+        // Resolve dirtiness if necessary.
+        RebuildSprite();
         
         if(curImage == null)
             return;
@@ -212,7 +198,6 @@ public class UISprite extends UIWidget {
         // Rebuild the image itself if necessary.
         if(isImageDirty)
         {
-            isImageDirty = false;
             curImage = new BufferedImage((int)imageSize.X, (int)imageSize.Y, BufferedImage.TYPE_INT_ARGB);
         }
         
@@ -222,27 +207,40 @@ public class UISprite extends UIWidget {
         float g = color.getGreen() / 255f;
         float b = color.getBlue() / 255f;
         
+        // If no change in color or sprite, just return.
+        if(!isImageDirty && a == prevColor[0] && r == prevColor[1] && g == prevColor[2] && b == prevColor[3])
+            return;
+        prevColor[0] = a;
+        prevColor[1] = r;
+        prevColor[2] = g;
+        prevColor[3] = b;
+        
+        // Put image.
         Graphics2D graphic = curImage.createGraphics();
         graphic.drawImage(curIcon.getImage(), 0, 0, null);
         graphic.dispose();
         
         // Tinting the sprite.
         // Due to limitations of Java Swing's GUI system, each pixel must be tinted manually :(
+        ColorModel colorModel = curImage.getColorModel();
+        WritableRaster raster = curImage.getRaster();
         for (int i = 0; i < curImage.getWidth(); i++)
         {
-          for (int j = 0; j < curImage.getHeight(); j++)
-          {
-            int ax = curImage.getColorModel().getAlpha(curImage.getRaster().getDataElements(i, j, null));
-            int rx = curImage.getColorModel().getRed(curImage.getRaster().getDataElements(i, j, null));
-            int gx = curImage.getColorModel().getGreen(curImage.getRaster().getDataElements(i, j, null));
-            int bx = curImage.getColorModel().getBlue(curImage.getRaster().getDataElements(i, j, null));
-            rx *= r;
-            gx *= g;
-            bx *= b;
-            ax *= a;
-            curImage.setRGB(i, j, (ax << 24) | (rx << 16) | (gx << 8) | (bx));
-          }
+            for (int j = 0; j < curImage.getHeight(); j++)
+            {
+                int ax = colorModel.getAlpha(raster.getDataElements(i, j, null));
+                int rx = colorModel.getRed(raster.getDataElements(i, j, null));
+                int gx = colorModel.getGreen(raster.getDataElements(i, j, null));
+                int bx = colorModel.getBlue(raster.getDataElements(i, j, null));
+                ax *= a;
+                rx *= r;
+                gx *= g;
+                bx *= b;
+                curImage.setRGB(i, j, (ax << 24) | (rx << 16) | (gx << 8) | (bx));
+            }
         }
+        
+        isImageDirty = false;
     }
     
     /**

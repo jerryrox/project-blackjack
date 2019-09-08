@@ -10,9 +10,11 @@ import game.animations.EaseType;
 import game.animations.Easing;
 import game.debug.Debug;
 import game.ui.gui.UIRootPanel;
-import game.ui.gui.objects.components.UIAnimator;
-import game.ui.gui.objects.components.ui.UILabel;
-import game.ui.gui.objects.components.ui.UISprite;
+import game.ui.gui.UIScreenController;
+import game.ui.gui.components.UIAnimator;
+import game.ui.gui.components.ui.UILabel;
+import game.ui.gui.components.ui.UISprite;
+import game.ui.gui.screens.UISplashScreen;
 import java.awt.Color;
 
 /**
@@ -29,12 +31,16 @@ public class UIScene extends UIObject {
     }
     
     @InitWithDependency
-    private void Init()
+    private void Init(UIScreenController screens)
     {
         // Adjust (0,0) to center of screen.
         GetTransform().SetLocalPosition(UIRootPanel.Width / 2, UIRootPanel.Height / 2);
         
-        UISprite sprite = CreateChild().AddComponent(new UISprite());
+        // Show splash screen.
+        screens.ShowView(UISplashScreen.class);
+        
+        // Some test codes.
+        /*UISprite sprite = CreateChild().AddComponent(new UISprite());
         sprite.SetSpritename("round-box");
         sprite.SetSize(250, 500);
         sprite.SetColor(Color.blue);
@@ -101,6 +107,6 @@ public class UIScene extends UIObject {
             });
             sprite2Ani.PlayAt(0);
             sprite2Ani.SetWrapMode(AnimationWrap.Loop);
-        }
+        }*/
     }
 }

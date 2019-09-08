@@ -20,6 +20,8 @@ public class UIFrame extends JFrame {
     public UIFrame()
     {
         super("Blackjack Knights");
+        
+        rootPanel = new UIRootPanel();
     }
     
     /**
@@ -31,8 +33,7 @@ public class UIFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         
-        // Create root panel and add to frame
-        rootPanel = new UIRootPanel();
+        // Create add panel to frame
         getContentPane().add(rootPanel);
         // Add the root panel as dependency since certain drawable elements may need them.
         dependencies.Cache(rootPanel);
@@ -59,4 +60,9 @@ public class UIFrame extends JFrame {
         // Start game loop.
         rootPanel.StartLoop();
     }
+    
+    /**
+     * Returns the root panel object.
+     */
+    public UIRootPanel GetRootPanel() { return rootPanel; }
 }

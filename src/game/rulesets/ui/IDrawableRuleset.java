@@ -5,7 +5,7 @@ package game.rulesets.ui;
 
 import game.rulesets.BaseRuleset;
 import game.rulesets.IGameSession;
-import game.ui.IDisplayer;
+import game.ui.cli.IDisplayer;
 
 /**
  * Provides a general interface for a drawable ruleset object.

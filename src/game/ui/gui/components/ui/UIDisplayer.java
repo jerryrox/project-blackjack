@@ -1,12 +1,12 @@
 /*
  * Jerry Kim (18015036), 2019
  */
-package game.ui.gui.objects.components.ui;
+package game.ui.gui.components.ui;
 
 import game.allocation.InitWithDependency;
 import game.debug.Debug;
 import game.ui.gui.objects.UIObject;
-import game.ui.gui.objects.components.UIComponent;
+import game.ui.gui.components.UIComponent;
 
 /**
  * Basis of any displayable elements in the GUI.
@@ -16,14 +16,14 @@ import game.ui.gui.objects.components.UIComponent;
 public abstract class UIDisplayer extends UIComponent {
     
     /**
+     * Parent displayer in the hierarchy.
+     */
+    protected UIDisplayer parent = null;
+    
+    /**
      * Local transparency value of the displayer.
      */
     private float alpha = 1;
-    
-    /**
-     * Parent displayer in the hierarchy.
-     */
-    private UIDisplayer parent = null;
     
     
     protected UIDisplayer()

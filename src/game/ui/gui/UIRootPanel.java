@@ -79,8 +79,6 @@ public class UIRootPanel extends JPanel {
         gameLooper.start();
     }
     
-    
-    
     public UIScene GetScene() { return scene; }
     
     public @Override void paintComponent(Graphics g)

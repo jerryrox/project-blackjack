@@ -9,8 +9,8 @@ import game.allocation.ReceivesDependency;
 import game.data.Yieldable;
 import game.debug.Debug;
 import game.debug.ILogger;
-import game.ui.gui.objects.components.UIComponent;
-import game.ui.gui.objects.components.UITransform;
+import game.ui.gui.components.UIComponent;
+import game.ui.gui.components.UITransform;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
@@ -89,6 +89,11 @@ public class UIObject extends UIBehavior {
         // Add default components.
         transform = AddComponent(new UITransform(parent == null ? null : parent.transform));
     }
+    
+    /**
+     * Returns the name of the object.
+     */
+    public String GetName() { return name; }
     
     /**
      * Returns the parent object instance of this object.

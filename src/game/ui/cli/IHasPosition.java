@@ -1,7 +1,7 @@
 /*
  * Jerry Kim (18015036), 2019
  */
-package game.ui;
+package game.ui.cli;
 
 import game.data.Vector2;
 

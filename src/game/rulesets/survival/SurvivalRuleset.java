@@ -12,7 +12,7 @@ import game.rulesets.GameAIPlayer;
 import game.rulesets.GameModes;
 import game.rulesets.ui.IDrawableRuleset;
 import game.rulesets.ui.cli.CliSurvivalRuleset;
-import game.ui.IDisplayer;
+import game.ui.cli.IDisplayer;
 
 /**
  * Ruleset implementation for Survival game mode.

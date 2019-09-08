@@ -6,7 +6,6 @@ package game.ui.cli;
 import game.allocation.IDependencyContainer;
 import game.allocation.ReceivesDependency;
 import game.data.Vector2;
-import game.ui.IDisplayer;
 import game.ui.cli.commands.CommandContext;
 import java.util.TreeSet;
 

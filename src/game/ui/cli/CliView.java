@@ -3,8 +3,6 @@
  */
 package game.ui.cli;
 
-import game.ui.IView;
-
 /**
  * An abstract IView implementation for specialized View subclasses.
  * @author jerrykim

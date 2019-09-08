@@ -3,10 +3,10 @@
  */
 package game.ui.cli;
 
+import game.ui.IViewController;
 import game.allocation.IDependencyContainer;
 import game.data.Yieldable;
 import game.debug.Debug;
-import game.ui.IViewController;
 import java.util.HashMap;
 
 /**

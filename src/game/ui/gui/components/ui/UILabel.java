@@ -1,7 +1,7 @@
 /*
  * Jerry Kim (18015036), 2019
  */
-package game.ui.gui.objects.components.ui;
+package game.ui.gui.components.ui;
 
 import game.allocation.InitWithDependency;
 import game.allocation.ReceivesDependency;
@@ -34,11 +34,6 @@ public class UILabel extends UIWidget {
     private WrapModes wrapMode = WrapModes.ResizeFreely;
     
     /**
-     * Whether text image should be rebuilt.
-     */
-    private boolean isDirty = true;
-    
-    /**
      * Whether the text has changed when label was dirty.
      */
     private boolean textChanged = true;
@@ -52,6 +47,11 @@ public class UILabel extends UIWidget {
      * Text rendered as image.
      */
     private BufferedImage image;
+    
+    /**
+     * Holds array of previous color values for performance issues.
+     */
+    private float[] prevColor = new float[] { -1, -1, -1, -1 };
     
     @ReceivesDependency
     private GuiFontProvider fontProvider;
@@ -75,7 +75,6 @@ public class UILabel extends UIWidget {
     public void SetText(String text)
     {
         this.text = (text == null ? "" : text);
-        isDirty = true;
         textChanged = true;
     }
     
@@ -98,26 +97,10 @@ public class UILabel extends UIWidget {
     
     public @Override void ResetSize() { SetSize(image.getWidth(), image.getHeight()); }
     
-    public @Override void SetAlpha(float alpha)
-    {
-        super.SetAlpha(alpha);
-        isDirty = true;
-    }
-    
-    public @Override void SetColor(Color color)
-    {
-        super.SetColor(color);
-        isDirty = true;
-    }
-    
     public @Override void Render(Graphics buffer)
     {
         // Rebuild text image.
-        if(isDirty)
-        {
-            isDirty = false;
-            RebuildTextImage(buffer.getFontMetrics(font));
-        }
+        RebuildTextImage(buffer.getFontMetrics(font));
         
         super.Render(buffer);
     }
@@ -137,7 +120,6 @@ public class UILabel extends UIWidget {
             
         if(textChanged)
         {
-            textChanged = false;
             // Create image.
             image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
             
@@ -152,6 +134,14 @@ public class UILabel extends UIWidget {
         Color color = GetColor();
         Color col = new Color(color.getRed(), color.getGreen(), color.getBlue(), (int)(GetWorldAlpha() * 255f));
         
+        // If no change in color or text, just return.
+        if(!textChanged && prevColor[0] == col.getAlpha() && prevColor[1] == col.getRed() && prevColor[2] == col.getGreen() && prevColor[3] == col.getBlue())
+            return;
+        prevColor[0] = col.getAlpha();
+        prevColor[1] = col.getRed();
+        prevColor[2] = col.getGreen();
+        prevColor[3] = col.getBlue();
+        
         // Setup anti-aliased text.
         RenderingHints hint = new RenderingHints(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         
@@ -162,6 +152,8 @@ public class UILabel extends UIWidget {
         g.setFont(font);
         g.drawString(text, 0, h - h/4);
         g.dispose();
+        
+        textChanged = false;
     }
     
     /**

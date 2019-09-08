@@ -24,6 +24,11 @@ public class GuiEngine implements IGuiEngine {
         dependencies.Cache(frame);
     }
     
+    /**
+     * Returns the frame of the application.
+     */
+    public UIFrame GetFrame() { return frame; }
+    
     public void Start()
     {
         frame.Initialize(dependencies);
