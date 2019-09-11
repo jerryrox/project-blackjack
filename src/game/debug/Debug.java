@@ -36,6 +36,16 @@ public final class Debug {
      * Outputs a Info level message.
      * @param message 
      */
+    public static void Log(Object message)
+    {
+        if(Logger != null)
+            Logger.LogInfo(message);
+    }
+    
+    /**
+     * Outputs a Info level message.
+     * @param message 
+     */
     public static void LogInfo(Object message)
     {
         if(Logger != null)
