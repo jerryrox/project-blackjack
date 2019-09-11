@@ -23,6 +23,8 @@ public abstract class UIView extends UIDisplayer {
     private boolean isShowAniHooked = false;
     private boolean isHideAniHooked = false;
     
+    private boolean isFirstInit = true;
+    
     
     protected UIView()
     {
@@ -46,8 +48,6 @@ public abstract class UIView extends UIDisplayer {
                 SetAlpha(Easing.Linear(progress, 1, -1, 0));
             });
         }
-        
-        uiObject.SetActive(false);
     }
     
     /**
@@ -61,8 +61,9 @@ public abstract class UIView extends UIDisplayer {
      */
     public void ShowView()
     {
-        if(uiObject.IsActive() || IsAnimating())
+        if(!isFirstInit && uiObject.IsActive() || IsAnimating())
             return;
+        isFirstInit = false;
         
         if(!isShowAniHooked)
         {

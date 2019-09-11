@@ -99,7 +99,15 @@ public abstract class UIWidget extends UIDisplayer {
     /**
      * Sets the color of the widget.
      */
-    public void SetColor(Color color) { this.color = color; }
+    public void SetColor(Color color)
+    {
+        SetColor(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f);
+    }
+    
+    /**
+     * Sets the color of the widget.
+     */
+    public void SetColor(float r, float g, float b) { color = new Color(r, g, b); }
     
     /**
      * Returns the drawing color of widget.

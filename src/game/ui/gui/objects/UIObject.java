@@ -129,9 +129,9 @@ public class UIObject extends UIBehavior {
             if(inactiveParents <= 0)
             {
                 if(isActive)
-                    OnActive();
+                    InvokeOnActive();
                 else
-                    OnInactive();
+                    InvokeOnInactive();
             }
             
             // Propagate active signal to all children objects.
@@ -181,6 +181,13 @@ public class UIObject extends UIBehavior {
         
         // Inject dependencies for initialization.
         dependencies.Inject(t);
+        
+        // Inherit active state and invoke event.
+        obj.inactiveParents = this.inactiveParents + (this.isActive ? 0 : 1);
+        if(obj.inactiveParents == 0)
+            obj.InvokeOnActive();
+        else
+            obj.InvokeOnInactive();
         
         // Cleanse children list.
         isChildrenDirty = true;
@@ -232,6 +239,12 @@ public class UIObject extends UIBehavior {
         
         // Initialize component by injection.
         dependencies.Inject(t);
+        
+        // Invoke active event based on this object's state.
+        if(this.IsActiveInHierarchy())
+            t.OnActive();
+        else
+            t.OnInactive();
         
         return t;
     }
@@ -380,6 +393,16 @@ public class UIObject extends UIBehavior {
             children.get(i).PropagateRender(buffer);
     }
     
+    /**
+     * Event called when this object has become active in hierarchy.
+     */
+    public void OnActive() {}
+    
+    /**
+     * Event called when this object has become inactive in hierarchy.
+     */
+    public void OnInactive() {}
+    
     public @Override void Update(float deltaTime) {}
 
     public @Override void OnDestroy()
@@ -402,23 +425,51 @@ public class UIObject extends UIBehavior {
     {
         // Apply it locally if not the emitter.
         if(!isEmitter)
+        {
             inactiveParents += isActive ? -1 : 1;
+            
+            // Invoke events based on implicit activation/deactivation.
+            // Child active, parent active, all parents active
+            if(this.isActive && isActive && inactiveParents == 0)
+                InvokeOnActive();
+            // Child active, parent inactive, one parent inactive)
+            else if(this.isActive && !isActive && inactiveParents == 1)
+                InvokeOnInactive();
+        }
         // Propagate to children.
         for(int i=children.size()-1; i>=0; i--)
             children.get(i).PropagateSetActive(false, isActive);
     }
     
-    /**
-     * Event called when this object has become active in hierarchy.
-     */
-    protected void OnActive() {}
-    
-    /**
-     * Event called when this object has become inactive in hierarchy.
-     */
-    protected void OnInactive() {}
-    
     protected @Override void OnEnable() {}
 
     protected @Override void OnDisable() {}
+    
+    /**
+     * Invokes OnActive on this object and its components.
+     */
+    private void InvokeOnActive()
+    {
+        OnActive();
+        for(int i=0; i<components.size(); i++)
+        {
+            UIComponent component = components.get(i);
+            if(!component.isDestroying)
+                components.get(i).OnActive();
+        }
+    }
+    
+    /**
+     * Invokes OnInactive on this object and its components.
+     */
+    private void InvokeOnInactive()
+    {
+        OnInactive();
+        for(int i=0; i<components.size(); i++)
+        {
+            UIComponent component = components.get(i);
+            if(!component.isDestroying)
+                components.get(i).OnInactive();
+        }
+    }
 }

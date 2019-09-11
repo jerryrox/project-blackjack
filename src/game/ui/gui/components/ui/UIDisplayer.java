@@ -7,6 +7,7 @@ import game.allocation.InitWithDependency;
 import game.debug.Debug;
 import game.ui.gui.objects.UIObject;
 import game.ui.gui.components.UIComponent;
+import game.utils.MathUtils;
 
 /**
  * Basis of any displayable elements in the GUI.
@@ -48,7 +49,7 @@ public abstract class UIDisplayer extends UIComponent {
     /**
      * Sets the local alpha value of the displayer.
      */
-    public void SetAlpha(float alpha) { this.alpha = alpha; }
+    public void SetAlpha(float alpha) { this.alpha = MathUtils.Clamp01(alpha); }
     
     /**
      * Returns the local alpha value of the displayer.

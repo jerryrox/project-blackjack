@@ -107,4 +107,27 @@ public final class Debug {
         if(Logger != null)
             Logger.LogErrorFormat(format, params);
     }
+    
+    /**
+     * Creates and returns a new stack trace string.
+     */
+    public static String GetStackTrace()
+    {
+        if(Logger == null)
+            return null;
+        
+        try
+        {
+            throw new Exception("Debug.GetStackTrace()");
+        }
+        catch(Exception e)
+        {
+            StringBuilder sb = new StringBuilder();
+            for(StackTraceElement elem : e.getStackTrace())
+            {
+                sb.append(elem.toString()).append('\n');
+            }
+            return sb.toString();
+        }
+    }
 }

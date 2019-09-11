@@ -65,7 +65,9 @@ public class GuiGame extends BaseGame {
         atlas.AddSprite("loading");
         atlas.AddSprite("logo-aut");
         atlas.AddSprite("null");
+        atlas.AddSprite("playground");
         atlas.AddSprite("round-box", new Rect(8, 8, 10, 10));
+        atlas.AddSprite("title");
     }
 
     protected @Override void OnStart()

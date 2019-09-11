@@ -25,6 +25,12 @@ public abstract class UIComponent extends UIBehavior {
     }
     
     /**
+     * Returns the name of the component.
+     * @return 
+     */
+    public String GetName() { return getClass().getName(); }
+    
+    /**
      * Returns the object which the component is attached to.
      */
     public UIObject GetObject() { return uiObject; }
@@ -49,6 +55,16 @@ public abstract class UIComponent extends UIBehavior {
      */
     public void Render(Graphics buffer) {}
 
+    /**
+     * Event called when the owner object has become active in hierarchy.
+     */
+    public void OnActive() {}
+    
+    /**
+     * Event called when the owner object has become inactive in hierarchy.
+     */
+    public void OnInactive() {}
+    
     public @Override void Update(float deltaTime) {}
     
     public @Override void OnDestroy() {}

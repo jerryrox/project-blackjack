@@ -7,9 +7,11 @@ import game.allocation.InitWithDependency;
 import game.allocation.ReceivesDependency;
 import game.animations.Anime;
 import game.animations.Easing;
+import game.ui.gui.UIOverlayController;
 import game.ui.gui.UIScreenController;
 import game.ui.gui.components.ui.UIScreen;
 import game.ui.gui.components.ui.UISprite;
+import game.ui.gui.overlays.UIWallpaperOverlay;
 
 /**
  * Splash screen.
@@ -19,6 +21,9 @@ public class UISplashScreen extends UIScreen {
     
     @ReceivesDependency
     private UIScreenController screens;
+    
+    @ReceivesDependency
+    private UIOverlayController overlays;
     
     
     public UISplashScreen()
@@ -53,6 +58,8 @@ public class UISplashScreen extends UIScreen {
     private void EndSplash()
     {
         screens.HideView(this);
+        
         screens.ShowView(UIHomeScreen.class);
+        overlays.ShowView(UIWallpaperOverlay.class);
     }
 }

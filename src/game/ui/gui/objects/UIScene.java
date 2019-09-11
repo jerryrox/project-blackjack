@@ -5,8 +5,12 @@ package game.ui.gui.objects;
 
 import game.allocation.InitWithDependency;
 import game.debug.Debug;
+import game.ui.gui.UIOverlayController;
 import game.ui.gui.UIRootPanel;
 import game.ui.gui.UIScreenController;
+import game.ui.gui.overlays.UIWallpaperOverlay;
+import game.ui.gui.screens.UIHomeScreen;
+import game.ui.gui.screens.UISplashScreen;
 import game.ui.gui.screens.UITestScreen;
 
 /**
@@ -23,7 +27,7 @@ public class UIScene extends UIObject {
     }
     
     @InitWithDependency
-    private void Init(UIScreenController screens)
+    private void Init(UIScreenController screens, UIOverlayController overlays)
     {
         // Adjust (0,0) to center of screen.
         GetTransform().SetLocalPosition(UIRootPanel.Width / 2, UIRootPanel.Height / 2);
@@ -31,6 +35,10 @@ public class UIScene extends UIObject {
         // Show splash screen.
         //screens.ShowView(UISplashScreen.class);
         
-        screens.ShowView(UITestScreen.class);
+        // Skipping splash screen for test purposes.
+        screens.ShowView(UIHomeScreen.class);
+        overlays.ShowView(UIWallpaperOverlay.class);
+        
+        //screens.ShowView(UITestScreen.class);
     }
 }

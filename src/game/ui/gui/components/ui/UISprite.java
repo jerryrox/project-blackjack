@@ -81,6 +81,15 @@ public class UISprite extends UIWidget {
      */
     private float[] prevColor = new float[] { -1, -1, -1, -1 };
     
+    /**
+     * Due to Java GUI's limitations, applying multiplicative blending continuously outputs unwanted results
+     * when image has an alpha channel.
+     * This array will contain the last color buffers used before applying blending so we have an approximate color
+     * to return to.
+     */
+    private int[][] lastColorBuffer = null;
+    private boolean lcbCached = false;
+    
     @ReceivesDependency
     private UIAtlas atlas;
     
@@ -199,13 +208,16 @@ public class UISprite extends UIWidget {
         if(isImageDirty)
         {
             curImage = new BufferedImage((int)imageSize.X, (int)imageSize.Y, BufferedImage.TYPE_INT_ARGB);
+            lastColorBuffer = new int[curImage.getWidth()][curImage.getHeight()];
+            lcbCached = false;
         }
         
         Color color = GetColor();
+        final float byteReciprocal = 1f / 255f;
         float a = GetWorldAlpha();
-        float r = color.getRed() / 255f;
-        float g = color.getGreen() / 255f;
-        float b = color.getBlue() / 255f;
+        float r = color.getRed() * byteReciprocal;
+        float g = color.getGreen() * byteReciprocal;
+        float b = color.getBlue() * byteReciprocal;
         
         // If no change in color or sprite, just return.
         if(!isImageDirty && a == prevColor[0] && r == prevColor[1] && g == prevColor[2] && b == prevColor[3])
@@ -215,7 +227,7 @@ public class UISprite extends UIWidget {
         prevColor[2] = g;
         prevColor[3] = b;
         
-        // Put image.
+        // Redraw image if necessary.
         Graphics2D graphic = curImage.createGraphics();
         graphic.drawImage(curIcon.getImage(), 0, 0, null);
         graphic.dispose();
@@ -228,18 +240,24 @@ public class UISprite extends UIWidget {
         {
             for (int j = 0; j < curImage.getHeight(); j++)
             {
-                int ax = colorModel.getAlpha(raster.getDataElements(i, j, null));
-                int rx = colorModel.getRed(raster.getDataElements(i, j, null));
-                int gx = colorModel.getGreen(raster.getDataElements(i, j, null));
-                int bx = colorModel.getBlue(raster.getDataElements(i, j, null));
-                ax *= a;
-                rx *= r;
-                gx *= g;
-                bx *= b;
-                curImage.setRGB(i, j, (ax << 24) | (rx << 16) | (gx << 8) | (bx));
+                // Cache original color value.
+                if(!lcbCached)
+                    lastColorBuffer[i][j] = (colorModel.getAlpha(raster.getDataElements(i, j, null)) << 24) |
+                            (colorModel.getRed(raster.getDataElements(i, j, null)) << 16) |
+                            (colorModel.getGreen(raster.getDataElements(i, j, null)) << 8) |
+                            colorModel.getBlue(raster.getDataElements(i, j, null));
+                
+                long originalColor = lastColorBuffer[i][j];
+                int ax = (int)(((originalColor >> 24) & 0x000000ff) * a);
+                int rx = (int)(((originalColor >> 16) & 0x000000ff) * a);
+                int gx = (int)(((originalColor >> 8) & 0x000000ff) * a);
+                int bx = (int)((originalColor & 0x000000ff) * a);
+                
+                curImage.setRGB(i, j, (ax << 24) | (rx << 16) | (gx << 8) | bx);
             }
         }
         
+        lcbCached = true;
         isImageDirty = false;
     }
     
