@@ -70,6 +70,42 @@ public class UILabel extends UIWidget {
     }
     
     /**
+     * Sets font used by this label.
+     */
+    public void SetFont(String font, int style, int size)
+    {
+        Font newFont = fontProvider.Get(font, style, size);
+        if(newFont == null)
+            return;
+        this.font = newFont;
+        textChanged = true;
+    }
+    
+    /**
+     * Sets the font size of currently using font.
+     */
+    public void SetFontSize(int size)
+    {
+        Font newFont = fontProvider.Get(font.getFontName(), font.getStyle(), size);
+        if(newFont == null)
+            return;
+        this.font = newFont;
+        textChanged = true;
+    }
+    
+    /**
+     * Sets the style of currently using font.
+     */
+    public void SetFontStyle(int style)
+    {
+        Font newFont = fontProvider.Get(font.getFontName(), style, font.getSize());
+        if(newFont == null)
+            return;
+        this.font = newFont;
+        textChanged = true;
+    }
+    
+    /**
      * Sets the text value to display.
      */
     public void SetText(String text)
@@ -117,6 +153,14 @@ public class UILabel extends UIWidget {
     {
         int w = metrics.stringWidth(text);
         int h = metrics.getHeight();
+        
+        // Handling potentially empty text cases.
+        if(w <= 0 || h <= 0)
+        {
+            image = null;
+            textChanged = false;
+            return;
+        }
             
         if(textChanged)
         {
