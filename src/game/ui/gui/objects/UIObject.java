@@ -331,6 +331,39 @@ public class UIObject extends UIBehavior {
     }
     
     /**
+     * Propagates input update signal to this object, children objects, and components.
+     * This method should never be called manually!
+     */
+    public boolean PropagateInput()
+    {
+        // If this object is inactive, return.
+        if(!isActive)
+            return true;
+        
+        // Send input to child with highest depth first.
+        for(int i=children.size()-1; i>=0; i--)
+        {
+            UIObject child = children.get(i);
+            // If child wishes to consume input, just return.
+            if(!child.PropagateInput())
+                return false;
+        }
+        
+        // Send update signal to components.
+        // When processing input for components, the return value from UpdateInput will toggle whether
+        // input propagation should be stopped, instead of immediately returning.
+        boolean shouldStop = false;
+        for(int i=0; i<components.size(); i++)
+            shouldStop |= !components.get(i).UpdateInput();
+        
+        // Perform input update on the object itself.
+        shouldStop |= !UpdateInput();
+        
+        // Return whether input was consumed or not.
+        return !shouldStop;
+    }
+    
+    /**
      * Propagates render signal to children objects and components.
      * This method should never be called manually!
      */

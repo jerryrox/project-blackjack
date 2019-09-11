@@ -64,6 +64,12 @@ public abstract class UIBehavior {
     public abstract void Update(float deltaTime);
     
     /**
+     * Updates logics for receiving input.
+     * Returns whether input will further propagate to lower-depth objects.
+     */
+    public boolean UpdateInput() { return true; }
+    
+    /**
      * Event called when the behavior is about to be destroyed.
      */
     public abstract void OnDestroy();

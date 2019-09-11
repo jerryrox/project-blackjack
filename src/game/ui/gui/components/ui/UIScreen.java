@@ -30,4 +30,11 @@ public class UIScreen extends UIView {
             GetTransform().SetLocalScale(scale, scale);
         });
     }
+    
+    public @Override boolean UpdateInput()
+    {
+        // By default, screens do not propagate input to lower-depth objects if custom implementation
+        // is not defined.
+        return false;
+    }
 }

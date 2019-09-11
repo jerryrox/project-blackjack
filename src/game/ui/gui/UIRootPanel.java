@@ -3,10 +3,13 @@
  */
 package game.ui.gui;
 
+import game.allocation.IDependencyContainer;
+import game.allocation.InitWithDependency;
 import game.ui.gui.objects.UIScene;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -44,6 +47,11 @@ public class UIRootPanel extends JPanel {
      */
     private long lastTime;
     
+    /**
+     * Input delegate.
+     */
+    private UIInput input;
+    
     
     public UIRootPanel()
     {
@@ -52,6 +60,19 @@ public class UIRootPanel extends JPanel {
         setPreferredSize(new Dimension(Width, Height));
         
         scene = new UIScene();
+    }
+    
+    @InitWithDependency
+    private void Init(IDependencyContainer dependencies)
+    {
+        // Initialize input system.
+        input = new UIInput();
+        input.Bind(this);
+        // Cache input system as dependency.
+        dependencies.Cache(input);
+        
+        // Init scene
+        dependencies.Inject(scene);
     }
     
     /**
@@ -72,7 +93,9 @@ public class UIRootPanel extends JPanel {
                 deltaTime = MaxDeltaTime;
             
             // Update
+            scene.PropagateInput();
             scene.PropagateUpdate(deltaTime);
+            input.Update();
             // Render
             repaint();
         });

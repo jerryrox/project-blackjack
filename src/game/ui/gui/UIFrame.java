@@ -54,8 +54,8 @@ public class UIFrame extends JFrame {
         // Display the frame.
         setVisible(true);
         
-        // Initialize the scene by injection.
-        dependencies.Inject(rootPanel.GetScene());
+        // Initialize the panel by injection.
+        dependencies.Inject(rootPanel);
         
         // Start game loop.
         rootPanel.StartLoop();
