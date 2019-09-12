@@ -18,3 +18,11 @@ External assets used:
 AUT Logo
 Used in accordance to AUT branding guidelines version 1.3
 -
+icon-coin
+icon-heart
+
+These are assets purchased by my company for other projects.
+Permission was granted for use in this assignment.
+-
+Other image assets were previously created in photoshop for another project.
+-
