@@ -205,7 +205,7 @@ public class CliShopScreen extends CliView {
             return;
         }
         int cost = item.BuyCost * count;
-        if(cost > user.GetGold())
+        if(cost > user.Gold.GetValue())
         {
             SetStatus("You don't have enough gold.");
             return;
@@ -215,7 +215,7 @@ public class CliShopScreen extends CliView {
         Action purchase = () -> {
             for(int i=0; i<count; i++)
                 itemStore.AddItem(item);
-            user.SetGold(user.GetGold() - cost);
+            user.Gold.SetValue(user.Gold.GetValue()- cost);
             SetStatus("Purchased " + count + " " + item.Name + " successfully.");
             
             itemStore.Save();

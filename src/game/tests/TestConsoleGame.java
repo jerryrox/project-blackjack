@@ -5,6 +5,7 @@ package game.tests;
 
 import game.BaseGame;
 import game.ConsoleGame;
+import game.GameArguments;
 import game.allocation.DependencyContainer;
 import game.allocation.IDependencyContainer;
 import game.allocation.InitWithDependency;
@@ -24,9 +25,9 @@ import game.ui.cli.commands.CommandInfo;
  */
 public class TestConsoleGame extends ConsoleGame {
     
-    public TestConsoleGame(ILogger logger)
+    public TestConsoleGame(GameArguments args)
     {
-        super(logger);
+        super(args);
     }
     
     protected @Override void PostInitialize()

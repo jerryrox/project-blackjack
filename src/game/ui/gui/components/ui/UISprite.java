@@ -249,9 +249,9 @@ public class UISprite extends UIWidget {
                 
                 long originalColor = lastColorBuffer[i][j];
                 int ax = (int)(((originalColor >> 24) & 0x000000ff) * a);
-                int rx = (int)(((originalColor >> 16) & 0x000000ff) * a);
-                int gx = (int)(((originalColor >> 8) & 0x000000ff) * a);
-                int bx = (int)((originalColor & 0x000000ff) * a);
+                int rx = (int)(((originalColor >> 16) & 0x000000ff) * r);
+                int gx = (int)(((originalColor >> 8) & 0x000000ff) * g);
+                int bx = (int)((originalColor & 0x000000ff) * b);
                 
                 curImage.setRGB(i, j, (ax << 24) | (rx << 16) | (gx << 8) | bx);
             }

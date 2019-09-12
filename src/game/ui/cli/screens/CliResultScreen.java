@@ -70,9 +70,9 @@ public class CliResultScreen extends CliView {
         this.result = result;
         
         // Refresh user status.
-        user.SetGold(user.GetGold() + GetFinalRewards());
+        user.Gold.SetValue(user.Gold.GetValue()+ GetFinalRewards());
         if(result.Mode == GameModes.Survival && result.ResultType == GameResultTypes.Win)
-            user.SetSurvivalRound(Math.max(result.Difficulty, user.GetSurvivalRound()));
+            user.SurvivalRound.SetValue(Math.max(result.Difficulty, user.SurvivalRound.GetValue()));
         
         // Save user data.
         userStore.Save();

@@ -5,6 +5,7 @@ package game;
 
 import game.allocation.DependencyContainer;
 import game.allocation.IDependencyContainer;
+import game.debug.ConsoleLogger;
 import game.debug.Debug;
 import game.debug.ILogger;
 import game.io.storage.ItemFileStorage;
@@ -18,7 +19,7 @@ import game.rulesets.items.ItemDefinitions;
  * such as console or GUI, etc.
  * @author jerrykim
  */
-public abstract class BaseGame {
+public abstract class BaseGame implements IGame {
     
     protected ILogger logger;
     
@@ -29,10 +30,13 @@ public abstract class BaseGame {
     protected UserStore userStore;
     protected ItemStore itemStore;
     
+    protected GameArguments gameArgs;
     
-    protected BaseGame(ILogger logger)
+    
+    protected BaseGame(GameArguments args)
     {
-        this.logger = logger;
+        gameArgs = args;
+        logger = args.Logger == null ? new ConsoleLogger() : args.Logger;
         dependencies = new DependencyContainer(logger);
     }
     
@@ -55,6 +59,7 @@ public abstract class BaseGame {
         Debug.Initialize(logger);
         
         // Core
+        dependencies.CacheAs(IGame.class, this);
         dependencies.CacheAs(ILogger.class, logger);
         dependencies.CacheAs(IDependencyContainer.class, dependencies);
         
@@ -62,9 +67,10 @@ public abstract class BaseGame {
         dependencies.Cache(itemDefinitions = new ItemDefinitions());
         
         // Stores
-        dependencies.Cache(userStore = new UserStore(new UserFileStorage()));
+        boolean useDatabase = gameArgs.UseDatabaseStorage;
+        dependencies.Cache(userStore = new UserStore(useDatabase ? new UserFileStorage() : new UserFileStorage()));
         dependencies.Cache(userStore.Load());
-        dependencies.Cache(itemStore = new ItemStore(itemDefinitions, new ItemFileStorage(itemDefinitions)));
+        dependencies.Cache(itemStore = new ItemStore(itemDefinitions, useDatabase ? new ItemFileStorage(itemDefinitions) : new ItemFileStorage(itemDefinitions)));
     }
     
     /**

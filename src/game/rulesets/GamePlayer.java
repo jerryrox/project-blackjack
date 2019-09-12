@@ -73,7 +73,7 @@ public class GamePlayer {
     /**
      * Returns the name of the player.
      */
-    public String GetName() { return user.GetUsername(); }
+    public String GetName() { return user.Username.GetValue(); }
     
     /**
      * Returns the remaining health of this player.

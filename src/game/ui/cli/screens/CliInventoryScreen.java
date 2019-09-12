@@ -180,7 +180,7 @@ public class CliInventoryScreen extends CliView {
         Action sell = () -> {
             for(int i=0; i<count; i++)
                 itemStore.RemoveItem(item);
-            user.SetGold(user.GetGold() + price);
+            user.Gold.SetValue(user.Gold.GetValue()+ price);
             SetStatus("Sold " + count + " " + item.Name + " successfully.");
             
             itemStore.Save();

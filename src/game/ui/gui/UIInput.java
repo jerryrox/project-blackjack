@@ -59,6 +59,7 @@ public class UIInput implements MouseInputListener, KeyListener {
     public void Bind(JPanel panel)
     {
         panel.addMouseListener(this);
+        panel.addMouseMotionListener(this);
         panel.addKeyListener(this);
         panel.setFocusable(true);
         panel.requestFocusInWindow();
@@ -121,7 +122,11 @@ public class UIInput implements MouseInputListener, KeyListener {
 
     public @Override void mouseExited(MouseEvent e) {}
 
-    public @Override void mouseDragged(MouseEvent e) {}
+    public @Override void mouseDragged(MouseEvent e)
+    {
+        mousePos.X = e.getX();
+        mousePos.Y = e.getY();
+    }
 
     public @Override void mouseMoved(MouseEvent e)
     {
@@ -131,12 +136,19 @@ public class UIInput implements MouseInputListener, KeyListener {
 
     public @Override void keyTyped(KeyEvent e)
     {
-        typedBuffer.append(e.getKeyChar());
+        char ch = e.getKeyChar();
+        // Preprocess certain characters before appending.
+        if(ch == '\b')
+            typedBuffer.append("\\b");
+        else
+            typedBuffer.append(ch);
     }
 
     public @Override void keyPressed(KeyEvent e)
     {
         int keycode = e.getKeyCode();
+        if(holdKeys.contains(keycode))
+            return;
         downKeys.add(keycode);
         holdKeys.add(keycode);
     }

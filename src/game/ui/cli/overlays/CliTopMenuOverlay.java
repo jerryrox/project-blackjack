@@ -29,7 +29,7 @@ public class CliTopMenuOverlay extends CliView {
         for(int i=2; i<lastX-1; i++)
             buffer.SetBuffer('─', i, 2);
         
-        buffer.SetBuffer("Profile: " + user.GetUsername(), 3, 1);
-        buffer.SetBuffer("Gold: " + user.GetGold(), lastX-3, 1, Pivot.Right);
+        buffer.SetBuffer("Profile: " + user.Username.GetValue(), 3, 1);
+        buffer.SetBuffer("Gold: " + user.Gold.GetValue(), lastX-3, 1, Pivot.Right);
     }
 }

@@ -3,6 +3,9 @@
  */
 package game.rulesets;
 
+import game.utils.MathUtils;
+import game.utils.Random;
+
 /**
  * A card used in the game.
  * @author jerrykim
@@ -10,9 +13,19 @@ package game.rulesets;
 public class Card implements ICard {
     
     /**
+     * Maximum value of a card.
+     */
+    public static final int MaxValue = 11;
+    
+    /**
+     * Minimum value of a card.
+     */
+    public static final int MinValue = 1;
+    
+    /**
      * Number value of the card.
      */
-    private int number = 0;
+    private int number = MinValue;
     
     /**
      * Whether the card is a cloned instance created from item effect.
@@ -20,9 +33,14 @@ public class Card implements ICard {
     private boolean isCloned = false;
     
     
+    public Card()
+    {
+        this(Random.Range(MinValue, MaxValue + 1));
+    }
+    
     public Card(int number)
     {
-        this.number = number;
+        this.number = MathUtils.Clamp(number, MinValue, MaxValue);
     }
     
     public Card(Card card)

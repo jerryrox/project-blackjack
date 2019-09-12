@@ -10,6 +10,7 @@ import game.ui.gui.UIRootPanel;
 import game.ui.gui.UIScreenController;
 import game.ui.gui.overlays.UIWallpaperOverlay;
 import game.ui.gui.screens.UIHomeScreen;
+import game.ui.gui.screens.UIMainScreen;
 import game.ui.gui.screens.UISplashScreen;
 import game.ui.gui.screens.UITestScreen;
 
@@ -36,9 +37,9 @@ public class UIScene extends UIObject {
         //screens.ShowView(UISplashScreen.class);
         
         // Skipping splash screen for test purposes.
-        screens.ShowView(UIHomeScreen.class);
+        screens.ShowView(UIMainScreen.class);
         overlays.ShowView(UIWallpaperOverlay.class);
         
-        //screens.ShowView(UITestScreen.class);
+//        screens.ShowView(UITestScreen.class);
     }
 }

@@ -367,10 +367,15 @@ public class UIObject extends UIBehavior {
         // input propagation should be stopped, instead of immediately returning.
         boolean shouldStop = false;
         for(int i=0; i<components.size(); i++)
-            shouldStop |= !components.get(i).UpdateInput();
+        {
+            UIComponent component = components.get(i);
+            if(component.isEnabled)
+                shouldStop |= !component.UpdateInput();
+        }
         
         // Perform input update on the object itself.
-        shouldStop |= !UpdateInput();
+        if(isEnabled)
+            shouldStop |= !UpdateInput();
         
         // Return whether input was consumed or not.
         return !shouldStop;
@@ -387,7 +392,11 @@ public class UIObject extends UIBehavior {
             return;
         // Let components render their stuffs.
         for(int i=0; i<components.size(); i++)
-            components.get(i).Render(buffer);
+        {
+            UIComponent component = components.get(i);
+            if(component.isEnabled)
+                component.Render(buffer);
+        }
         // Propagate render signal to children.
         for(int i=0; i<children.size(); i++)
             children.get(i).PropagateRender(buffer);

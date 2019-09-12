@@ -28,7 +28,7 @@ public class SurvivalRuleset extends BaseRuleset {
     {
         // In survival ruleset, the AI's difficulty depends on user's best survival level value.
         GameAIPlayer ai = gameProcessor.GetAIPlayer();
-        ai.SetDifficulty(user.GetSurvivalRound() + 1);
+        ai.SetDifficulty(user.SurvivalRound.GetValue() + 1);
         
         super.OnStartSession();
     }

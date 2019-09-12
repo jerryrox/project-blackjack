@@ -3,6 +3,8 @@
  */
 package game.entities;
 
+import game.data.Bindable;
+import game.data.BindableInt;
 import game.io.IKeyValueSerializable;
 import game.io.serializers.KeyValueSerializer;
 
@@ -12,26 +14,16 @@ import game.io.serializers.KeyValueSerializer;
  */
 public class UserEntity implements IKeyValueSerializable, IEntity {
     
-    private String id;
-    private String username;
-    private int gold;
-    private int survivalRound = 0;
+    public final Bindable<String> Id = new Bindable<>(null);
+    public final Bindable<String> Username = new Bindable<>(null);
+    public final BindableInt Gold = new BindableInt(0);
+    public final BindableInt SurvivalRound = new BindableInt(0);
     
     private UserStats stats = new UserStats();
     
     
-    public @Override void SetId(String id) { this.id = id; }
-
-    public @Override String GetId() { return id; }
-    
-    public String GetUsername() { return username; }
-    public void SetUsername(String username) { this.username = username; }
-    
-    public int GetGold() { return gold; }
-    public void SetGold(int gold) { this.gold = gold; }
-    
-    public int GetSurvivalRound() { return survivalRound; }
-    public void SetSurvivalRound(int round) { survivalRound = round; }
+    public @Override void SetId(String id) { Id.SetValue(id); }
+    public @Override String GetId() { return Id.GetValue(); }
     
     public UserStats GetStats() { return stats; }
     
@@ -39,22 +31,22 @@ public class UserEntity implements IKeyValueSerializable, IEntity {
      * Returns whether this user object is considered an uninitialized, empty data.
      * @return 
      */
-    public boolean IsEmptyData() { return username == null || username.length() == 0; }
+    public boolean IsEmptyData() { return Username.GetValue() == null || Username.GetValue().length() == 0; }
     
     public @Override void Serialize(KeyValueSerializer serializer)
     {
-        serializer.Set("username", username);
-        serializer.Set("gold", gold);
-        serializer.Set("survivalRound", survivalRound);
+        serializer.Set("username", Username.GetValue());
+        serializer.Set("gold", Gold.GetValue());
+        serializer.Set("survivalRound", SurvivalRound.GetValue());
         
         stats.Serialize(serializer);
     }
 
     public @Override void Deserialize(KeyValueSerializer serializer)
     {
-        username = serializer.Get("username");
-        gold = serializer.GetInt("gold");
-        survivalRound = serializer.GetInt("survivalRound");
+        Username.SetValue(serializer.Get("username"));
+        Gold.SetValue(serializer.GetInt("gold"));
+        SurvivalRound.SetValue(serializer.GetInt("survivalRound"));
         
         stats.Deserialize(serializer);
     }
@@ -62,11 +54,11 @@ public class UserEntity implements IKeyValueSerializable, IEntity {
     public @Override String toString()
     {
         return String.format(
-            "User - id: %d, username: %s, gold: %d, survivalRound: %d",
-            id,
-            username,
-            gold,
-            survivalRound
+            "User - id: %s, username: %s, gold: %d, survivalRound: %d",
+            Id.GetValue(),
+            Username.GetValue(),
+            Gold.GetValue(),
+            SurvivalRound.GetValue()
         );
     }
 }

@@ -23,7 +23,7 @@ public class CliTestCommandOverlay extends CliView {
             int gold = args.GetInt("amount");
             if(gold < 0)
                 gold = 0;
-            user.SetGold(gold);
+            user.Gold.SetValue(gold);
             userStore.Save();
         });
         setGold.SetDescription("(TEST) Sets user's gold.");

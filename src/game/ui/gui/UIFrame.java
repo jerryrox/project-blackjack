@@ -3,9 +3,12 @@
  */
 package game.ui.gui;
 
+import game.IGame;
 import game.allocation.IDependencyContainer;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 
 /**
@@ -19,7 +22,7 @@ public class UIFrame extends JFrame {
     
     public UIFrame()
     {
-        super("Blackjack Knights");
+        super("Project: Blackjack");
         
         rootPanel = new UIRootPanel();
     }
@@ -30,13 +33,20 @@ public class UIFrame extends JFrame {
     public void Initialize(IDependencyContainer dependencies)
     {
         // Setup frame
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setResizable(false);
+        
+        // Override close operation to gracefully exit the applicaion.
+        addWindowListener(new WindowAdapter() {
+            
+            public @Override void windowClosing(WindowEvent windowEvent)
+            {
+                dependencies.Get(IGame.class).Quit();
+            }
+        });
         
         // Create add panel to frame
         getContentPane().add(rootPanel);
-        // Add the root panel as dependency since certain drawable elements may need them.
-        dependencies.Cache(rootPanel);
         
         // Resize frame.
         pack();
@@ -65,4 +75,5 @@ public class UIFrame extends JFrame {
      * Returns the root panel object.
      */
     public UIRootPanel GetRootPanel() { return rootPanel; }
+    
 }

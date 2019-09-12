@@ -38,10 +38,10 @@ public class GameAIPlayer extends GamePlayer {
         this.difficulty = difficulty;
         
         // Set reward for this ai.
-        user.SetGold(GetReward(difficulty));
+        user.Gold.SetValue(GetReward(difficulty));
         
         // Set name.
-        user.SetUsername("Bot " + Random.Range(0, 10000));
+        user.Username.SetValue("Bot " + Random.Range(0, 10000));
         
         // Modify stats.
         UserStats stat = user.GetStats();

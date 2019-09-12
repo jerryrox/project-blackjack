@@ -8,6 +8,7 @@ import game.allocation.ReceivesDependency;
 import game.data.Vector2;
 import game.debug.Debug;
 import game.ui.gui.graphics.GuiFontProvider;
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -29,9 +30,19 @@ public class UILabel extends UIWidget {
     private String text = "";
     
     /**
-     * Current wrap mode of the text.
+     * Cached array of text splitted using new line char.
      */
-    private WrapModes wrapMode = WrapModes.ResizeFreely;
+    private String[] splittedText = null;
+    
+    /**
+     * Number of lines in the text.
+     */
+    private int lineCount = 1;
+    
+    /**
+     * Cached size of the actual text to be drawn.
+     */
+    private Vector2 cachedSize = new Vector2();
     
     /**
      * Whether the text has changed when label was dirty.
@@ -51,7 +62,12 @@ public class UILabel extends UIWidget {
     /**
      * Holds array of previous color values for performance issues.
      */
-    private float[] prevColor = new float[] { -1, -1, -1, -1 };
+    private int prevColor = 0;
+    
+    /**
+     * Anti alias support for text.
+     */
+    private RenderingHints hints = new RenderingHints(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
     
     @ReceivesDependency
     private GuiFontProvider fontProvider;
@@ -67,6 +83,9 @@ public class UILabel extends UIWidget {
     {
         // Set default font.
         font = fontProvider.Get(18);
+        
+        super.SetWidth(1);
+        super.SetHeight(font.getSize());
     }
     
     /**
@@ -112,6 +131,9 @@ public class UILabel extends UIWidget {
     {
         this.text = (text == null ? "" : text);
         textChanged = true;
+        
+        splittedText = this.text.split("\n");
+        lineCount = splittedText.length;
     }
     
     /**
@@ -119,17 +141,9 @@ public class UILabel extends UIWidget {
      */
     public String GetText() { return text; }
     
-    public @Override void SetWidth(int width)
-    {
-        if(wrapMode == WrapModes.Constrained)
-            super.SetWidth(width);
-    }
+    public @Override void SetWidth(int width) {}
     
-    public @Override void SetHeight(int height) 
-    {
-        if(wrapMode == WrapModes.Constrained)
-            super.SetHeight(height);
-    }
+    public @Override void SetHeight(int height)  {}
     
     public @Override void ResetSize() { SetSize(image.getWidth(), image.getHeight()); }
     
@@ -151,27 +165,36 @@ public class UILabel extends UIWidget {
      */
     private void RebuildTextImage(FontMetrics metrics)
     {
-        int w = metrics.stringWidth(text);
-        int h = metrics.getHeight();
-        
         // Handling potentially empty text cases.
-        if(w <= 0 || h <= 0)
+        if(text == null ||text.length() == 0)
         {
             image = null;
             textChanged = false;
             return;
         }
-            
+        
+        int w = (int)cachedSize.X;
+        int h = (int)cachedSize.Y;
+        int totalH = h * lineCount;
+        
         if(textChanged)
         {
-            // Create image.
-            image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+            // Calculate new size
+            w = 0;
+            h = metrics.getHeight();
+            for(String line : splittedText)
+                w = Math.max(metrics.stringWidth(line), w);
+            totalH = h * lineCount;
             
-            if(wrapMode == WrapModes.ResizeFreely)
-            {
-                super.SetWidth(w);
-                super.SetHeight(h);
-            }
+            // Cache new size
+            cachedSize.X = w;
+            cachedSize.Y = h;
+            
+            // Create image.
+            image = new BufferedImage(w, totalH, BufferedImage.TYPE_INT_ARGB);
+            
+            super.SetWidth(w);
+            super.SetHeight(totalH);
         }
         
         // Prepare text color.
@@ -179,32 +202,45 @@ public class UILabel extends UIWidget {
         Color col = new Color(color.getRed(), color.getGreen(), color.getBlue(), (int)(GetWorldAlpha() * 255f));
         
         // If no change in color or text, just return.
-        if(!textChanged && prevColor[0] == col.getAlpha() && prevColor[1] == col.getRed() && prevColor[2] == col.getGreen() && prevColor[3] == col.getBlue())
+        if(!textChanged && prevColor == col.getRGB())
             return;
-        prevColor[0] = col.getAlpha();
-        prevColor[1] = col.getRed();
-        prevColor[2] = col.getGreen();
-        prevColor[3] = col.getBlue();
-        
-        // Setup anti-aliased text.
-        RenderingHints hint = new RenderingHints(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        prevColor = col.getRGB();
         
         // Set properties.
         Graphics2D g = image.createGraphics();
-        g.setRenderingHints(hint);
+        
+        g.setComposite(AlphaComposite.Clear);
+        g.fillRect(0, 0, w, totalH);
+        g.setComposite(AlphaComposite.SrcOver);
+        
+        g.setRenderingHints(hints);
         g.setColor(col);
         g.setFont(font);
-        g.drawString(text, 0, h - h/4);
+        int y = h - h/4;
+        for (String line : splittedText)
+        {
+            int x = 0;
+            int lineWidth = metrics.stringWidth(line);
+            switch(GetPivot())
+            {
+            case Top:
+            case Center:
+            case Bottom:
+                x = w / 2 - lineWidth / 2;
+                break;
+            case TopRight:
+            case Right:
+            case BottomRight:
+                x = w - lineWidth;
+                break;
+            }
+            
+            g.drawString(line, x, y);
+            y += h;
+        }
+        //g.drawString(text, 0, h - h/4);
         g.dispose();
         
         textChanged = false;
-    }
-    
-    /**
-     * Types of methods used for drawing the label text.
-     */
-    public enum WrapModes {
-        ResizeFreely,
-        Constrained
     }
 }

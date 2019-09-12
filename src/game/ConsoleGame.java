@@ -30,9 +30,9 @@ public class ConsoleGame extends BaseGame {
     protected CliOverlayController overlayController;
     
     
-    public ConsoleGame(ILogger logger)
+    public ConsoleGame(GameArguments args)
     {
-        super(logger);
+        super(args);
     }
     
     protected @Override void Initialize()
@@ -70,4 +70,10 @@ public class ConsoleGame extends BaseGame {
         // Start the engine.
         cliEngine.StartUpdate();
     }
+
+    public @Override String GetVersion() { return ""; }
+
+    public @Override void ForceQuit() {}
+
+    public @Override void Quit() {}
 }

@@ -28,7 +28,7 @@ public class CliRegisterScreen extends CliView {
             {
                 if(username.length() > 16)
                     username = username.substring(0, 16);
-                user.SetUsername(username);
+                user.Username.SetValue(username);
                 userStore.Save();
                 screens.ShowView(CliMainScreen.class);
             }

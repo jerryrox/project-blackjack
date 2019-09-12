@@ -12,12 +12,15 @@ import game.data.Action;
 import game.data.ActionT;
 import game.debug.Debug;
 import game.ui.gui.UIInput;
+import game.ui.gui.UIOverlayController;
 import game.ui.gui.components.UIAnimator;
 import game.ui.gui.components.ui.UILabel;
 import game.ui.gui.components.ui.UIScreen;
 import game.ui.gui.components.ui.UISprite;
+import game.ui.gui.overlays.UIDialogOverlay;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.KeyEvent;
 
 /**
  * Screen implementation dedicated for testing purposes.
@@ -32,6 +35,9 @@ public class UITestScreen extends UIScreen {
     @ReceivesDependency
     private UIInput input;
     
+    @ReceivesDependency
+    private UIOverlayController overlays;
+    
     
     public UITestScreen()
     {
@@ -41,9 +47,9 @@ public class UITestScreen extends UIScreen {
     @InitWithDependency
     private void Init()
     {
-        //InitForWidgetDisplayTest();
-        
-        InitForInputTest();
+//        InitForWidgetDisplayTest();
+//        InitForInputTest();
+        InitForDialogOverlayTest();
     }
     
     public @Override void Update(float deltaTime)
@@ -164,6 +170,31 @@ public class UITestScreen extends UIScreen {
             
             sb.append(input.GetInputString());
             keyIndicator.SetText(sb.toString());
+        };
+    }
+    
+    private void InitForDialogOverlayTest()
+    {
+        inputHandler = () -> {
+            if(input.IsKeyDown(KeyEvent.VK_A))
+            {
+                UIDialogOverlay dialog = overlays.ShowView(UIDialogOverlay.class);
+                dialog.SetYesMode("Test message dialog with Yes button only?", () -> {
+                    Debug.Log("Pressed Yes");
+                });
+            }
+            else if(input.IsKeyDown(KeyEvent.VK_S))
+            {
+                UIDialogOverlay dialog = overlays.ShowView(UIDialogOverlay.class);
+                dialog.SetYesNoMode("Test message dialog with Yes and No buttons?",
+                    () -> {
+                        Debug.Log("Pressed Yes");
+                    },
+                    () -> {
+                        Debug.Log("Pressed No");
+                    }
+                );
+            }
         };
     }
     

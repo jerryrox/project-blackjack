@@ -85,7 +85,7 @@ public abstract class BaseRuleset implements IGameSession {
         GamePlayer humanPlayer = gameProcessor.GetHumanPlayer();
         GameAIPlayer aiPlayer = gameProcessor.GetAIPlayer();
         
-        int rewards = aiPlayer.GetUser().GetGold();
+        int rewards = aiPlayer.GetUser().Gold.GetValue();
         GameResultTypes resultType = GameResultTypes.Draw;
         
         if(!humanPlayer.IsDead())

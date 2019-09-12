@@ -40,4 +40,6 @@ public class Vector2 implements IStruct<Vector2> {
      * Clones this instance's values to a new Vector2 object.
      */
     public @Override Vector2 Clone() { return new Vector2(X, Y); }
+    
+    public @Override String toString() { return String.format("(%.2f, %.2f)", X, Y); }
 }

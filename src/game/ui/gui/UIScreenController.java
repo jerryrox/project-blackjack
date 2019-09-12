@@ -3,6 +3,7 @@
  */
 package game.ui.gui;
 
+import game.debug.Debug;
 import game.ui.gui.components.ui.UIScreen;
 import game.ui.gui.objects.UIObject;
 
@@ -22,7 +23,7 @@ public class UIScreenController extends UIViewController<UIScreen> {
         // Hide all other views.
         views.values().forEach(v -> {
             if(v.IsShowing() && view != v)
-                HideView(view);
+                HideView(v);
         });
     }
 

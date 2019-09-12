@@ -16,11 +16,16 @@ public class Main {
     {
         ILogger logger = new ConsoleLogger();
         
+        // Build arguments to pass to the game.
+        GameArguments gameArgs = new GameArguments();
+        gameArgs.Logger = logger;
+        gameArgs.UseDatabaseStorage = false;
+        
         BaseGame game = null;
         switch(Application.Runtime)
         {
-        case Console: game = new ConsoleGame(logger); break;
-        case Gui: game = new GuiGame(logger); break;
+        case Console: game = new ConsoleGame(gameArgs); break;
+        case Gui: game = new GuiGame(gameArgs); break;
         default:
             logger.LogWarning("Unknown application runtime! Check Application class to see if it's setup correctly!");
             return;

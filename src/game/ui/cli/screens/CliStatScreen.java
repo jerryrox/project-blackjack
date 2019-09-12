@@ -105,14 +105,14 @@ public class CliStatScreen extends CliView {
             SetStatus("Item was not found for given number!");
             return;
         }
-        if(user.GetGold() < stat.GetCost())
+        if(user.Gold.GetValue()< stat.GetCost())
         {
             SetStatus("You don't have enough gold!");
             return;
         }
         
         // Do upgrade and decrease gold
-        user.SetGold(user.GetGold() - stat.GetCost());
+        user.Gold.SetValue(user.Gold.GetValue() - stat.GetCost());
         stat.SetLevel(stat.GetLevel() + 1);
         userStore.Save();
         

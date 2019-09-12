@@ -71,7 +71,7 @@ public class CliModeScreen extends CliView {
         
         buffer.SetBuffer("(Survival)", halfWidth, 6, Pivot.Center);
         buffer.SetBuffer("Endless battle against AIs which get stronger every next round.", halfWidth, 7, Pivot.Center);
-        buffer.SetBuffer("Your best round: " + user.GetSurvivalRound(), halfWidth, 8, Pivot.Center);
+        buffer.SetBuffer("Your best round: " + user.SurvivalRound.GetValue(), halfWidth, 8, Pivot.Center);
         
         buffer.SetBuffer("(Casual)", halfWidth, 10, Pivot.Center);
         buffer.SetBuffer("A single battle against AI with similar stats of yours.", halfWidth, 11, Pivot.Center);
