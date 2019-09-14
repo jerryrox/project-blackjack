@@ -27,4 +27,8 @@ public class ColorPreset {
     public final Color Gold = new Color(255, 241, 120);
     
     public final Color CardPattern = new Color(255, 92, 92);
+    
+    public final Color Phase = new Color(149, 255, 144);
+    
+    public final Color Health = new Color(0x71ce6c);
 }

@@ -11,10 +11,12 @@ import game.utils.MathUtils;
 
 /**
  * Basis of any displayable elements in the GUI.
- * Can't be used as-is.
+ * Can be used as-is to hold child widgets to tweak alpha values together
+ * when this displayer's alpha changes.
+ * Basically like a UIPanel in Unity NGUI.
  * @author jerrykim
  */
-public abstract class UIDisplayer extends UIComponent {
+public class UIDisplayer extends UIComponent {
     
     /**
      * Parent displayer in the hierarchy.
@@ -27,7 +29,7 @@ public abstract class UIDisplayer extends UIComponent {
     private float alpha = 1;
     
     
-    protected UIDisplayer()
+    public UIDisplayer()
     {
         super();
     }

@@ -196,6 +196,12 @@ public class UIObject extends UIBehavior {
     }
     
     /**
+     * Returns whether the specified object is included as this object's
+     * direct child.
+     */
+    public boolean ContainsChild(UIObject obj) { return children.contains(obj); }
+    
+    /**
      * Creates a plain UIObject instance and adds it as child.
      */
     public UIObject CreateChild() { return AddChild(new UIObject()); }

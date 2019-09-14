@@ -63,8 +63,6 @@ public class GameProcessor implements IGameSession {
         
         humanPlayer.ResetState();
         aiPlayer.ResetState();
-        
-        NewPhase();
     }
 
     public @Override void OnStopSession()
@@ -80,9 +78,33 @@ public class GameProcessor implements IGameSession {
     {
         if(humanPlayer.IsDead() || aiPlayer.IsDead())
             isFinished = true;
-        else
-            NewPhase();
     }
+    
+    /**
+     * Prepares new phase of the battle.
+     */
+    public void NewPhase()
+    {
+        curPhase ++;
+        
+        // Notify phase change.
+        humanPlayer.OnNextPhase();
+        aiPlayer.OnNextPhase();
+        
+        // Return all cards to deck.
+        humanPlayer.GetHand().ReturnAllCards(deck);
+        aiPlayer.GetHand().ReturnAllCards(deck);
+        
+        // Shuffle deck and put random initial cards on player.
+        deck.Shuffle();
+        humanPlayer.GetHand().DrawCard(deck);
+        aiPlayer.GetHand().DrawCard(deck);
+    }
+    
+    /**
+     * Sets whether human player is on turn.
+     */
+    public void SetHumanTurn(boolean isHumanTurn) { this.isHumanTurn = isHumanTurn; }
     
     /**
      * Changes turn to other player.
@@ -152,25 +174,4 @@ public class GameProcessor implements IGameSession {
      * Returns whether the game has finished.
      */
     public boolean IsFinished() { return isFinished; }
-    
-    /**
-     * Prepares new phase of the battle.
-     */
-    private void NewPhase()
-    {
-        curPhase ++;
-        
-        // Notify phase change.
-        humanPlayer.OnNextPhase();
-        aiPlayer.OnNextPhase();
-        
-        // Return all cards to deck.
-        humanPlayer.GetHand().ReturnAllCards(deck);
-        aiPlayer.GetHand().ReturnAllCards(deck);
-        
-        // Shuffle deck and put random initial cards on player.
-        deck.Shuffle();
-        humanPlayer.GetHand().DrawCard(deck);
-        aiPlayer.GetHand().DrawCard(deck);
-    }
 }

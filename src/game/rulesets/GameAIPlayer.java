@@ -24,6 +24,8 @@ public class GameAIPlayer extends GamePlayer {
         super(new UserEntity());
     }
     
+    public @Override boolean IsHuman() { return false; }
+    
     /**
      * Returns the current difficulty value of this ai.
      */

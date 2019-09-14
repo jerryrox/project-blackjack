@@ -59,7 +59,7 @@ public class CliButton extends CliDisplayer {
     /**
      * Sets the text value to be displayed on the button.
      */
-    public void SetText()
+    public void SetText(String text)
     {
         this.text = text;
     }

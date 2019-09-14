@@ -39,7 +39,12 @@ public class PlayerHand {
     /**
      * Draws card from the deck.
      */
-    public void DrawCard(Deck deck) { hand.add(deck.PopCard()); }
+    public Card DrawCard(Deck deck)
+    {
+        Card card = deck.PopCard();
+        hand.add(card);
+        return card;
+    }
     
     /**
      * Returns the last card in hand to the deck.
@@ -63,6 +68,11 @@ public class PlayerHand {
     }
     
     /**
+     * Returns the number of cards in hand.
+     */
+    public int GetCardCount() { return hand.size(); }
+    
+    /**
      * Clears card remnants remaining from stopping the game.
      */
     public void ClearCards() { hand.clear(); }
@@ -71,6 +81,16 @@ public class PlayerHand {
      * Returns all cards in hand.
      */
     public Iterable<Card> GetAllCards() { return hand; }
+    
+    /**
+     * Returns the card at specified index.
+     */
+    public Card GetCard(int index)
+    {
+        if(index < 0 || index >= hand.size())
+            return null;
+        return hand.get(index);
+    }
     
     /**
      * Returns all cards in hand except the first one.

@@ -8,6 +8,7 @@ import game.animations.Anime;
 import game.debug.Debug;
 import game.debug.ILogger;
 import java.util.HashMap;
+import javafx.util.Pair;
 
 /**
  * Holds and processes anime objects passed to this object.
@@ -50,6 +51,11 @@ public class UIAnimator extends UIComponent {
      * @return 
      */
     public Anime GetAnime(String name) { return animations.get(name); }
+    
+    /**
+     * Returns all anime names registered.
+     */
+    public Iterable<String> GetNames() { return animations.keySet(); }
     
     /**
      * Removes anime instance associated with specified name.

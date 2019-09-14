@@ -23,6 +23,9 @@ import game.ui.gui.objects.UIObject;
  */
 public class UICardDisplayer extends UIObject {
     
+    public static final int CardWidth = 280;
+    
+    private UIObject scaler;
     private UIObject frontSide;
     private UIObject backSide;
     
@@ -46,14 +49,16 @@ public class UICardDisplayer extends UIObject {
     @InitWithDependency
     private void Init(ColorPreset colors)
     {
-        UISprite frame = AddComponent(new UISprite());
+        scaler = CreateChild();
+        
+        UISprite frame = scaler.AddComponent(new UISprite());
         {
             frame.SetSpritename("card-frame");
             frame.SetWrapMode(UISprite.WrapModes.Sliced);
-            frame.SetSize(280, 400);
+            frame.SetSize(CardWidth, 400);
         }
         
-        frontSide = CreateChild();
+        frontSide = scaler.CreateChild();
         {
             for(int i=0; i<patterns.length; i++)
             {
@@ -74,7 +79,7 @@ public class UICardDisplayer extends UIObject {
             }
         }
         
-        backSide = CreateChild();
+        backSide = scaler.CreateChild();
         {
             UISprite back = backSide.CreateChild().AddComponent(new UISprite());
             {
@@ -121,6 +126,14 @@ public class UICardDisplayer extends UIObject {
         
         // Start from back side.
         SetSide(false, false);
+    }
+    
+    /**
+     * Sets scale of the card displayer.
+     */
+    public void SetScale(float scale)
+    {
+        scaler.GetTransform().SetLocalScale(scale, scale);
     }
     
     /**
@@ -216,7 +229,7 @@ public class UICardDisplayer extends UIObject {
         int rowCount = 1;
         while(true)
         {
-            int patternsInRow = rowCount % 2 == 0 ? 3 : 2;
+            int patternsInRow = rowCount % 2 == 1 ? 3 : 2;
             cumulativeNum -= patternsInRow;
             if(cumulativeNum <= 0)
                 break;

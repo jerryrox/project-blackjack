@@ -37,10 +37,6 @@ public class UITopMenuOverlay extends UIOverlay {
         
         onGoldChanged = (gold) -> {
             goldLabel.SetText(String.format("%,d", gold));
-            goldIconTransform.SetLocalPosition(
-                goldLabel.GetTransform().GetLocalPosition().X - goldLabel.GetWidth() - 34,
-                2
-            );
         };
     }
     
@@ -81,6 +77,11 @@ public class UITopMenuOverlay extends UIOverlay {
     public @Override void Update(float deltaTime)
     {
         super.Update(deltaTime);
+        
+        goldIconTransform.SetLocalPosition(
+            goldLabel.GetTransform().GetLocalPosition().X - goldLabel.GetWidth() - 18,
+            2
+        );
     }
     
     protected @Override void OnPreShowView()

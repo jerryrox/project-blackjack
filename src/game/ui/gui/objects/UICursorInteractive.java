@@ -90,8 +90,7 @@ public class UICursorInteractive extends UIObject {
         // Automatically adjust cursor area.
         if(targetWidget != null)
         {
-            offset.X = 0;
-            offset.Y = 0;
+            offset = targetWidget.GetTransform().GetLocalPosition();
             size = GetTransform().GetWorldScale();
             size.X *= targetWidget.GetWidth();
             size.Y *= targetWidget.GetHeight();

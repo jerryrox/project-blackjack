@@ -60,19 +60,6 @@ public class UIHelpScreen extends UIScreen {
             content.SetPivot(Pivot.Top);
             content.SetText(GetInstructions());
             content.GetTransform().SetLocalPosition(0, -60);
-            /*
-║         The players will share the same deck, with cards ranging from 1 to 11. No doubles.       ║
-║                  Players take turns drawing a card to reach 21 or close below 21.                ║
-║                          Exceeding the total of 21 is considered losing.                         ║
-║           When both players decide to skip turn, the phase is evaluated for the winner.          ║
-║                                                                                                  ║
-║          The winner inflicts their damage stat to the opponent with some critical chance.        ║
-║                     If the phase ended in a draw, both players receive damage.                   ║
-║                                                                                                  ║
-║                  * Damaging when the card total is 21 has 200% critical chance. *                ║
-║                             * Critical strike inflicts 150% damage. *
-            
-            */
         }
         
         uiObject.AddChild(developerButton = new UIRoundBoxButton());

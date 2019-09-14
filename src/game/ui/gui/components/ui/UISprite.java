@@ -163,6 +163,10 @@ public class UISprite extends UIWidget {
         }
         else
         {
+            // If width is 0, don't render.
+            if(actualSize.X < 1)
+                return;
+                    
             srcDrawSizes[0].X = sliceRect.X;
             srcDrawSizes[0].Y = sliceRect.Y;
             srcDrawSizes[1].X = sliceRect.Z;
@@ -170,10 +174,10 @@ public class UISprite extends UIWidget {
             srcDrawSizes[2].X = imageSize.X - sliceRect.X - sliceRect.Z;
             srcDrawSizes[2].Y = imageSize.Y - sliceRect.Y - sliceRect.W;
             
-            destDrawSizes[0].X = srcDrawSizes[0].X * scale.X;
-            destDrawSizes[0].Y = srcDrawSizes[0].Y * scale.Y;
-            destDrawSizes[2].X = srcDrawSizes[2].X * scale.X;
-            destDrawSizes[2].Y = srcDrawSizes[2].Y * scale.Y;
+            destDrawSizes[0].X = Math.min(srcDrawSizes[0].X, srcDrawSizes[0].X * scale.X);
+            destDrawSizes[0].Y = Math.min(srcDrawSizes[0].Y, srcDrawSizes[0].Y * scale.Y);
+            destDrawSizes[2].X = Math.min(srcDrawSizes[2].X, srcDrawSizes[2].X * scale.X);
+            destDrawSizes[2].Y = Math.min(srcDrawSizes[2].Y, srcDrawSizes[2].Y * scale.Y);
             destDrawSizes[1].X = actualSize.X - destDrawSizes[0].X - destDrawSizes[2].X;
             destDrawSizes[1].Y = actualSize.Y - destDrawSizes[0].Y - destDrawSizes[2].Y;
             

@@ -49,7 +49,7 @@ public class GamePlayer {
     /**
      * Array of game items affecting the player.
      */
-    protected ArrayList<GameItem> items = new ArrayList<GameItem>();
+    protected ArrayList<GameItem> items = new ArrayList<>();
     
     
     
@@ -59,6 +59,12 @@ public class GamePlayer {
         this.hand = new PlayerHand(this);
         ResetState();
     }
+    
+    /**
+     * Returns whether the player is human controlled.
+     * @return 
+     */
+    public boolean IsHuman() { return true; }
     
     /**
      * Returns the user instance used to represent this player.
@@ -166,15 +172,16 @@ public class GamePlayer {
     
     /**
      * Applies item effect on this player.
+     * Returns the GameItem instance applied to player.
      */
-    public void ApplyItem(ItemInfo item)
+    public GameItem ApplyItem(ItemInfo item)
     {
         GameItem gameItem = new GameItem(item);
         item.ApplyToGame(this, gameItem);
         // If instant use, don't add to list.
-        if(gameItem.GetDuration() == 0)
-            return;
-        items.add(gameItem);
+        if(gameItem.GetDuration() > 0)
+            items.add(gameItem);
+        return gameItem;
     }
     
     /**

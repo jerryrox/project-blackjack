@@ -61,9 +61,13 @@ public class GuiGame extends BaseGame {
         super.PostInitialize();
         
         // Import sprite images into atlas.
+        atlas.AddSprite("action-draw-bg");
+        atlas.AddSprite("action-skip-bg");
         atlas.AddSprite("box", new Rect(1, 1, 1, 1));
         atlas.AddSprite("card-back");
         atlas.AddSprite("card-frame", new Rect(17, 17, 2, 2));
+        atlas.AddSprite("casual-icon");
+        atlas.AddSprite("casual-title");
         atlas.AddSprite("glow");
         atlas.AddSprite("gradation_0", new Rect(0, 1, 116, 18));
         atlas.AddSprite("gradation_1", new Rect(0, 1, 117, 18));
@@ -71,19 +75,27 @@ public class GuiGame extends BaseGame {
         atlas.AddSprite("icon-arrow-left");
         atlas.AddSprite("icon-arrow-right");
         atlas.AddSprite("icon-coin");
+        atlas.AddSprite("icon-cross");
+        atlas.AddSprite("icon-damage");
         atlas.AddSprite("icon-heart");
         atlas.AddSprite("icon-menu");
         atlas.AddSprite("icon-pause");
         atlas.AddSprite("icon-play");
         atlas.AddSprite("icon-power");
         atlas.AddSprite("icon-retry");
+        atlas.AddSprite("info-panel-bg");
         atlas.AddSprite("loading");
         atlas.AddSprite("logo-aut");
+        atlas.AddSprite("mode-button-glow");
         atlas.AddSprite("null");
         atlas.AddSprite("pattern");
         atlas.AddSprite("playground");
         atlas.AddSprite("round-box", new Rect(8, 8, 10, 10));
+        atlas.AddSprite("survival-icon");
+        atlas.AddSprite("survival-title");
         atlas.AddSprite("title");
+        
+        atlas.AddSprite("guide-game");
     }
 
     protected @Override void OnStart()

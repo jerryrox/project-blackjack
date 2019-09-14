@@ -225,7 +225,7 @@ public class UIMainScreen extends UIScreen {
     
     private void OnPlayButton()
     {
-        
+        screens.ShowView(UIModeScreen.class);
     }
     
     private void OnShopButton()

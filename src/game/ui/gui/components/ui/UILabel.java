@@ -101,6 +101,18 @@ public class UILabel extends UIWidget {
     }
     
     /**
+     * Sets font style and size used by this label.
+     */
+    public void SetFont(int style, int size)
+    {
+        Font newFont = fontProvider.Get(font.getFontName(), style, size);
+        if(newFont == null)
+            return;
+        this.font = newFont;
+        textChanged = true;
+    }
+    
+    /**
      * Sets the font size of currently using font.
      */
     public void SetFontSize(int size)
@@ -179,11 +191,14 @@ public class UILabel extends UIWidget {
         
         if(textChanged)
         {
+            // Add additional width if italic style has been applied.
+            int italicOffset = ((font.getStyle() & Font.ITALIC) != 0) ? font.getSize() / 4 : 0;
+            
             // Calculate new size
             w = 0;
             h = metrics.getHeight();
             for(String line : splittedText)
-                w = Math.max(metrics.stringWidth(line), w);
+                w = Math.max(metrics.stringWidth(line) + italicOffset, w);
             totalH = h * lineCount;
             
             // Cache new size

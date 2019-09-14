@@ -12,6 +12,7 @@ import game.rulesets.GameAIPlayer;
 import game.rulesets.GameModes;
 import game.rulesets.ui.IDrawableRuleset;
 import game.rulesets.ui.cli.CliSurvivalRuleset;
+import game.rulesets.ui.gui.GuiRuleset;
 import game.ui.cli.IDisplayer;
 
 /**
@@ -38,6 +39,7 @@ public class SurvivalRuleset extends BaseRuleset {
         switch(Application.Runtime)
         {
         case Console: return new CliSurvivalRuleset();
+        case Gui: return new GuiRuleset();
         }
         return null;
     }

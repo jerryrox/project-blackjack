@@ -5,12 +5,17 @@ package game.ui.gui.objects;
 
 import game.allocation.InitWithDependency;
 import game.debug.Debug;
+import game.rulesets.GameModes;
+import game.rulesets.GameResult;
+import game.rulesets.GameResultTypes;
 import game.ui.gui.UIOverlayController;
 import game.ui.gui.UIRootPanel;
 import game.ui.gui.UIScreenController;
 import game.ui.gui.overlays.UIWallpaperOverlay;
 import game.ui.gui.screens.UIHomeScreen;
 import game.ui.gui.screens.UIMainScreen;
+import game.ui.gui.screens.UIModeScreen;
+import game.ui.gui.screens.UIResultScreen;
 import game.ui.gui.screens.UISplashScreen;
 import game.ui.gui.screens.UITestScreen;
 
@@ -36,9 +41,15 @@ public class UIScene extends UIObject {
         // Show splash screen.
         //screens.ShowView(UISplashScreen.class);
         
-        // Skipping splash screen for test purposes.
-        screens.ShowView(UIMainScreen.class);
+        // ========================================
+        // TEST CODES
+        // ========================================
+        screens.ShowView(UIModeScreen.class);
         overlays.ShowView(UIWallpaperOverlay.class);
+        
+//        UIResultScreen result = screens.ShowView(UIResultScreen.class);
+//        GameResult dummyResult = new GameResult(GameModes.Casual, GameResultTypes.Win, 0, 0);
+//        result.SetResult(dummyResult);
         
 //        screens.ShowView(UITestScreen.class);
     }

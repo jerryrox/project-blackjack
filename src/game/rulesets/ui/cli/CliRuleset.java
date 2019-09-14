@@ -138,6 +138,9 @@ public class CliRuleset<T extends BaseRuleset> extends CliDisplayer implements I
         aiStatusBar.SetPlayer(aiPlayer);
         humanHandDisplay.SetPlayer(humanPlayer, true);
         aiHandDisplay.SetPlayer(aiPlayer, false);
+        
+        // Start new phase.
+        gameProcessor.NewPhase();
     }
 
     public @Override void OnStopSession()
@@ -345,5 +348,7 @@ public class CliRuleset<T extends BaseRuleset> extends CliDisplayer implements I
         
         // Set end phase.
         gameProcessor.SetPhaseEnd();
+        if(!gameProcessor.IsFinished())
+            gameProcessor.NewPhase();
     }
 }

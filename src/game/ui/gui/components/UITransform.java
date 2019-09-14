@@ -39,6 +39,9 @@ public class UITransform extends UIComponent {
     
     /**
      * Whether world transform values should be rebuilt.
+     * 
+     * NOT a sophisticalted design though.
+     * Needs redesigning when I got time.
      */
     private boolean rebuildWorldTransform = true;
     
@@ -95,12 +98,48 @@ public class UITransform extends UIComponent {
     /**
      * Returns the position of the transform in world space.
      */
-    public Vector2 GetWorldPosition() { return worldPosition.Clone(); }
+    public Vector2 GetWorldPosition()
+    {
+        if(rebuildWorldTransform)
+            SignalParentForWorldTransform();
+        return worldPosition.Clone();
+    }
     
     /**
      * Returns the scale of the transform in world space.
      */
-    public Vector2 GetWorldScale() { return worldScale.Clone(); }
+    public Vector2 GetWorldScale()
+    {
+        if(rebuildWorldTransform)
+            SignalParentForWorldTransform();
+        return worldScale.Clone();
+    }
+    
+    /**
+     * Converts the specified world position to local position and returns a new vector holding this value.
+     */
+    public Vector2 InverseTransformPoint(Vector2 point)
+    {
+        Vector2 newPoint = point.Clone();
+        newPoint.X -= worldPosition.X;
+        newPoint.Y -= worldPosition.Y;
+        newPoint.X /= worldScale.X;
+        newPoint.Y /= worldScale.Y;
+        return newPoint;
+    }
+    
+    /**
+     * Converts the specified local position to world position and returns a new vector holding this value.
+     */
+    public Vector2 TransformPoint(Vector2 point)
+    {
+        Vector2 newPoint = point.Clone();
+        newPoint.X *= worldScale.X;
+        newPoint.Y *= worldScale.Y;
+        newPoint.X += worldPosition.X;
+        newPoint.Y += worldPosition.Y;
+        return newPoint;
+    }
     
     public @Override void Update(float deltaTime)
     {
@@ -109,10 +148,31 @@ public class UITransform extends UIComponent {
     }
     
     /**
+     * Signals the top-most parent who needs to refresh world transform for calculation now.
+     */
+    private void SignalParentForWorldTransform()
+    {
+        UITransform target = this;
+        UITransform checking = target;
+        while(true)
+        {
+            checking = checking.parent;
+            if(checking == null || checking == target)
+                break;
+            if(checking.rebuildWorldTransform)
+                target = checking;
+        }
+        if(target != null)
+            target.CalculateWorldTransform();
+    }
+    
+    /**
      * Calculates world transform values of this transform.
      */
     private void CalculateWorldTransform()
     {
+        rebuildWorldTransform = false;
+        
         // Apply parent's transform values.
         if(parent != null)
         {
@@ -135,11 +195,7 @@ public class UITransform extends UIComponent {
         // Signal children as well.
         for(UIObject obj : uiObject.GetChildren())
         {
-            UITransform transform = obj.GetTransform();
-            // In any case the children's world transform needed rebuild as well,
-            // disable its flag as it'll be handled here anyway.
-            transform.rebuildWorldTransform = false;
-            transform.CalculateWorldTransform();
+            obj.GetTransform().CalculateWorldTransform();
         }
     }
 }
