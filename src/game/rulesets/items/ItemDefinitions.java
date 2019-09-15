@@ -62,50 +62,50 @@ public class ItemDefinitions {
     
     public ItemDefinitions()
     {
-        items.add(DamageUpD = new DamageUpItemInfo(1, ItemGrade.D, 115, 100, 1));
-        items.add(DamageUpC = new DamageUpItemInfo(2, ItemGrade.C, 120, 200, 2));
-        items.add(DamageUpB = new DamageUpItemInfo(3, ItemGrade.B, 125, 400, 2));
-        items.add(DamageUpA = new DamageUpItemInfo(4, ItemGrade.A, 130, 700, 2));
-        items.add(DamageUpS = new DamageUpItemInfo(5, ItemGrade.S, 135, 1100, 3));
-        items.add(DamageUpSS = new DamageUpItemInfo(6, ItemGrade.SS, 140, 1600, 3));
-        items.add(DamageUpSSS = new DamageUpItemInfo(7, ItemGrade.SSS, 150, 2200, 3));
+        items.add(DamageUpD = new DamageUpItemInfo(1, ItemGrade.D, 115, 50, 1));
+        items.add(DamageUpC = new DamageUpItemInfo(2, ItemGrade.C, 120, 100, 2));
+        items.add(DamageUpB = new DamageUpItemInfo(3, ItemGrade.B, 125, 200, 2));
+        items.add(DamageUpA = new DamageUpItemInfo(4, ItemGrade.A, 130, 350, 2));
+        items.add(DamageUpS = new DamageUpItemInfo(5, ItemGrade.S, 135, 550, 3));
+        items.add(DamageUpSS = new DamageUpItemInfo(6, ItemGrade.SS, 140, 800, 3));
+        items.add(DamageUpSSS = new DamageUpItemInfo(7, ItemGrade.SSS, 150, 1100, 3));
 
-        items.add(LuckUpC = new LuckUpItemInfo(11, ItemGrade.D, 105, 100, 1));
-        items.add(LuckUpB = new LuckUpItemInfo(12, ItemGrade.C, 110, 200, 2));
-        items.add(LuckUpA = new LuckUpItemInfo(13, ItemGrade.B, 115, 400, 2));
-        items.add(LuckUpD = new LuckUpItemInfo(14, ItemGrade.A, 120, 700, 2));
-        items.add(LuckUpS = new LuckUpItemInfo(15, ItemGrade.S, 125, 1100, 3));
-        items.add(LuckUpSS = new LuckUpItemInfo(16, ItemGrade.SS, 130, 1600, 3));
-        items.add(LuckUpSSS = new LuckUpItemInfo(17, ItemGrade.SSS, 140, 2200, 3));
+        items.add(LuckUpC = new LuckUpItemInfo(11, ItemGrade.D, 105, 50, 1));
+        items.add(LuckUpB = new LuckUpItemInfo(12, ItemGrade.C, 110, 100, 2));
+        items.add(LuckUpA = new LuckUpItemInfo(13, ItemGrade.B, 115, 200, 2));
+        items.add(LuckUpD = new LuckUpItemInfo(14, ItemGrade.A, 120, 350, 2));
+        items.add(LuckUpS = new LuckUpItemInfo(15, ItemGrade.S, 125, 550, 3));
+        items.add(LuckUpSS = new LuckUpItemInfo(16, ItemGrade.SS, 130, 800, 3));
+        items.add(LuckUpSSS = new LuckUpItemInfo(17, ItemGrade.SSS, 140, 1100, 3));
 
-        items.add(ArmorUpD = new ArmorUpItemInfo(21, ItemGrade.D, 110, 100, 1));
-        items.add(ArmorUpC = new ArmorUpItemInfo(22, ItemGrade.C, 115, 200, 2));
-        items.add(ArmorUpB = new ArmorUpItemInfo(23, ItemGrade.B, 120, 400, 2));
-        items.add(ArmorUpA = new ArmorUpItemInfo(24, ItemGrade.A, 125, 700, 2));
-        items.add(ArmorUpS = new ArmorUpItemInfo(25, ItemGrade.S, 130, 1100, 3));
-        items.add(ArmorUpSS = new ArmorUpItemInfo(26, ItemGrade.SS, 135, 1600, 3));
-        items.add(ArmorUpSSS = new ArmorUpItemInfo(27, ItemGrade.SSS, 145, 2200, 3));
+        items.add(ArmorUpD = new ArmorUpItemInfo(21, ItemGrade.D, 110, 50, 1));
+        items.add(ArmorUpC = new ArmorUpItemInfo(22, ItemGrade.C, 115, 100, 2));
+        items.add(ArmorUpB = new ArmorUpItemInfo(23, ItemGrade.B, 120, 200, 2));
+        items.add(ArmorUpA = new ArmorUpItemInfo(24, ItemGrade.A, 125, 350, 2));
+        items.add(ArmorUpS = new ArmorUpItemInfo(25, ItemGrade.S, 130, 550, 3));
+        items.add(ArmorUpSS = new ArmorUpItemInfo(26, ItemGrade.SS, 135, 800, 3));
+        items.add(ArmorUpSSS = new ArmorUpItemInfo(27, ItemGrade.SSS, 145, 1100, 3));
         
-        items.add(AgilityUpD = new AgilityUpItemInfo(31, ItemGrade.D, 5, 100, 1));
-        items.add(AgilityUpC = new AgilityUpItemInfo(32, ItemGrade.C, 10, 200, 2));
-        items.add(AgilityUpB = new AgilityUpItemInfo(33, ItemGrade.B, 15, 400, 2));
-        items.add(AgilityUpA = new AgilityUpItemInfo(34, ItemGrade.A, 20, 700, 2));
-        items.add(AgilityUpS = new AgilityUpItemInfo(35, ItemGrade.S, 25, 1100, 3));
-        items.add(AgilityUpSS = new AgilityUpItemInfo(36, ItemGrade.SS, 30, 1600, 3));
-        items.add(AgilityUpSSS = new AgilityUpItemInfo(37, ItemGrade.SSS, 40, 2200, 3));
+        items.add(AgilityUpD = new AgilityUpItemInfo(31, ItemGrade.D, 5, 50, 1));
+        items.add(AgilityUpC = new AgilityUpItemInfo(32, ItemGrade.C, 10, 100, 2));
+        items.add(AgilityUpB = new AgilityUpItemInfo(33, ItemGrade.B, 15, 200, 2));
+        items.add(AgilityUpA = new AgilityUpItemInfo(34, ItemGrade.A, 20, 350, 2));
+        items.add(AgilityUpS = new AgilityUpItemInfo(35, ItemGrade.S, 25, 550, 3));
+        items.add(AgilityUpSS = new AgilityUpItemInfo(36, ItemGrade.SS, 30, 800, 3));
+        items.add(AgilityUpSSS = new AgilityUpItemInfo(37, ItemGrade.SSS, 40, 1100, 3));
         
-        items.add(HealD = new HealItemInfo(41, ItemGrade.D, 6, 100));
-        items.add(HealC = new HealItemInfo(42, ItemGrade.C, 10, 200));
-        items.add(HealB = new HealItemInfo(43, ItemGrade.B, 14, 400));
-        items.add(HealA = new HealItemInfo(44, ItemGrade.A, 18, 700));
-        items.add(HealS = new HealItemInfo(45, ItemGrade.S, 22, 1100));
-        items.add(HealSS = new HealItemInfo(46, ItemGrade.SS, 26, 1600));
-        items.add(HealSSS = new HealItemInfo(47, ItemGrade.SSS, 32, 2200));
+        items.add(HealD = new HealItemInfo(41, ItemGrade.D, 6, 50));
+        items.add(HealC = new HealItemInfo(42, ItemGrade.C, 10, 100));
+        items.add(HealB = new HealItemInfo(43, ItemGrade.B, 14, 200));
+        items.add(HealA = new HealItemInfo(44, ItemGrade.A, 18, 350));
+        items.add(HealS = new HealItemInfo(45, ItemGrade.S, 22, 550));
+        items.add(HealSS = new HealItemInfo(46, ItemGrade.SS, 26, 800));
+        items.add(HealSSS = new HealItemInfo(47, ItemGrade.SSS, 32, 1100));
         
-        items.add(Peek = new PeekItemInfo(1001, 2500));
-        items.add(Reveal = new RevealItemInfo(1002, 2500));
-        items.add(Return = new ReturnItemInfo(1003, 2500));
-        items.add(Clone = new CloneItemInfo(1004, 5000));
+        items.add(Peek = new PeekItemInfo(1001, 150));
+        items.add(Reveal = new RevealItemInfo(1002, 150));
+        items.add(Return = new ReturnItemInfo(1003, 300));
+        items.add(Clone = new CloneItemInfo(1004, 300));
     }
     
     /**
