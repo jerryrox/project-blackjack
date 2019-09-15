@@ -131,6 +131,9 @@ public class GuiRuleset extends UIObject implements IDrawableRuleset<BaseRuleset
 
     public @Override void OnStartSession()
     {
+        // Initialize state handler.
+        stateHandler.Initialize();
+        
         // Initialize controllers.
         humanController = new GuiGameHumanController(this, gameProcessor.GetHumanPlayer(), infoPanel, overlays);
         aiController = new GuiGameAiController(this, gameProcessor.GetAIPlayer(), gameProcessor.GetHumanPlayer(), gameProcessor.GetDeck());
@@ -159,6 +162,8 @@ public class GuiRuleset extends UIObject implements IDrawableRuleset<BaseRuleset
 
     public @Override void OnStopSession()
     {
+        stateHandler.Dispose();
+        
         playerArea.Dispose();
         aiArea.Dispose();
         

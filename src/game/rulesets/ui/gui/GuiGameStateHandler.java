@@ -44,6 +44,24 @@ public class GuiGameStateHandler {
     }
     
     /**
+     * Initializes the state handler for a fresh game session.
+     */
+    public void Initialize()
+    {
+        Dispose();
+    }
+    
+    /**
+     * Disposes state handler along with current game session.
+     */
+    public void Dispose()
+    {
+        pendingEvents = 0;
+        eventName = null;
+        onEnd = null;
+    }
+    
+    /**
      * Adds specified listener to list.
      */
     public void AddListener(IGameStateListener listener)

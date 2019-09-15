@@ -138,9 +138,6 @@ public class UIGameInfoPanel extends UIObject implements IGameStateListener{
             quitButton.SetLabel("Quit");
             quitButton.SetWidth(160);
             quitButton.GetTransform().SetLocalPosition(centerX, 320);
-            quitButton.Clicked.Add((arg) -> {
-                OnQuitButton();
-            });
         }
         
         UIAnimator animator = AddComponent(new UIAnimator());
@@ -189,6 +186,7 @@ public class UIGameInfoPanel extends UIObject implements IGameStateListener{
     public UIGameActionButton GetDrawButton() { return drawButton; }
     public UIGameActionButton GetSkipButton() { return skipButton; }
     public UIRoundBoxButton GetItemButton() { return itemButton; }
+    public UIRoundBoxButton GetQuitButton() { return quitButton; }
 
     public @Override Events OnSetTurnState(GamePlayer player) { return null; }
 
@@ -219,10 +217,5 @@ public class UIGameInfoPanel extends UIObject implements IGameStateListener{
     private void RefreshPhase()
     {
         phaseLabel.SetText("Phase " + gameProcessor.GetPhase());
-    }
-    
-    private void OnQuitButton()
-    {
-        rulesetDisplayer.QuitGame();
     }
 }

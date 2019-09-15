@@ -29,6 +29,7 @@ public class GuiGameHumanController extends GuiGameController {
     private ActionT onDraw;
     private ActionT onSkip;
     private ActionT onItem;
+    private ActionT onQuit;
     
     
     public GuiGameHumanController(GuiRuleset rulesetDisplay, GamePlayer player,
@@ -41,11 +42,13 @@ public class GuiGameHumanController extends GuiGameController {
         onDraw = (arg) -> OnDrawButton();
         onSkip = (arg) -> OnSkipButton();
         onItem = (arg) -> OnItemButton();
+        onQuit = (arg) -> OnQuitButton();
         
         // Hook on to action button events.
         infoPanel.GetDrawButton().Clicked.Add(onDraw);
         infoPanel.GetSkipButton().Clicked.Add(onSkip);
         infoPanel.GetItemButton().Clicked.Add(onItem);
+        infoPanel.GetQuitButton().Clicked.Add(onQuit);
     }
     
     public @Override void SetTurn(boolean onTurn)
@@ -55,6 +58,7 @@ public class GuiGameHumanController extends GuiGameController {
         infoPanel.GetDrawButton().SetActive(onTurn);
         infoPanel.GetSkipButton().SetActive(onTurn);
         infoPanel.GetItemButton().SetActive(onTurn);
+        infoPanel.GetQuitButton().SetActive(onTurn);
     }
     
     public @Override void Dispose()
@@ -62,6 +66,7 @@ public class GuiGameHumanController extends GuiGameController {
         infoPanel.GetDrawButton().Clicked.Remove(onDraw);
         infoPanel.GetSkipButton().Clicked.Remove(onSkip);
         infoPanel.GetItemButton().Clicked.Remove(onItem);
+        infoPanel.GetQuitButton().Clicked.Remove(onQuit);
     }
     
     private void OnDrawButton()
@@ -80,5 +85,10 @@ public class GuiGameHumanController extends GuiGameController {
     {
         UIUseItemOverlay overlay = overlays.ShowView(UIUseItemOverlay.class);
         overlay.SetController(this);
+    }
+    
+    private void OnQuitButton()
+    {
+        rulesetDisplay.QuitGame();
     }
 }
