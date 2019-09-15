@@ -113,11 +113,11 @@ public class CliStatScreen extends CliView {
         
         // Do upgrade and decrease gold
         user.Gold.SetValue(user.Gold.GetValue() - stat.GetCost());
-        stat.SetLevel(stat.GetLevel() + 1);
+        stat.Level.SetValue(stat.Level.GetValue() + 1);
         userStore.Save();
         
         // Set status message
-        SetStatus("Upgraded " + stat.GetName() + " to level " + stat.GetLevel());
+        SetStatus("Upgraded " + stat.GetName() + " to level " + stat.Level.GetValue());
     }
     
     /**
@@ -129,7 +129,7 @@ public class CliStatScreen extends CliView {
         int startX = 3;
         int startY = inx * 2 + 5;
         buffer.SetBuffer(String.format("#%d [%s]", inx+1, stat.GetName()), startX, startY);
-        buffer.SetBuffer("Level: " + stat.GetLevel(), startX + 16, startY);
+        buffer.SetBuffer("Level: " + stat.Level.GetValue(), startX + 16, startY);
         buffer.SetBuffer("Upgrade cost: " + stat.GetCost(), startX + 28, startY);
         buffer.SetBuffer("- " + stat.GetDescription(), startX + 4, startY + 1);
     }

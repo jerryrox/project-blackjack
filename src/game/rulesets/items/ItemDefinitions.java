@@ -138,6 +138,11 @@ public class ItemDefinitions {
     }
     
     /**
+     * Returns all item infos.
+     */
+    public Iterable<ItemInfo> GetAllInfos() { return items; }
+    
+    /**
      * Returns the number of item definitions in the list.
      * @return 
      */

@@ -345,7 +345,7 @@ public class UIGameHand extends UIObject implements IGameStateListener {
             positions[0] = MinPos;
         else
         {
-            float cardDist = Math.min(MaxCardDistance, PosRange * (cardCount - 1));
+            float cardDist = Math.min(MaxCardDistance, PosRange / (cardCount - 1));
             for(int i=0; i<positions.length; i++)
                 positions[i] = MinPos + i * cardDist;
         }

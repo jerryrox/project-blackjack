@@ -16,7 +16,7 @@ public class FortuneStat extends Stat {
         super("Fortune");
     }
     
-    public @Override double GetValue() { return level * 0.15 + 1; }
+    public @Override double GetValue() { return Level.GetValue() * 0.15 + 1; }
 
     public @Override String GetDescription() { return String.format("Multiplies rewards by %d%%.", (int)(GetValue() * 100)); }
     

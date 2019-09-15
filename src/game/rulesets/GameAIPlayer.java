@@ -47,10 +47,10 @@ public class GameAIPlayer extends GamePlayer {
         
         // Modify stats.
         UserStats stat = user.GetStats();
-        stat.Power.SetLevel((difficulty + 1) / 2);
-        stat.Armor.SetLevel((difficulty + 1) / 2);
-        stat.Endurance.SetLevel(difficulty / 2);
-        stat.Luck.SetLevel(difficulty / 2);
+        stat.Power.Level.SetValue((difficulty + 1) / 2);
+        stat.Armor.Level.SetValue((difficulty + 1) / 2);
+        stat.Endurance.Level.SetValue(difficulty / 2);
+        stat.Luck.Level.SetValue(difficulty / 2);
         
         // Reset state.
         ResetState();
@@ -61,6 +61,6 @@ public class GameAIPlayer extends GamePlayer {
      */
     private int GetReward(int difficulty)
     {
-        return (int)((Math.pow(difficulty, 1.6) + 10) * Random.Range(0.95f, 1.05f));
+        return (int)((Math.pow(difficulty, 1.6) + 20) * Random.Range(0.95f, 1.05f));
     }
 }

@@ -40,7 +40,6 @@ public class UIMainScreen extends UIScreen {
     private UIRoundBoxButton playButton;
     private UIRoundBoxButton shopButton;
     private UIRoundBoxButton inventoryButton;
-    private UIRoundBoxButton statButton;
     private UIRoundBoxButton helpButton;
     private UIRoundBoxButton quitButton;
     
@@ -80,30 +79,31 @@ public class UIMainScreen extends UIScreen {
             changeLabel.GetTransform().SetLocalPosition(0, 210);
         }
         
+        final float statPosX = -440;
         UILabel statsLabel = uiObject.CreateChild().AddComponent(new UILabel());
         {
             statsLabel.SetText("Your stats");
-            statsLabel.GetTransform().SetLocalPosition(-480, -210);
+            statsLabel.GetTransform().SetLocalPosition(statPosX, -210);
         }
         uiObject.AddChild(powerDisplayer = new UIMainStatDisplayer());
         {
-            powerDisplayer.GetTransform().SetLocalPosition(-480, -160);
+            powerDisplayer.GetTransform().SetLocalPosition(statPosX, -160);
         }
         uiObject.AddChild(armorDisplayer = new UIMainStatDisplayer());
         {
-            armorDisplayer.GetTransform().SetLocalPosition(-480, -85);
+            armorDisplayer.GetTransform().SetLocalPosition(statPosX, -85);
         }
         uiObject.AddChild(enduranceDisplayer = new UIMainStatDisplayer());
         {
-            enduranceDisplayer.GetTransform().SetLocalPosition(-480, -10);
+            enduranceDisplayer.GetTransform().SetLocalPosition(statPosX, -10);
         }
         uiObject.AddChild(luckDisplayer = new UIMainStatDisplayer());
         {
-            luckDisplayer.GetTransform().SetLocalPosition(-480, 65);
+            luckDisplayer.GetTransform().SetLocalPosition(statPosX, 65);
         }
         uiObject.AddChild(fortuneDisplayer = new UIMainStatDisplayer());
         {
-            fortuneDisplayer.GetTransform().SetLocalPosition(-480, 140);
+            fortuneDisplayer.GetTransform().SetLocalPosition(statPosX, 140);
         }
         
         final int buttonWidth = 160;
@@ -113,7 +113,7 @@ public class UIMainScreen extends UIScreen {
             playButton.SetBgColor(colors.Neutral);
             playButton.SetLabel("Play");
             playButton.SetWidth(buttonWidth);
-            playButton.GetTransform().SetLocalPosition(-500, buttonPosY);
+            playButton.GetTransform().SetLocalPosition(-400, buttonPosY);
             playButton.Clicked.Add((arg) -> { OnPlayButton(); });
         }
         uiObject.AddChild(shopButton = new UIRoundBoxButton());
@@ -121,7 +121,7 @@ public class UIMainScreen extends UIScreen {
             shopButton.SetBgColor(colors.Positive);
             shopButton.SetLabel("Shop");
             shopButton.SetWidth(buttonWidth);
-            shopButton.GetTransform().SetLocalPosition(-300, buttonPosY);
+            shopButton.GetTransform().SetLocalPosition(-200, buttonPosY);
             shopButton.Clicked.Add((arg) -> { OnShopButton(); });
         }
         uiObject.AddChild(inventoryButton = new UIRoundBoxButton());
@@ -129,16 +129,8 @@ public class UIMainScreen extends UIScreen {
             inventoryButton.SetBgColor(colors.Positive);
             inventoryButton.SetLabel("Inventory");
             inventoryButton.SetWidth(buttonWidth);
-            inventoryButton.GetTransform().SetLocalPosition(-100, buttonPosY);
+            inventoryButton.GetTransform().SetLocalPosition(0, buttonPosY);
             inventoryButton.Clicked.Add((arg) -> { OnInventoryButton(); });
-        }
-        uiObject.AddChild(statButton = new UIRoundBoxButton());
-        {
-            statButton.SetBgColor(colors.Positive);
-            statButton.SetLabel("Stat");
-            statButton.SetWidth(buttonWidth);
-            statButton.GetTransform().SetLocalPosition(100, buttonPosY);
-            statButton.Clicked.Add((arg) -> { OnStatButton(); });
         }
         uiObject.AddChild(helpButton = new UIRoundBoxButton());
         {
@@ -146,7 +138,7 @@ public class UIMainScreen extends UIScreen {
             helpButton.SetTextColor(colors.Dark);
             helpButton.SetLabel("Help");
             helpButton.SetWidth(buttonWidth);
-            helpButton.GetTransform().SetLocalPosition(300, buttonPosY);
+            helpButton.GetTransform().SetLocalPosition(200, buttonPosY);
             helpButton.Clicked.Add((arg) -> { OnHelpButton(); });
         }
         uiObject.AddChild(quitButton = new UIRoundBoxButton());
@@ -154,7 +146,7 @@ public class UIMainScreen extends UIScreen {
             quitButton.SetBgColor(colors.Negative);
             quitButton.SetLabel("Quit");
             quitButton.SetWidth(buttonWidth);
-            quitButton.GetTransform().SetLocalPosition(500, buttonPosY);
+            quitButton.GetTransform().SetLocalPosition(400, buttonPosY);
             quitButton.Clicked.Add((arg) -> { OnQuitButton(); });
         }
     }
@@ -190,11 +182,11 @@ public class UIMainScreen extends UIScreen {
     private void RefreshStatDisplayers()
     {
         UserStats stats = user.GetStats();
-        powerDisplayer.Setup("Power", stats.Power.GetLevel(), stats.Power.GetDescription());
-        armorDisplayer.Setup("Armor", stats.Armor.GetLevel(), stats.Armor.GetDescription());
-        enduranceDisplayer.Setup("Endurance", stats.Endurance.GetLevel(), stats.Endurance.GetDescription());
-        luckDisplayer.Setup("Luck", stats.Luck.GetLevel(), stats.Luck.GetDescription());
-        fortuneDisplayer.Setup("Fortune", stats.Fortune.GetLevel(), stats.Fortune.GetDescription());
+        powerDisplayer.Setup(stats.Power);
+        armorDisplayer.Setup(stats.Armor);
+        enduranceDisplayer.Setup(stats.Endurance);
+        luckDisplayer.Setup(stats.Luck);
+        fortuneDisplayer.Setup(stats.Fortune);
     }
     
     /**
@@ -230,12 +222,12 @@ public class UIMainScreen extends UIScreen {
     
     private void OnShopButton()
     {
-        
+        screens.ShowView(UIShopScreen.class);
     }
     
     private void OnInventoryButton()
     {
-        
+        screens.ShowView(UIInventoryScreen.class);
     }
     
     private void OnStatButton()

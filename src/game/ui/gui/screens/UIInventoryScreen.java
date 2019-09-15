@@ -1,91 +1,80 @@
 /*
  * Jerry Kim (18015036), 2019
  */
-package game.ui.gui.overlays;
+package game.ui.gui.screens;
 
 import game.allocation.InitWithDependency;
 import game.allocation.ReceivesDependency;
-import game.data.Action;
 import game.data.Paginator;
-import game.debug.Debug;
 import game.entities.OwnedItemEntity;
 import game.graphics.ColorPreset;
 import game.io.store.ItemStore;
 import game.rulesets.items.ItemInfo;
-import game.rulesets.ui.gui.controller.GuiGameHumanController;
-import game.ui.gui.UIOverlayController;
+import game.ui.gui.UIScreenController;
 import game.ui.gui.components.ui.UILabel;
-import game.ui.gui.components.ui.UIOverlay;
-import game.ui.gui.components.ui.UISprite;
+import game.ui.gui.components.ui.UIScreen;
 import game.ui.gui.objects.customized.UIInventoryItem;
 import game.ui.gui.objects.customized.UIItemList;
 import game.ui.gui.objects.customized.UIRoundBoxButton;
-import java.awt.Color;
 import java.awt.Font;
-import java.util.ArrayList;
 
 /**
- * Overlay for using items.
+ * Inventory displayer screen.
  * @author jerrykim
  */
-public class UIUseItemOverlay extends UIOverlay {
+public class UIInventoryScreen extends UIScreen {
     
     private UIItemList<UIInventoryItem> itemList;
     private Paginator<Entry> paginator;
     
     private UILabel pageLabel;
     
-    private boolean usingItem = false;
-    
-    private GuiGameHumanController controller;
-    
     @ReceivesDependency
     private ItemStore itemStore;
     
     
-    public UIUseItemOverlay()
+    public UIInventoryScreen()
     {
+        super();
     }
     
     @InitWithDependency
-    private void Init(ColorPreset colors, UIOverlayController overlays)
+    private void Init(ColorPreset colors, UIScreenController screens)
     {
-        UISprite bg = uiObject.CreateChild().AddComponent(new UISprite());
-        {
-            bg.GetObject().SetDepth(-1);
-            bg.SetSpritename("box");
-            bg.SetColor(Color.black);
-            bg.SetAlpha(0.75f);
-            bg.SetSize(1280, 720);
-        }
-        
         UILabel title = uiObject.CreateChild().AddComponent(new UILabel());
         {
-            title.SetText("Select an item to use.");
-            title.GetTransform().SetLocalPosition(0, -320);
+            title.SetText("Inventory");
+            title.GetTransform().SetLocalPosition(0, -260f);
             title.SetFont(Font.BOLD, 24);
         }
         
-        final int itemsPerPage = 9;
+        final int itemsPerPage = 8;
         paginator = new Paginator<>(itemsPerPage);
         uiObject.AddChild(itemList = new UIItemList<>(itemsPerPage, () -> new UIInventoryItem()));
         {
-            itemList.GetTransform().SetLocalPosition(0, -240);
-            itemList.SetCallback((item) -> {
-                UseItem(item);
-            });
+            itemList.GetTransform().SetLocalPosition(0, -180);
         }
         
         final float menuPosY = 320;
-        UIRoundBoxButton closeButton = uiObject.AddChild(new UIRoundBoxButton());
+        UIRoundBoxButton shopButton = uiObject.AddChild(new UIRoundBoxButton());
         {
-            closeButton.SetBgColor(colors.Warning);
-            closeButton.SetWidth(200);
-            closeButton.SetLabel("Close");
-            closeButton.SetTextColor(colors.Dark);
-            closeButton.GetTransform().SetLocalPosition(480, menuPosY);
-            closeButton.Clicked.Add((arg) -> {
-                overlays.HideView(this);
+            shopButton.SetBgColor(colors.Neutral);
+            shopButton.SetWidth(180);
+            shopButton.SetLabel("Shop");
+            shopButton.GetTransform().SetLocalPosition(230, menuPosY);
+            shopButton.Clicked.Add((arg) -> {
+                screens.ShowView(UIShopScreen.class);
+            });
+        }
+        UIRoundBoxButton mainButton = uiObject.AddChild(new UIRoundBoxButton());
+        {
+            mainButton.SetBgColor(colors.Warning);
+            mainButton.SetWidth(180);
+            mainButton.SetLabel("Main menu");
+            mainButton.SetTextColor(colors.Dark);
+            mainButton.GetTransform().SetLocalPosition(480, menuPosY);
+            mainButton.Clicked.Add((arg) -> {
+                screens.ShowView(UIMainScreen.class);
             });
         }
         
@@ -117,52 +106,10 @@ public class UIUseItemOverlay extends UIOverlay {
         }
     }
     
-    public @Override boolean UpdateInput() { return false; }
-    
     public @Override void OnPreShowView()
     {
         super.OnPreShowView();
-        controller = null;
-        usingItem = false;
         RebuildEntries();
-        RedrawPage();
-    }
-    
-    /**
-     * Sets the controller that requested for item use.
-     */
-    public void SetController(GuiGameHumanController controller)
-    {
-        this.controller = controller;
-    }
-    
-    /**
-     * Requests use of specified item.
-     */
-    private void UseItem(ItemInfo item)
-    {
-        if(usingItem)
-            return;
-        if(controller != null)
-        {
-            // Notify controller.
-            usingItem = true;
-            controller.UseItem(item, () -> usingItem = false);
-            // Decrease item from inventory.
-            Entry entry = paginator.Find(e -> e.Item == item);
-            if(entry != null)
-            {
-                entry.Count --;
-                if(entry.Count <= 0)
-                    paginator.Remove(entry);
-                itemStore.RemoveItem(item);
-                itemStore.Save();
-            }
-        }
-        
-        int lastPage = paginator.GetCurPage();
-        RebuildEntries();
-        paginator.SetPage(lastPage);
         RedrawPage();
     }
     

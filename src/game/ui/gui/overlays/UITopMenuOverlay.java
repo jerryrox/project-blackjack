@@ -5,6 +5,8 @@ package game.ui.gui.overlays;
 
 import game.allocation.InitWithDependency;
 import game.allocation.ReceivesDependency;
+import game.animations.Anime;
+import game.animations.Easing;
 import game.data.ActionT;
 import game.entities.UserEntity;
 import game.graphics.ColorPreset;

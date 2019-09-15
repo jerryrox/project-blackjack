@@ -29,7 +29,7 @@ public class UIRootPanel extends JPanel {
      */
     public static final int Height = 720;
     
-    private final int DesiredDeltaTime = (int)(1000f / 60f);
+    private final int DesiredDeltaTime = (int)(1000f / 30f);
     private final int MaxDeltaTime = DesiredDeltaTime * 5;
     
     /**

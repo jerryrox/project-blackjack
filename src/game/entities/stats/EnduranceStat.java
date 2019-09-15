@@ -16,7 +16,7 @@ public class EnduranceStat extends Stat {
         super("Endurance");
     }
     
-    public @Override double GetValue() { return 1.5 * Math.pow(level, 1.8) + 25; }
+    public @Override double GetValue() { return 1.5 * Math.pow(Level.GetValue(), 1.8) + 25; }
     
     public @Override String GetDescription() { return String.format("Grants %d max health.", (int)GetValue()); }
 }

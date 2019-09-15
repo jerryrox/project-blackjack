@@ -31,7 +31,7 @@ public class CasualRuleset extends BaseRuleset {
         // In casual ruleset, the enemy ai's difficulty should be adjusted
         // somewhere near player's level.
         UserStats stats = user.GetStats();
-        int difficulty = (stats.Power.GetLevel() + stats.Armor.GetLevel() + stats.Endurance.GetLevel() + stats.Luck.GetLevel()) / 2;
+        int difficulty = (stats.Power.Level.GetValue() + stats.Armor.Level.GetValue() + stats.Endurance.Level.GetValue() + stats.Luck.Level.GetValue()) / 2;
         
         GameAIPlayer ai = gameProcessor.GetAIPlayer();
         ai.SetDifficulty(Math.max(Random.Range(difficulty-2, difficulty+5), 0));

@@ -13,19 +13,18 @@ import game.ui.gui.components.ui.UIDisplayer;
 import game.ui.gui.components.ui.UILabel;
 import game.ui.gui.components.ui.UISprite;
 import game.ui.gui.objects.UIButton;
-import game.ui.gui.objects.UIObject;
 import java.awt.Font;
 
 /**
- * Representation of a single item type in inventory.
+ * Representation of a single item type in shop.
  * @author jerrykim
  */
-public class UIInventoryItem extends UIButton implements IUIItemCell {
+public class UIShopItem extends UIButton implements IUIItemCell {
     
     private UIDisplayer panel;
     private UISprite bg;
     private UILabel nameLabel;
-    private UILabel countLabel;
+    private UILabel costLabel;
     private UILabel descriptionLabel;
     
     private ItemInfo item;
@@ -33,7 +32,7 @@ public class UIInventoryItem extends UIButton implements IUIItemCell {
     private Action callback;
     
     
-    public UIInventoryItem()
+    public UIShopItem()
     {
         super();
     }
@@ -49,7 +48,7 @@ public class UIInventoryItem extends UIButton implements IUIItemCell {
             bg.SetSpritename("round-box");
             bg.SetWrapMode(UISprite.WrapModes.Sliced);
             bg.SetSize(960, 56);
-            bg.SetColor(colors.Neutral);
+            bg.SetColor(colors.Negative);
             bg.SetAlpha(0.25f);
             
             SetTarget(bg);
@@ -60,12 +59,12 @@ public class UIInventoryItem extends UIButton implements IUIItemCell {
             nameLabel.SetPivot(Pivot.Left);
             nameLabel.GetTransform().SetLocalPosition(-460, -9);
         }
-        countLabel = CreateChild().AddComponent(new UILabel());
+        costLabel = CreateChild().AddComponent(new UILabel());
         {
-            countLabel.SetPivot(Pivot.Right);
-            countLabel.SetAlpha(0.5f);
-            countLabel.SetFontSize(16);
-            countLabel.GetTransform().SetLocalPosition(460, -9);
+            costLabel.SetPivot(Pivot.Right);
+            costLabel.SetAlpha(0.5f);
+            costLabel.SetFontSize(16);
+            costLabel.GetTransform().SetLocalPosition(460, -9);
         }
         descriptionLabel = CreateChild().AddComponent(new UILabel());
         {
@@ -96,22 +95,19 @@ public class UIInventoryItem extends UIButton implements IUIItemCell {
         });
     }
     
-    /**
-     * Sets display using specified item.
-     */
-    public @Override void Setup(ItemInfo item, int count)
-    {
-        this.item = item;
-        nameLabel.SetText(item.Name);
-        countLabel.SetText("Available: " + count);
-        descriptionLabel.SetText(item.Description);
-    }
-
     public @Override int GetHeight() { return bg.GetHeight(); }
 
     public @Override UIDisplayer GetPanel() { return panel; }
 
     public @Override ItemInfo GetItem() { return item; }
+
+    public @Override void Setup(ItemInfo item, int value)
+    {
+        this.item = item;
+        nameLabel.SetText(item.Name);
+        costLabel.SetText("Cost: " + value);
+        descriptionLabel.SetText(item.Description);
+    }
 
     public @Override void SetCallback(Action callback)
     {

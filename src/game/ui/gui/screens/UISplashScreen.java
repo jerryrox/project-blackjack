@@ -12,6 +12,7 @@ import game.ui.gui.UIScreenController;
 import game.ui.gui.components.ui.UIScreen;
 import game.ui.gui.components.ui.UISprite;
 import game.ui.gui.overlays.UIWallpaperOverlay;
+import java.awt.Color;
 
 /**
  * Splash screen.
@@ -34,6 +35,14 @@ public class UISplashScreen extends UIScreen {
     @InitWithDependency
     private void Init()
     {
+        UISprite bg = uiObject.CreateChild().AddComponent(new UISprite());
+        {
+            bg.GetObject().SetDepth(-1);
+            bg.SetSpritename("box");
+            bg.SetSize(1280, 720);
+            bg.SetColor(Color.black);
+        }
+        
         UISprite logo = uiObject.CreateChild().AddComponent(new UISprite());
         logo.SetSpritename("logo-aut");
         logo.ResetSize();
@@ -48,7 +57,7 @@ public class UISplashScreen extends UIScreen {
             logoAni.AddSection(110, 160, (progress) -> {
                 logo.SetAlpha(Easing.QuadEaseIn(progress, 1, -1, 0));
             });
-            logoAni.AddEvent(160, () -> {
+            logoAni.AddEvent(161, () -> {
                 EndSplash();
             });
             logoAni.Play();
@@ -57,9 +66,6 @@ public class UISplashScreen extends UIScreen {
     
     private void EndSplash()
     {
-        screens.HideView(this);
-        
         screens.ShowView(UIHomeScreen.class);
-        overlays.ShowView(UIWallpaperOverlay.class);
     }
 }

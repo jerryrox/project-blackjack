@@ -16,7 +16,7 @@ public class ArmorStat extends Stat {
         super("Armor");
     }
     
-    public @Override double GetValue() { return 0.2 * Math.pow(level, 1.5) + 5; }
+    public @Override double GetValue() { return 0.2 * Math.pow(Level.GetValue(), 1.5) + 5; }
     
     public @Override String GetDescription() { return String.format("Reduces incoming damage by %.2f.", GetValue()); }
 }

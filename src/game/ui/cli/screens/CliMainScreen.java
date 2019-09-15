@@ -122,15 +122,15 @@ public class CliMainScreen extends CliView {
         // Show stat levels of user.
         UserStats stats = user.GetStats();
         buffer.SetBuffer("Player stats:", 24, 4);
-        buffer.SetBuffer("[== Power level: " + stats.Power.GetLevel()+ " ==]", 24, 5);
+        buffer.SetBuffer("[== Power level: " + stats.Power.Level.GetValue()+ " ==]", 24, 5);
         buffer.SetBuffer("[-- Attack value: " + (int)stats.Power.GetValue()+ " --]", 24, 6);
-        buffer.SetBuffer("[== Armor level: " + stats.Armor.GetLevel() + " ==]", 24, 7);
+        buffer.SetBuffer("[== Armor level: " + stats.Armor.Level.GetValue() + " ==]", 24, 7);
         buffer.SetBuffer("[-- Defense value: " + (int)stats.Armor.GetValue()+ " --]", 24, 8);
-        buffer.SetBuffer("[== Endurance level: " + stats.Endurance.GetLevel()+ " ==]", 24, 9);
+        buffer.SetBuffer("[== Endurance level: " + stats.Endurance.Level.GetValue()+ " ==]", 24, 9);
         buffer.SetBuffer("[-- Max health value: " + (int)stats.Endurance.GetValue()+ " --]", 24, 10);
-        buffer.SetBuffer("[== Luck level: " + stats.Luck.GetLevel() + " ==]", 24, 11);
+        buffer.SetBuffer("[== Luck level: " + stats.Luck.Level.GetValue() + " ==]", 24, 11);
         buffer.SetBuffer("[-- Critical chance value: " + (int)stats.Luck.GetValue()+ "% --]", 24, 12);
-        buffer.SetBuffer("[== Fortune level: " + stats.Fortune.GetLevel()+ " ==]", 24, 13);
+        buffer.SetBuffer("[== Fortune level: " + stats.Fortune.Level.GetValue()+ " ==]", 24, 13);
         buffer.SetBuffer("[-- Reward mult. value: " + (int)(100 * stats.Fortune.GetValue()) + "% --]", 24, 14);
         
         super.Render(buffer);

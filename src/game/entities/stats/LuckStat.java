@@ -16,7 +16,7 @@ public class LuckStat extends Stat {
         super("Luck");
     }
     
-    public @Override double GetValue() { return level * 0.5 + 25; }
+    public @Override double GetValue() { return Level.GetValue() * 0.5 + 25; }
     
     public @Override String GetDescription() { return String.format("Inflicts a critical hit by %.1f%% chance.", GetValue()); }
 }

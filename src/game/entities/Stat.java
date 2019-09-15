@@ -3,6 +3,7 @@
  */
 package game.entities;
 
+import game.data.BindableInt;
 import game.io.IKeyValueSerializable;
 import game.io.serializers.KeyValueSerializer;
 
@@ -12,8 +13,9 @@ import game.io.serializers.KeyValueSerializer;
  */
 public abstract class Stat implements IKeyValueSerializable {
     
+    public final BindableInt Level = new BindableInt(0);
+    
     protected String name;
-    protected int level;
     
     
     protected Stat(String name)
@@ -27,20 +29,9 @@ public abstract class Stat implements IKeyValueSerializable {
     public String GetName() { return name; }
     
     /**
-     * Returns the level of the stat.
-     */
-    public int GetLevel() { return level; }
-    
-    /**
-     * Sets the level of the stat.
-     * @param level 
-     */
-    public void SetLevel(int level) { this.level = level; }
-    
-    /**
      * Returns the cost to upgrading this stat at current level.
      */
-    public int GetCost() { return 50 + level * 40; }
+    public int GetCost() { return 50 + Level.GetValue() * 40; }
     
     /**
      * Returns the evaluated value derived from stat level.
@@ -54,11 +45,11 @@ public abstract class Stat implements IKeyValueSerializable {
     
     public @Override void Serialize(KeyValueSerializer serializer)
     {
-        serializer.Set(name + "_level", level);
+        serializer.Set(name + "_level", Level.GetValue());
     }
     
     public @Override void Deserialize(KeyValueSerializer serializer)
     {
-        level = serializer.GetInt(name + "_level");
+        Level.SetValue(serializer.GetInt(name + "_level"));
     }
 }

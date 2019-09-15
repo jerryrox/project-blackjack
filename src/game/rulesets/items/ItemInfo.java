@@ -11,7 +11,7 @@ import game.rulesets.GamePlayer;
  * This serves like a metadata for an item instance.
  * @author jerrykim
  */
-public class ItemInfo {
+public class ItemInfo implements Comparable<ItemInfo> {
     
     /**
      * Identifier of the item.
@@ -67,4 +67,9 @@ public class ItemInfo {
      * @param item 
      */
     public void ApplyToGame(GamePlayer player, GameItem item) {}
+
+    public @Override int compareTo(ItemInfo o)
+    {
+        return Integer.compare(Id, o.Id);
+    }
 }

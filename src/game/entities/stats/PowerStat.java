@@ -16,7 +16,7 @@ public class PowerStat extends Stat {
         super("Power");
     }
     
-    public @Override double GetValue() { return 0.5 * Math.pow(level, 1.5) + 10; }
+    public @Override double GetValue() { return 0.5 * Math.pow(Level.GetValue(), 1.5) + 10; }
 
     public @Override String GetDescription() { return String.format("Grants %.2f attack damage.", GetValue()); }
 }
