@@ -15,4 +15,6 @@ public class GameArguments {
     public ILogger Logger = null;
     
     public boolean UseDatabaseStorage = false;
+    
+    public String[] RuntimeArguments;
 }

@@ -20,11 +20,11 @@ public class UIFrame extends JFrame {
     private UIRootPanel rootPanel;
     
     
-    public UIFrame()
+    public UIFrame(int fps)
     {
         super("Project: Blackjack");
         
-        rootPanel = new UIRootPanel();
+        rootPanel = new UIRootPanel(fps);
     }
     
     /**

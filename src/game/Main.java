@@ -20,6 +20,7 @@ public class Main {
         GameArguments gameArgs = new GameArguments();
         gameArgs.Logger = logger;
         gameArgs.UseDatabaseStorage = false;
+        gameArgs.RuntimeArguments = args;
         
         BaseGame game = null;
         switch(Application.Runtime)

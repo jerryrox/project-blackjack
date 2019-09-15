@@ -40,13 +40,13 @@ public class UIScene extends UIObject {
         GetTransform().SetLocalPosition(UIRootPanel.Width / 2, UIRootPanel.Height / 2);
         
         // Show splash screen.
-        //screens.ShowView(UISplashScreen.class);
+        screens.ShowView(UISplashScreen.class);
         overlays.ShowView(UIWallpaperOverlay.class);
         
         // ========================================
         // TEST CODES
         // ========================================
-        screens.ShowView(UIMainScreen.class);
+//        screens.ShowView(UIMainScreen.class);
         
 //        UIResultScreen result = screens.ShowView(UIResultScreen.class);
 //        GameResult dummyResult = new GameResult(GameModes.Casual, GameResultTypes.Win, 0, 0);

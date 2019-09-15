@@ -33,17 +33,32 @@ public class GuiGame extends BaseGame {
     
     private boolean isQuitting = false;
     
+    private int requestedFps;
+    
     
     public GuiGame(GameArguments args)
     {
         super(args);
+        
+        // Parse fps from runtime argument.
+        if(args.RuntimeArguments != null)
+        {
+            if(args.RuntimeArguments.length > 0)
+            {
+                try
+                {
+                    requestedFps = Integer.parseInt(args.RuntimeArguments[0]);
+                }
+                catch(Exception e) {}
+            }
+        }
     }
     
     protected @Override void Initialize()
     {
         super.Initialize();
         
-        dependencies.Cache(frame = new UIFrame());
+        dependencies.Cache(frame = new UIFrame(requestedFps));
         dependencies.Cache(fontProvider = new GuiFontProvider());
         dependencies.Cache(atlas = new UIAtlas());
         dependencies.Cache(colors = new ColorPreset());

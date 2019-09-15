@@ -29,8 +29,8 @@ public class UIRootPanel extends JPanel {
      */
     public static final int Height = 720;
     
-    private final int DesiredDeltaTime = (int)(1000f / 30f);
-    private final int MaxDeltaTime = DesiredDeltaTime * 5;
+    private int desiredDeltaTime = (int)(1000f / 30f);
+    private int maxDeltaTime;
     
     /**
      * Root object of gameobject hierarchy.
@@ -53,9 +53,17 @@ public class UIRootPanel extends JPanel {
     private UIInput input;
     
     
-    public UIRootPanel()
+    public UIRootPanel(int fps)
     {
         super();
+        
+        // Set fps.
+        if(fps <= 0)
+            fps = 30;
+        else if(fps > 60)
+            fps = 60;
+        desiredDeltaTime = (int)(1000f / fps);
+        maxDeltaTime = desiredDeltaTime * 5;
         
         setPreferredSize(new Dimension(Width, Height));
         
@@ -82,15 +90,15 @@ public class UIRootPanel extends JPanel {
     {
         lastTime = System.currentTimeMillis();
         
-        gameLooper = new Timer(DesiredDeltaTime, (e) -> {
+        gameLooper = new Timer(desiredDeltaTime, (e) -> {
             // Calculate delta time
             long curTime = System.currentTimeMillis();
             float deltaTime = (curTime - lastTime) / 1000f;
             lastTime = curTime;
             
             // Clamp deltaTime
-            if(deltaTime > MaxDeltaTime)
-                deltaTime = MaxDeltaTime;
+            if(deltaTime > maxDeltaTime)
+                deltaTime = maxDeltaTime;
             
             // Update
             scene.PropagateInput();
