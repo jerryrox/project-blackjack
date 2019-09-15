@@ -3,6 +3,7 @@
  */
 package game.io.storage;
 
+import game.debug.Debug;
 import game.entities.IEntity;
 import game.io.IKeyValueSerializable;
 import game.utils.PathUtils;
@@ -47,6 +48,8 @@ public class FileSystemStorage<T extends IEntity & IKeyValueSerializable> implem
     {
         this.createHandler = createHandler;
         file = new File(PathUtils.GetDataPath() + fileName);
+        Debug.Log("FileSystemStorage - Initializing storage at: " + file.getAbsolutePath());
+        
         // Make sure the file exists.
         if(!file.exists())
         {

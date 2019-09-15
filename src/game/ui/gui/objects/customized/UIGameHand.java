@@ -114,7 +114,10 @@ public class UIGameHand extends UIObject implements IGameStateListener {
     public void Dispose()
     {
         for(int i=0; i<cards.size(); i++)
+        {
+            cards.get(i).SetSide(false, false);
             cards.get(i).SetActive(false);
+        }
     }
     
     public @Override Events OnSetTurnState(GamePlayer player) { return null; }

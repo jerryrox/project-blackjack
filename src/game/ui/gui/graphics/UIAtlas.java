@@ -6,6 +6,8 @@ package game.ui.gui.graphics;
 import game.data.Rect;
 import game.debug.Debug;
 import java.io.File;
+import java.net.URI;
+import java.net.URL;
 import java.util.HashMap;
 import javax.swing.ImageIcon;
 
@@ -60,17 +62,23 @@ public class UIAtlas {
         for(int i=0; i<extensions.length; i++)
         {
             // Build image path
-            String path = String.format("assets/sprites/%s%s", spritename, extensions[i]);
-            
-            // If image file does not exist, continue.
-            File file = new File(path);
-            if(!file.exists())
+            URL url = getClass().getResource(String.format("/assets/sprites/%s%s", spritename, extensions[i]));
+            if(url == null)
                 continue;
             
-            // If exists, build image icon and add to atlas.
-            ImageIcon image = new ImageIcon(path);
-            UISpriteInfo spriteInfo = new UISpriteInfo(image, sliceRect);
-            atlas.put(spritename, spriteInfo);
+            // If image file does not exist, continue.
+            try
+            {
+                // If exists, build image icon and add to atlas.
+                ImageIcon image = new ImageIcon(url);
+                UISpriteInfo spriteInfo = new UISpriteInfo(image, sliceRect);
+                atlas.put(spritename, spriteInfo);
+            }
+            catch(Exception e)
+            {
+                Debug.LogWarningFormat("UIAtlas.AddSprite - Error while reading sprite %s from %s.\n%s", spritename, url.getFile(), e.getMessage());
+                continue;
+            }
             return;
         }
         

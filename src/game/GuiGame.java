@@ -94,8 +94,6 @@ public class GuiGame extends BaseGame {
         atlas.AddSprite("survival-icon");
         atlas.AddSprite("survival-title");
         atlas.AddSprite("title");
-        
-        atlas.AddSprite("guide-game");
     }
 
     protected @Override void OnStart()
