@@ -120,6 +120,8 @@ public class GuiGame extends BaseGame {
 
     public @Override void ForceQuit()
     {
+        userStore.Dispose();
+        itemStore.Dispose();
         System.exit(0);
     }
 

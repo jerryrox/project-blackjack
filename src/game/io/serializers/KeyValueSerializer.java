@@ -24,6 +24,11 @@ public class KeyValueSerializer {
     public int GetCount() { return map.size(); }
     
     /**
+     * Returns all keys mapped with a value.
+     */
+    public Iterable<String> GetKeys() { return map.keySet(); }
+    
+    /**
      * Clears all stored entries in the map.
      */
     public void Clear() { map.clear(); }

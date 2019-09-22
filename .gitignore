@@ -4,3 +4,5 @@
 **/.DS_Store
 /build/
 /dist/
+*DB/
+derby.log

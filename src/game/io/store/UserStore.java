@@ -3,6 +3,7 @@
  */
 package game.io.store;
 
+import game.data.IDisposable;
 import game.debug.Debug;
 import game.entities.UserEntity;
 import game.io.IStorage;
@@ -11,7 +12,7 @@ import game.io.IStorage;
  * Provides access to user information.
  * @author jerrykim
  */
-public class UserStore {
+public class UserStore implements IDisposable {
     
     /**
      * Source from which the user data is loaded.
@@ -54,5 +55,10 @@ public class UserStore {
     {
         storage.Set("user", curUser);
         storage.Save();
+    }
+
+    public @Override void Dispose()
+    {
+        storage.Dispose();
     }
 }

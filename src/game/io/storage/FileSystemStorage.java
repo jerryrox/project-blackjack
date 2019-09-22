@@ -103,6 +103,8 @@ public class FileSystemStorage<T extends IEntity & IKeyValueSerializable> implem
             // TODO: Handle exception
         }
     }
+    
+    public @Override void Dispose() {}
 
     public @Override void Save()
     {

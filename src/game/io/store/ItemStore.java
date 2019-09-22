@@ -3,6 +3,7 @@
  */
 package game.io.store;
 
+import game.data.IDisposable;
 import game.data.Yieldable;
 import game.entities.OwnedItemEntity;
 import game.io.IStorage;
@@ -13,7 +14,7 @@ import game.rulesets.items.ItemInfo;
  * Store which manages the user's owned items.
  * @author jerrykim
  */
-public class ItemStore {
+public class ItemStore implements IDisposable {
     
     /**
      * Storage from which the items are saved/loaded.
@@ -96,4 +97,9 @@ public class ItemStore {
      * Saves all entries to storage.
      */
     public void Save() { storage.Save(); }
+
+    public @Override void Dispose()
+    {
+        storage.Dispose();
+    }
 }

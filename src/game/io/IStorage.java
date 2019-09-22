@@ -3,6 +3,7 @@
  */
 package game.io;
 
+import game.data.IDisposable;
 import game.entities.IEntity;
 
 /**
@@ -10,12 +11,17 @@ import game.entities.IEntity;
  * Example: Filesystem, Database, etc.
  * @author jerrykim
  */
-public interface IStorage<T extends IEntity> {
+public interface IStorage<T extends IEntity> extends IDisposable {
     
     /**
      * Initializes this storage provider instance.
      */
     void Initialize();
+    
+    /**
+     * Disposes any used resources.
+     */
+    @Override void Dispose();
     
     /**
      * Stores any unsaved data to storage.
