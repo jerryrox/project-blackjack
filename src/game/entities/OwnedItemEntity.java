@@ -47,6 +47,8 @@ public class OwnedItemEntity implements IKeyValueSerializable, IEntity {
     
     public ItemInfo GetInfo() { return itemInfo; }
     
+    public void SetInfo(ItemInfo info) { itemInfo = info; }
+    
     public @Override void Serialize(KeyValueSerializer serializer)
     {
         serializer.Set("infoId", itemInfo.Id);

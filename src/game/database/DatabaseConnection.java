@@ -53,7 +53,7 @@ public class DatabaseConnection {
             return true;
         try
         {
-            connection = DriverManager.getConnection(GetConnectionString());
+            connection = DriverManager.getConnection(GetConnectionString(), "jerryrox", "jerryrox");
             isConnected = connection != null && !connection.isClosed();
             return isConnected;
         }

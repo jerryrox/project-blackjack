@@ -5,10 +5,13 @@ package game;
 
 import game.allocation.DependencyContainer;
 import game.allocation.IDependencyContainer;
+import game.database.DatabaseConnection;
 import game.debug.ConsoleLogger;
 import game.debug.Debug;
 import game.debug.ILogger;
+import game.io.storage.ItemDatabaseStorage;
 import game.io.storage.ItemFileStorage;
+import game.io.storage.UserDatabaseStorage;
 import game.io.storage.UserFileStorage;
 import game.io.store.ItemStore;
 import game.io.store.UserStore;
@@ -27,6 +30,7 @@ public abstract class BaseGame implements IGame {
     
     protected ItemDefinitions itemDefinitions;
     
+    protected DatabaseConnection dbConnection;
     protected UserStore userStore;
     protected ItemStore itemStore;
     
@@ -68,9 +72,13 @@ public abstract class BaseGame implements IGame {
         
         // Stores
         boolean useDatabase = gameArgs.UseDatabaseStorage;
-        dependencies.Cache(userStore = new UserStore(useDatabase ? new UserFileStorage() : new UserFileStorage()));
+        // Init database connection instance if using database.
+        if(useDatabase)
+            dependencies.Cache(dbConnection = new DatabaseConnection("ProjectBlackjackDB", logger));
+        // Init stores.
+        dependencies.Cache(userStore = new UserStore(useDatabase ? new UserDatabaseStorage(dbConnection) : new UserFileStorage()));
         dependencies.Cache(userStore.Load());
-        dependencies.Cache(itemStore = new ItemStore(itemDefinitions, useDatabase ? new ItemFileStorage(itemDefinitions) : new ItemFileStorage(itemDefinitions)));
+        dependencies.Cache(itemStore = new ItemStore(itemDefinitions, useDatabase ? new ItemDatabaseStorage(dbConnection, itemDefinitions) : new ItemFileStorage(itemDefinitions)));
     }
     
     /**

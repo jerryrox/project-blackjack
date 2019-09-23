@@ -19,7 +19,7 @@ public class Main {
         // Build arguments to pass to the game.
         GameArguments gameArgs = new GameArguments();
         gameArgs.Logger = logger;
-        gameArgs.UseDatabaseStorage = false;
+        gameArgs.UseDatabaseStorage = true;
         gameArgs.RuntimeArguments = args;
         
         BaseGame game = null;

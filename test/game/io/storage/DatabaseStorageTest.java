@@ -60,6 +60,8 @@ public class DatabaseStorageTest {
         assertEquals(entity.Id, replacingEntity.Id);
         assertNotEquals(entity.MyInt, replacingEntity.MyInt);
         assertNotEquals(entity.MyFloat, replacingEntity.MyFloat);
+        
+        System.out.println("Setting replacingEntity's id: " + replacingEntity.Id);
         storage.Set(replacingEntity.Id, replacingEntity);
         
         DummyEntity loadedEntity = storage.Get(entity.Id);

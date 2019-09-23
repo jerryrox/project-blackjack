@@ -230,11 +230,6 @@ public class UIMainScreen extends UIScreen {
         screens.ShowView(UIInventoryScreen.class);
     }
     
-    private void OnStatButton()
-    {
-        
-    }
-    
     private void OnHelpButton()
     {
         screens.ShowView(UIHelpScreen.class);

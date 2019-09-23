@@ -58,6 +58,7 @@ public abstract class DatabaseStorage<T extends IEntity> implements IStorage<T> 
         String existingId = value.GetId();
         if(existingId == null || existingId.length() == 0)
             value.SetId(existingId = UUID.randomUUID().toString());
+        
         Set(existingId, value);
     }
 
@@ -69,6 +70,9 @@ public abstract class DatabaseStorage<T extends IEntity> implements IStorage<T> 
             Remove(id);
         else
         {
+            // Make sure the value's id matches the specified id.
+            value.SetId(id);
+        
             Statement statement = connection.CreateStatement();
             if(statement == null)
                 return;
@@ -134,8 +138,8 @@ public abstract class DatabaseStorage<T extends IEntity> implements IStorage<T> 
         ));
         try
         {
-            result.next();
-            return ParseEntity(result);
+            if(result != null && result.next())
+                return ParseEntity(result);
         }
         catch(SQLException e)
         {
@@ -163,11 +167,14 @@ public abstract class DatabaseStorage<T extends IEntity> implements IStorage<T> 
         ));
         try
         {
-            // Add all ids to list and return it.
-            ArrayList<String> ids = new ArrayList<>();
-            while(result.next())
-                ids.add(result.getString(1));
-            return ids;
+            if(result != null)
+            {
+                // Add all ids to list and return it.
+                ArrayList<String> ids = new ArrayList<>();
+                while(result.next())
+                    ids.add(result.getString(1));
+                return ids;
+            }
         }
         catch(SQLException e)
         {
@@ -195,11 +202,14 @@ public abstract class DatabaseStorage<T extends IEntity> implements IStorage<T> 
         ));
         try
         {
-            // Add values to list and return it.
-            ArrayList<T> values = new ArrayList<>();
-            while(result.next())
-                values.add(ParseEntity(result));
-            return values;
+            if(result != null)
+            {
+                // Add values to list and return it.
+                ArrayList<T> values = new ArrayList<>();
+                while(result.next())
+                    values.add(ParseEntity(result));
+                return values;
+            }
         }
         catch(SQLException e)
         {

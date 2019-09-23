@@ -4,21 +4,12 @@
 package game.ui.gui.objects;
 
 import game.allocation.InitWithDependency;
-import game.debug.Debug;
-import game.rulesets.GameModes;
-import game.rulesets.GameResult;
-import game.rulesets.GameResultTypes;
 import game.ui.gui.UIOverlayController;
 import game.ui.gui.UIRootPanel;
 import game.ui.gui.UIScreenController;
+import game.ui.gui.overlays.UIQuickMessageOverlay;
 import game.ui.gui.overlays.UIWallpaperOverlay;
-import game.ui.gui.screens.UIHomeScreen;
-import game.ui.gui.screens.UIInventoryScreen;
-import game.ui.gui.screens.UIMainScreen;
-import game.ui.gui.screens.UIModeScreen;
-import game.ui.gui.screens.UIResultScreen;
 import game.ui.gui.screens.UISplashScreen;
-import game.ui.gui.screens.UITestScreen;
 
 /**
  * A specialization of UIObject for serving as the root object in the 
@@ -42,6 +33,7 @@ public class UIScene extends UIObject {
         // Show splash screen.
         screens.ShowView(UISplashScreen.class);
         overlays.ShowView(UIWallpaperOverlay.class);
+        overlays.ShowView(UIQuickMessageOverlay.class);
         
         // ========================================
         // TEST CODES

@@ -42,13 +42,16 @@ public class UIUseItemOverlay extends UIOverlay {
     @ReceivesDependency
     private ItemStore itemStore;
     
+    @ReceivesDependency
+    private UIOverlayController overlays;
+    
     
     public UIUseItemOverlay()
     {
     }
     
     @InitWithDependency
-    private void Init(ColorPreset colors, UIOverlayController overlays)
+    private void Init(ColorPreset colors)
     {
         UISprite bg = uiObject.CreateChild().AddComponent(new UISprite());
         {
@@ -158,6 +161,11 @@ public class UIUseItemOverlay extends UIOverlay {
                 itemStore.RemoveItem(item);
                 itemStore.Save();
             }
+            
+            // Display message
+            UIQuickMessageOverlay message = overlays.GetView(UIQuickMessageOverlay.class);
+            if(message != null)
+                message.ShowMessage("Used item: " + item.Name);
         }
         
         int lastPage = paginator.GetCurPage();
