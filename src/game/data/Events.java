@@ -28,6 +28,11 @@ public class Events<T extends Object> {
     public void Remove(ActionT<T> callback) { callbacks.remove(callback); }
     
     /**
+     * Clears all callbacked registered.
+     */
+    public void Clear() { callbacks.clear(); }
+    
+    /**
      * Fires all callbacks registered to this event.
      */
     public void Invoke(T value)

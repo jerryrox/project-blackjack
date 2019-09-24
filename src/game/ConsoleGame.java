@@ -70,10 +70,15 @@ public class ConsoleGame extends BaseGame {
         // Start the engine.
         cliEngine.StartUpdate();
     }
+    
+    public @Override RuntimeMode GetRuntime() { return RuntimeMode.Cli; }
 
     public @Override String GetVersion() { return ""; }
 
-    public @Override void ForceQuit() {}
+    public @Override void ForceQuit()
+    {
+        super.ForceQuit();
+    }
 
     public @Override void Quit() {}
 }

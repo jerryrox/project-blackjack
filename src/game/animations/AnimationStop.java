@@ -9,7 +9,19 @@ package game.animations;
  */
 public enum AnimationStop {
     
+    /**
+     * No actions to take.
+     */
     None,
+    
+    /**
+     * Reset to the beginning of the animation.
+     * Default.
+     */
     Reset,
+    
+    /**
+     * Reset to the end of the animaion.
+     */
     End
 }

@@ -110,6 +110,11 @@ public class Paginator<T extends Object> {
     public List<T> GetAllItems() { return items; }
     
     /**
+     * Returns the number of all items being managed.
+     */
+    public int GetItemsCount() { return items.size(); }
+    
+    /**
      * Returns the current page number.
      */
     public int GetCurPage() { return curPage; }

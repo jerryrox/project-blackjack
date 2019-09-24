@@ -52,7 +52,6 @@ public class GamePlayer {
     protected ArrayList<GameItem> items = new ArrayList<>();
     
     
-    
     public GamePlayer(UserEntity user)
     {
         this.user = user;
@@ -221,7 +220,7 @@ public class GamePlayer {
     /**
      * Returns the factor at which affects damage.
      */
-    private double GetDamageMultiplier()
+    public final double GetDamageMultiplier()
     {
         double value = 1;
         for(int i=0; i<items.size(); i++)
@@ -232,7 +231,7 @@ public class GamePlayer {
     /**
      * Returns the factor at which affect defense.
      */
-    private double GetArmorMultiplier()
+    public final double GetArmorMultiplier()
     {
         double value = 1;
         for(int i=0; i<items.size(); i++)
@@ -243,7 +242,7 @@ public class GamePlayer {
     /**
      * Returns the factor at which affects critical chance.
      */
-    private double GetCritChanceMultiplier()
+    public final double GetCritChanceMultiplier()
     {
         double value = 1;
         for(int i=0; i<items.size(); i++)
@@ -254,7 +253,7 @@ public class GamePlayer {
     /**
      * Returns the factor at which affects critical resist.
      */
-    private double GetCritResistMultiplier()
+    public final double GetCritResistMultiplier()
     {
         double value = 1;
         for(int i=0; i<items.size(); i++)

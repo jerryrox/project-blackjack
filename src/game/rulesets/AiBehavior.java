@@ -79,7 +79,6 @@ public class AiBehavior {
         // Get probability.
         float rangeProbability = (float)cardsWithinRange / (float)availableCards.size();
         // Apply randomness.
-        // TODO: Improve
         rangeProbability *= Random.Range(1f, 1.15f);
         
         // Return whether ai should draw.

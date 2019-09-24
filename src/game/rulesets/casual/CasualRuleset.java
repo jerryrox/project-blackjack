@@ -3,7 +3,7 @@
  */
 package game.rulesets.casual;
 
-import game.Application;
+import game.IGame;
 import game.allocation.ReceivesDependency;
 import game.debug.Debug;
 import game.entities.UserEntity;
@@ -25,6 +25,9 @@ public class CasualRuleset extends BaseRuleset {
     @ReceivesDependency
     private UserEntity user;
     
+    @ReceivesDependency
+    private IGame game;
+    
     
     public @Override void OnStartSession()
     {
@@ -41,9 +44,9 @@ public class CasualRuleset extends BaseRuleset {
     
     protected @Override IDrawableRuleset CreateDrawableRuleset()
     {
-        switch(Application.Runtime)
+        switch(game.GetRuntime())
         {
-        case Console: return new CliSurvivalRuleset();
+        case Cli: return new CliSurvivalRuleset();
         case Gui: return new GuiRuleset();
         }
         return null;

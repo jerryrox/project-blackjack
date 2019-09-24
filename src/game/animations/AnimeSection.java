@@ -65,13 +65,13 @@ public class AnimeSection {
      */
     public void UpdateState(int frame)
     {
-        lastFrame = curFrame;
-        curFrame = frame;
-        
-        if(frame < from || (frame > to && lastFrame >= to))
-            return;
         if(!isActive)
             return;
+        if(frame < from || (frame > to && lastFrame >= to))
+            return;
+        
+        lastFrame = curFrame;
+        curFrame = frame;
         
         ActivateState();
         isActive = ShouldBeActive();

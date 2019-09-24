@@ -10,7 +10,7 @@ import game.utils.Random;
  * A card used in the game.
  * @author jerrykim
  */
-public class Card implements ICard {
+public class Card {
     
     /**
      * Maximum value of a card.
@@ -49,7 +49,7 @@ public class Card implements ICard {
         isCloned = true;
     }
     
-    public @Override int GetNumber() { return number; }
+    public int GetNumber() { return number; }
     
-    public @Override boolean IsCloned() { return isCloned; }
+    public boolean IsCloned() { return isCloned; }
 }

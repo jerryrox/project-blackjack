@@ -90,4 +90,10 @@ public abstract class BaseGame implements IGame {
      * Performs any initial process to start the actual game.
      */
     protected abstract void OnStart();
+    
+    public @Override void ForceQuit()
+    {
+        if(dbConnection != null && dbConnection.IsConnected())
+            dbConnection.Dispose();
+    }
 }

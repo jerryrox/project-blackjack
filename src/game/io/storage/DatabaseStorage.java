@@ -47,8 +47,6 @@ public abstract class DatabaseStorage<T extends IEntity> implements IStorage<T> 
 
     public @Override void Dispose()
     {
-        if(connection.IsConnected())
-            connection.Dispose();
     }
     
     public @Override void Save() {}

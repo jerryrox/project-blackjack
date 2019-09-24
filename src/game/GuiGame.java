@@ -115,11 +115,13 @@ public class GuiGame extends BaseGame {
     {
         frame.Initialize(dependencies);
     }
+    public @Override RuntimeMode GetRuntime() { return RuntimeMode.Gui; }
 
     public @Override String GetVersion()  { return Version; }
 
     public @Override void ForceQuit()
     {
+        super.ForceQuit();
         userStore.Dispose();
         itemStore.Dispose();
         System.exit(0);

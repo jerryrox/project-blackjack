@@ -115,7 +115,7 @@ public class PlayerHand {
     }
     
     /**
-     * Returns the total value of all visible cards in hand.
+     * Returns the total value of all cards in hand, except for the first one.
      */
     public int GetTotalVisibleValue()
     {

@@ -10,9 +10,11 @@ import java.util.ArrayList;
  * Holds piles of cards to be used in game.
  * @author jerrykim
  */
-public class Deck implements IDeck<Card> {
+public class Deck {
     
-    private ArrayList<Card> cards = new ArrayList<Card>();
+    public static final int CardsPerSet = 11;
+    
+    private ArrayList<Card> cards = new ArrayList<>();
     
     private int setCount;
     
@@ -26,7 +28,7 @@ public class Deck implements IDeck<Card> {
             AddSetTo(cards);
     }
     
-    public @Override void Shuffle()
+    public void Shuffle()
     {
         for(int i=0; i<cards.size(); i++)
         {
@@ -37,11 +39,11 @@ public class Deck implements IDeck<Card> {
         }
     }
     
-    public @Override int GetSetCount() { return setCount; }
+    public int GetSetCount() { return setCount; }
     
-    public @Override int GetCardCount() { return cards.size(); }
+    public int GetCardCount() { return cards.size(); }
     
-    public @Override boolean AddCard(Card card)
+    public boolean AddCard(Card card)
     {
         if(card.IsCloned())
             return false;
@@ -51,27 +53,27 @@ public class Deck implements IDeck<Card> {
         return true;
     }
     
-    public @Override void AddSetTo(ArrayList<Card> list)
+    public void AddSetTo(ArrayList<Card> list)
     {
         for(int i=1; i<12; i++)
             list.add(new Card(i));
     }
     
-    public @Override Card PopCard()
+    public Card PopCard()
     {
         if(cards.size() == 0)
             return null;
         return cards.remove(cards.size()-1);
     }
     
-    public @Override Card PeekCard()
+    public Card PeekCard()
     {
         if(cards.size() == 0)
             return null;
         return cards.get(cards.size()-1);
     }
     
-    public @Override boolean HasCard() { return cards.size() > 0; }
+    public boolean HasCards() { return cards.size() > 0; }
     
-    public @Override Iterable<Card> GetAllCards() { return cards; }
+    public Iterable<Card> GetAllCards() { return cards; }
 }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Representation of a single animation.
  * @author jerrykim
  */
-public class Anime {
+public class Anime implements IAnime {
     
     private float frameTime = 0;
     private float currentTime = 0;
@@ -32,35 +32,17 @@ public class Anime {
         frameTime = 1f / fps;
     }
     
-    /**
-     * Returns the duration of the entire animation in frames.
-     */
-    public int GetDuration() { return duration; }
+    public @Override int GetDuration() { return duration; }
     
-    /**
-     * Returns the duration of the entire animation in seconds.
-     */
-    public float GetTimeDuration() { return duration * frameTime; }
+    public @Override float GetTimeDuration() { return duration * frameTime; }
     
-    /**
-     * Returns the current frame index.
-     */
-    public int GetCurrentFrame() { return lastFrame; }
+    public @Override int GetCurrentFrame() { return lastFrame; }
     
-    /**
-     * Returns whether the animation is currently playing.
-     */
-    public boolean IsPlaying() { return isPlaying; }
+    public @Override boolean IsPlaying() { return isPlaying; }
     
-    /**
-     * Creates a new animation section. 
-     */
-    public void AddSection(int from, int to, ActionT<Float> action) { AddSection(from, to, EaseType.Linear, action); }
+    public @Override void AddSection(int from, int to, ActionT<Float> action) { AddSection(from, to, EaseType.Linear, action); }
     
-    /**
-     * Creates a new animation section.
-     */
-    public void AddSection(int from, int to, EaseType easeType, ActionT<Float> action)
+    public @Override void AddSection(int from, int to, EaseType easeType, ActionT<Float> action)
     {
         if(from < 0 || to < 0 || to <= from)
             return;
@@ -70,10 +52,7 @@ public class Anime {
             duration = to;
     }
     
-    /**
-     * Creates a new event at specified frame.
-     */
-    public void AddEvent(int frame, Action action)
+    public @Override void AddEvent(int frame, Action action)
     {
         if(frame < 0)
             return;
@@ -83,20 +62,11 @@ public class Anime {
             duration = frame;
     }
     
-    /**
-     * Sets animation wrap mode on end.
-     */
-    public void SetWrapMode(AnimationWrap mode) { wrapMode = mode; }
+    public @Override void SetWrapMode(AnimationWrap mode) { wrapMode = mode; }
     
-    /**
-     * Sets animation stop mode on Stop() call.
-     */
-    public void SetStopMode(AnimationStop mode) { stopMode = mode; }
+    public @Override void SetStopMode(AnimationStop mode) { stopMode = mode; }
     
-    /**
-     * Plays animation at current frame.
-     */
-    public void Play()
+    public @Override void Play()
     {
         if(duration > 0 && !isPlaying)
         {
@@ -105,19 +75,13 @@ public class Anime {
         }
     }
     
-    /**
-     * Starts animation playback from specified frame.
-     */
-    public void PlayAt(int frame)
+    public @Override void PlayAt(int frame)
     {
         SeekTo(frame);
         Play();
     }
     
-    /**
-     * Pauses animation at current frame.
-     */
-    public void Pause()
+    public @Override void Pause()
     {
         if(duration > 0 && isPlaying)
         {
@@ -126,10 +90,7 @@ public class Anime {
         }
     }
     
-    /**
-     * Stops animation with accordance to current animation stop mode.
-     */
-    public void Stop()
+    public @Override void Stop()
     {
         if(duration > 0)
         {
@@ -143,15 +104,9 @@ public class Anime {
         }
     }
     
-    /**
-     * Seeks time to specified frame.
-     */
-    public void SeekTo(int frame) { SeekState(OverrideFrame(frame)); }
+    public @Override void SeekTo(int frame) { SeekState(OverrideFrame(frame)); }
     
-    /**
-     * Performs update for current game frame.
-     */
-    public void Update(float deltaTime)
+    public @Override void Update(float deltaTime)
     {
         if(!isPlaying)
             return;

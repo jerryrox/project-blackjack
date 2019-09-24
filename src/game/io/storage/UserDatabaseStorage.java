@@ -4,6 +4,7 @@
 package game.io.storage;
 
 import game.database.DatabaseConnection;
+import game.debug.Debug;
 import game.entities.UserEntity;
 import game.entities.UserStats;
 import java.sql.ResultSet;
@@ -70,7 +71,7 @@ public class UserDatabaseStorage extends DatabaseStorage<UserEntity> {
     {
         UserEntity entity = new UserEntity();
         UserStats stats = entity.GetStats();
-                
+        
         entity.SetId(result.getString("id"));
         entity.Username.SetValue(result.getString("username"));
         entity.Gold.SetValue(result.getInt("gold"));

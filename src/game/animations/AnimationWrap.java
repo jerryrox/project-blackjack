@@ -9,7 +9,19 @@ package game.animations;
  */
 public enum AnimationWrap {
     
+    /**
+     * Animation stops at the last frame.
+     * Default.
+     */
     None,
+    
+    /**
+     * Animation resets to the beginning and stops.
+     */
     Reset,
+    
+    /**
+     * Animation loops from start.
+     */
     Loop
 }

@@ -10,6 +10,11 @@ package game;
 public interface IGame {
     
     /**
+     * Returns the current runtime mode.
+     */
+    RuntimeMode GetRuntime();
+    
+    /**
      * Returns the application version.
      */
     String GetVersion();

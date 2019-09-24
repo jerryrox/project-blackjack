@@ -5,6 +5,7 @@ package game;
 
 import game.debug.ConsoleLogger;
 import game.debug.ILogger;
+import java.util.Scanner;
 
 /**
  * The entry point of the application.
@@ -22,18 +23,44 @@ public class Main {
         gameArgs.UseDatabaseStorage = true;
         gameArgs.RuntimeArguments = args;
         
+        // Ask for runtime mode first.
+        Scanner scanner = new Scanner(System.in);
         BaseGame game = null;
-        switch(Application.Runtime)
+        boolean selectedRuntime = false;
+        while(!selectedRuntime)
         {
-        case Console: game = new ConsoleGame(gameArgs); break;
-        case Gui: game = new GuiGame(gameArgs); break;
-        default:
-            logger.LogWarning("Unknown application runtime! Check Application class to see if it's setup correctly!");
-            return;
+            System.out.println("Select runtime mode. (gui / cli / quit)");
+            // Receive mode.
+            if(scanner.hasNextLine())
+            {
+                String line = scanner.nextLine();
+                if(line == null)
+                    continue;
+                
+                switch(line.trim().toLowerCase())
+                {
+                case "quit":
+                    selectedRuntime = true;
+                    break;
+                case "cli":
+                    selectedRuntime = true;
+                    game = new ConsoleGame(gameArgs);
+                    break;
+                case "gui":
+                    selectedRuntime = true;
+                    game = new GuiGame(gameArgs);
+                    break;
+                default:
+                    logger.LogWarning("Invalid command '"+line+"'!");
+                    break;
+                }
+            }
         }
         
         // Start game.
         if(game != null)
             game.Start();
+        
+        scanner.close();
     }
 }

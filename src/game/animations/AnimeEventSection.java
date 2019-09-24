@@ -12,10 +12,10 @@ import game.data.Action;
 public class AnimeEventSection extends AnimeSection {
     
     private Action callback;
-    private Anime anime;
+    private IAnime anime;
     
     
-    public AnimeEventSection(Anime anime, int frame, Action callback)
+    public AnimeEventSection(IAnime anime, int frame, Action callback)
     {
         super(0, frame, frame, EaseType.Linear, null);
         this.callback = callback;
@@ -24,7 +24,7 @@ public class AnimeEventSection extends AnimeSection {
     
     protected @Override void ActivateState()
     {
-        if(!anime.IsPlaying())
+        if(anime != null && !anime.IsPlaying())
             return;
         if(curFrame >= from && lastFrame < from && callback != null)
             callback.Invoke();

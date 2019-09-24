@@ -3,7 +3,7 @@
  */
 package game.rulesets.survival;
 
-import game.Application;
+import game.IGame;
 import game.allocation.ReceivesDependency;
 import game.debug.Debug;
 import game.entities.UserEntity;
@@ -13,7 +13,6 @@ import game.rulesets.GameModes;
 import game.rulesets.ui.IDrawableRuleset;
 import game.rulesets.ui.cli.CliSurvivalRuleset;
 import game.rulesets.ui.gui.GuiRuleset;
-import game.ui.cli.IDisplayer;
 
 /**
  * Ruleset implementation for Survival game mode.
@@ -23,6 +22,9 @@ public class SurvivalRuleset extends BaseRuleset {
     
     @ReceivesDependency
     private UserEntity user;
+    
+    @ReceivesDependency
+    private IGame game;
     
     
     public @Override void OnStartSession()
@@ -36,9 +38,9 @@ public class SurvivalRuleset extends BaseRuleset {
     
     protected @Override IDrawableRuleset CreateDrawableRuleset()
     {
-        switch(Application.Runtime)
+        switch(game.GetRuntime())
         {
-        case Console: return new CliSurvivalRuleset();
+        case Cli: return new CliSurvivalRuleset();
         case Gui: return new GuiRuleset();
         }
         return null;

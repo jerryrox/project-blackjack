@@ -18,59 +18,99 @@ import static org.junit.Assert.*;
  */
 public class DependencyContainerTest {
     
+    
     /**
-     * Test of Cache method, of class DependencyContainer.
+     * Testing dependency caching and retrieving.
      */
     @Test
-    public void testCache() {
+    public void TestCache()
+    {
         DependencyContainer container = new DependencyContainer(new ConsoleLogger());
         TestDependency dependency = new TestDependency("Troll");
-        
         container.Cache(dependency);
+        
+        assertEquals(container.Get(TestDependency.class), dependency);
     }
-
+    
     /**
-     * Test of CacheAs method, of class DependencyContainer.
+     * Testing dependency caching as an interface and retrieving.
      */
     @Test
-    public void testCacheAs() {
+    public void TestCacheAsInterface()
+    {
         DependencyContainer container = new DependencyContainer(new ConsoleLogger());
         TestDependency dependency = new TestDependency("Troll");
-        
         container.CacheAs(TestInterface.class, dependency);
+        
+        // This will output an error as console message but this is expected.
+        // Plus, the message only serves as an indication for the developer that the dependency was not cached for the specified type.
+        assertNull(container.Get(TestDependency.class));
+        
+        assertNotNull(container.Get(TestInterface.class));
+        
+        assertEquals((TestDependency)container.Get(TestInterface.class), dependency);
     }
-
+    
     /**
-     * Test of Get method, of class DependencyContainer.
+     * Testing dependency caching as a base type and retrieving.
      */
     @Test
-    public void testGet() {
+    public void TestCacheAsBase()
+    {
         DependencyContainer container = new DependencyContainer(new ConsoleLogger());
         TestDependency dependency = new TestDependency("Troll");
-        TestDependency dependency2 = new TestDependency("Troll 2");
+        container.CacheAs(TestBaseDependency.class, dependency);
         
-        container.Cache(dependency);
-        container.CacheAs(TestInterface.class, dependency2);
+        // This will output an error as console message but this is expected.
+        // Plus, the message only serves as an indication for the developer that the dependency was not cached for the specified type.
+        assertNull(container.Get(TestDependency.class));
         
-        assertEquals(dependency, container.Get(TestDependency.class));
-        assertEquals(dependency2, container.Get(TestInterface.class));
+        assertNotNull(container.Get(TestBaseDependency.class));
+        
+        assertEquals((TestDependency)container.Get(TestBaseDependency.class), dependency);
     }
-
+    
+    /**
+     * Testing case where a dependency has been cached for the same type.
+     */
+    @Test
+    public void TestDuplicateType()
+    {
+        DependencyContainer container = new DependencyContainer(new ConsoleLogger());
+        
+        TestDependency test1 = new TestDependency("Test1");
+        TestBaseDependency test2 = new TestBaseDependency(11);
+        
+        container.Cache(test2);
+        
+        // Should complain in console that a duplicate type already exists.
+        container.CacheAs(TestBaseDependency.class, test1);
+        
+        // Should complain in console that the dependency instance is null.
+        assertNull(container.Get(TestDependency.class));
+        
+        assertEquals(container.Get(TestBaseDependency.class), test2);
+    }
+    
     /**
      * Test of Inject method, of class DependencyContainer.
      */
     @Test
-    public void testInject() {
+    public void TestInject()
+    {
         ILogger logger = new ConsoleLogger();
         DependencyContainer container = new DependencyContainer(logger);
+        
         TestDependency dependency = new TestDependency("Troll");
-        TestDependency dependency2 = new TestDependency("Troll 2");
-        TestInjected injected = new TestInjected(logger);
+        TestDependency dependency2 = new TestDependency("Trollerz");
         
         container.Cache(dependency);
         container.CacheAs(TestInterface.class, dependency2);
         
+        // Object to be injected on.
+        TestInjected injected = new TestInjected(logger);
         container.Inject(injected);
+        
         assertEquals(injected.i, dependency2);
         assertEquals(injected.d, dependency);
     }
@@ -81,12 +121,23 @@ public class DependencyContainerTest {
         String GetA();
     }
     
-    private class TestDependency implements TestInterface {
+    private class TestBaseDependency {
+        
+        public int BB;
+        
+        public TestBaseDependency(int bb)
+        {
+            BB = bb;
+        }
+    }
+    
+    private class TestDependency extends TestBaseDependency implements TestInterface {
         
         private String A;
         
         public TestDependency(String val)
         {
+            super(val.length());
             A = val;
         }
         

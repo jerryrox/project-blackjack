@@ -3,7 +3,6 @@
  */
 package game.ui.cli.components;
 
-import game.rulesets.ICard;
 import game.ui.cli.CliBuffer;
 import game.ui.cli.CliDisplayer;
 

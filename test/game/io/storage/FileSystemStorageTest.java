@@ -1,7 +1,7 @@
 /*
  * Jerry Kim (18015036), 2019
  */
-package game.io.store;
+package game.io.storage;
 
 import game.entities.IEntity;
 import game.io.storage.FileSystemStorage;
@@ -14,12 +14,12 @@ import static org.junit.Assert.*;
  *
  * @author jerrykim
  */
-public class FileSystemStoreTest {
+public class FileSystemStorageTest {
     
     private final String TestFileName = "test.data";
     
     
-    public FileSystemStoreTest() {
+    public FileSystemStorageTest() {
     }
 
     /**
