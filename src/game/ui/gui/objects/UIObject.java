@@ -470,7 +470,7 @@ public class UIObject extends UIBehavior {
         {
             UIComponent component = components.get(i);
             if(!component.isDestroying)
-                components.get(i).OnActive();
+                component.OnActive();
         }
     }
     
@@ -484,7 +484,7 @@ public class UIObject extends UIBehavior {
         {
             UIComponent component = components.get(i);
             if(!component.isDestroying)
-                components.get(i).OnInactive();
+                component.OnInactive();
         }
     }
 }
